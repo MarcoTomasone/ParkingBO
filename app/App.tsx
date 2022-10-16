@@ -12,6 +12,7 @@ import React, {type PropsWithChildren} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './src/components/Home';
+import Map from './src/components/Map';
 import Walking from './src/components/Walking';
 import Location from './src/components/Location';
 import Transition from './src/components/Transition';
@@ -73,6 +74,7 @@ const App = () => {
         <NavigationContainer>
         <Stack.Navigator initialRouteName="Home">
             <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="Map" component={Map} />
             <Stack.Screen name="Walking" component={Walking} />
             <Stack.Screen name="Driving" component={Driving} />
             <Stack.Screen name="Location" component={Location} />

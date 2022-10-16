@@ -254,6 +254,10 @@ dependencies {
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
+    /*implementation ('com.mapbox.maps:android:10.8.1'){
+        exclude group: 'com.mapbox.geojson.BaseCoordinatesTypeAdapter', module: 'android-sdk-geojson:5.9.0'
+    }*/
+
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {

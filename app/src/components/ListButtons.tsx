@@ -1,36 +1,16 @@
 import React from 'react';
-import { StyleSheet, Button, View, Alert } from 'react-native';
+import { StyleSheet, Button, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 
 export type RootStackParamList = {
     Home: {};
+    Map: {};
     Driving: {};
     Walking: {};
     Location: {};
     Transition: {};
 };
-
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'center',
-      marginHorizontal: 16,
-    },
-    title: {
-      textAlign: 'center',
-      marginVertical: 8,
-    },
-    fixToText: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-    },
-    separator: {
-      marginVertical: 8,
-      borderBottomColor: '#737373',
-      borderBottomWidth: StyleSheet.hairlineWidth,
-    },
-  });
 
 const Separator = () => (
     <View style={styles.separator} />
@@ -42,6 +22,12 @@ const ListButtons = () => {
     const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
     return (
         <View style={styles.container}>
+            <Button
+                title="Mappa"
+                color="yellow"
+                onPress={() => navigation.navigate('Map', {})}
+            />
+            <Separator />
             <Button
                 title="Riconoscere Driving"
                 color="#f194ff"
@@ -68,5 +54,25 @@ const ListButtons = () => {
     </View>
       );
     }
-    
     export default ListButtons;
+    
+    const styles = StyleSheet.create({
+        container: {
+          flex: 1,
+          justifyContent: 'center',
+          marginHorizontal: 16,
+        },
+        title: {
+          textAlign: 'center',
+          marginVertical: 8,
+        },
+        fixToText: {
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+        },
+        separator: {
+          marginVertical: 8,
+          borderBottomColor: '#737373',
+          borderBottomWidth: StyleSheet.hairlineWidth,
+        },
+      });
