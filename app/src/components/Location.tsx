@@ -20,10 +20,10 @@ class Location extends Component<IProps,IState> {
       error:""
     };
 
-   setInterval(this.location.bind(this),3000)
+   setInterval(this.getLocation.bind(this),3000)
   }
 
- location(){
+ getLocation(){
     this.watchId = Geolocation.getCurrentPosition(
       (position) => {
         let obj = {
@@ -39,7 +39,7 @@ class Location extends Component<IProps,IState> {
   }
 
  componentDidMount() {
-    this.location()
+    this.getLocation()
   }
 
  componentWillUnmount() {
