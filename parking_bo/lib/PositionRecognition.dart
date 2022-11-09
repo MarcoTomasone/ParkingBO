@@ -5,6 +5,12 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+final LocationSettings locationSettings = LocationSettings(
+  accuracy: LocationAccuracy.high,
+  distanceFilter: 100,
+);
+
+//Quando torna indietro nella schermata principale non mi prende piu la posizione
 class CurrentLocation extends StatefulWidget {
   CurrentLocation({Key? key}) : super(key: key);
 
@@ -18,10 +24,10 @@ class _CurrentLocationState extends State<CurrentLocation> {
   @override
   void initState() {
     super.initState();
-    _getCurrentLocation();
+    _getPermissionLocation();
   }
 
-  void _getCurrentLocation() async {
+  void _getPermissionLocation() async {
     LocationPermission permission;
 
     permission = await Geolocator.checkPermission();
@@ -31,28 +37,27 @@ class _CurrentLocationState extends State<CurrentLocation> {
         setState(() {
           currentLocation = "Permission Denied";
         });
-      } else {
-        var position = await Geolocator.getCurrentPosition(
-            desiredAccuracy: LocationAccuracy.high);
-        setState(() {
-          currentLocation = "latitude: ${position.latitude}" +
-              " , " +
-              "Logitude: ${position.longitude}";
-        });
       }
-    } else {
-      var position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high);
-      setState(() {
-        currentLocation = "latitude: ${position.latitude}" +
-            " , " +
-            "Logitude: ${position.longitude}";
-      });
     }
+    ;
   }
 
   @override
   Widget build(BuildContext context) {
+    if (currentLocation != "Permission Denied") {
+      Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+          .then((Position? position) {
+        setState(() {
+          currentLocation = (position == null
+              ? "Unknown"
+              : "${position.latitude}, ${position.longitude}");
+        });
+      }).catchError((e) {
+        print(e);
+      });
+      ;
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Location"),
@@ -77,14 +82,7 @@ class _CurrentLocationState extends State<CurrentLocation> {
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  'Location',
-                                ),
-                                (currentLocation != null)
-                                    ? Text(currentLocation)
-                                    : Container(),
-                              ],
+                              children: <Widget>[Text(currentLocation)],
                             ),
                           ),
                           SizedBox(
