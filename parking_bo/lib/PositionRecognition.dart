@@ -61,6 +61,7 @@ class _CurrentLocationState extends State<CurrentLocation> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Location"),
+        centerTitle: true
       ),
       body: SingleChildScrollView(
         child: Container(

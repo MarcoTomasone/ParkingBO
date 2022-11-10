@@ -1,112 +1,97 @@
 import 'dart:async';
-import 'dart:io';
+import 'dart:developer' as dev;
 
-import "package:flutter/material.dart";
-import 'package:activity_recognition_flutter/activity_recognition_flutter.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_activity_recognition/flutter_activity_recognition.dart';
+import './utils/httpRequest.dart';
 
-class ActivityRecognitionApp extends StatefulWidget {
+void main() => runApp(ActivityRecognition());
+
+class ActivityRecognition extends StatefulWidget {
   @override
-  _ActivityRecognitionAppState createState() => _ActivityRecognitionAppState();
+  _ActivityRecognitionState createState() => _ActivityRecognitionState();
 }
 
-class _ActivityRecognitionAppState extends State<ActivityRecognitionApp> {
-  StreamSubscription<ActivityEvent>? activityStreamSubscription;
-  List<ActivityEvent> _events = [];
-  ActivityRecognition activityRecognition = ActivityRecognition();
+class _ActivityRecognitionState extends State<ActivityRecognition> {
+  final _activityStreamController = StreamController<Activity>();
+  StreamSubscription<Activity>? _activityStreamSubscription;
+  String activityList = '';
+
+  void _onActivityReceive(Activity activity) async {
+    dev.log('Activity Detected >> ${activity.toJson()}');
+    //if(activity.confidence == ActivityConfidence.HIGH)
+      //sendUserActivity(activity);
+    _activityStreamController.sink.add(activity);
+  }
+
+  void _handleError(dynamic error) {
+    dev.log('Catch Error >> $error');
+  }
 
   @override
   void initState() {
     super.initState();
-    _init();
-    _events.add(ActivityEvent.unknown());
-  }
+    WidgetsBinding.instance?.addPostFrameCallback((_) async {
+      final activityRecognition = FlutterActivityRecognition.instance;
 
-  @override
-  void dispose() {
-    activityStreamSubscription?.cancel();
-    super.dispose();
-  }
-
-  void _init() async {
-    // Android requires explicitly asking permission
-    if (Platform.isAndroid) {
-      if (await Permission.activityRecognition.request().isGranted) {
-        _startTracking();
+      // Check if the user has granted permission. If not, request permission.
+      PermissionRequestResult reqResult;
+      reqResult = await activityRecognition.checkPermission();
+      if (reqResult == PermissionRequestResult.PERMANENTLY_DENIED) {
+        dev.log('Permission is permanently denied.');
+        return;
+      } else if (reqResult == PermissionRequestResult.DENIED) {
+        reqResult = await activityRecognition.requestPermission();
+        if (reqResult != PermissionRequestResult.GRANTED) {
+          dev.log('Permission is denied.');
+          return;
+        }
       }
-    }
 
-    // iOS does not
-    else {
-      _startTracking();
-    }
-  }
-
-  void _startTracking() {
-    activityStreamSubscription = activityRecognition
-        .activityStream(runForegroundService: true)
-        .listen(onData, onError: onError);
-  }
-
-  void onData(ActivityEvent activityEvent) {
-    print(activityEvent);
-    setState(() {
-      _events.add(activityEvent);
+      // Subscribe to the activity stream.
+      _activityStreamSubscription = activityRecognition.activityStream
+          .handleError(_handleError)
+          .listen(_onActivityReceive);
     });
-  }
-
-  void onError(Object error) {
-    print('ERROR - $error');
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
         appBar: AppBar(
-          title: const Text('Activity Recognition'),
+          title: Text('Activity Recognition'),
+          centerTitle: true
         ),
-        body: Center(
-          child: ListView.builder(
-              itemCount: _events.length,
-              reverse: true,
-              itemBuilder: (_, int idx) {
-                final activity = _events[idx];
-                return ListTile(
-                  leading: _activityIcon(activity.type),
-                  title: Text(
-                      '${activity.type.toString().split('.').last} (${activity.confidence}%)'),
-                  trailing: Text(activity.timeStamp
-                      .toString()
-                      .split(' ')
-                      .last
-                      .split('.')
-                      .first),
-                );
-              }),
-        ),
-      ),
+        body: _buildContentView()
     );
   }
 
-  Icon _activityIcon(ActivityType type) {
-    switch (type) {
-      case ActivityType.WALKING:
-        return Icon(Icons.directions_walk);
-      case ActivityType.IN_VEHICLE:
-        return Icon(Icons.car_rental);
-      case ActivityType.ON_BICYCLE:
-        return Icon(Icons.pedal_bike);
-      case ActivityType.ON_FOOT:
-        return Icon(Icons.directions_walk);
-      case ActivityType.RUNNING:
-        return Icon(Icons.run_circle);
-      case ActivityType.STILL:
-        return Icon(Icons.cancel_outlined);
-      case ActivityType.TILTING:
-        return Icon(Icons.redo);
-      default:
-        return Icon(Icons.device_unknown);
-    }
+  @override
+  void dispose() {
+    _activityStreamController.close();
+    _activityStreamSubscription?.cancel();
+    super.dispose();
+  }
+
+  Widget _buildContentView() {
+    return StreamBuilder<Activity>(
+      stream: _activityStreamController.stream,
+      builder: (context, snapshot) {
+        final updatedDateTime = DateTime.now();
+        final content = snapshot.data?.toJson().toString() ?? '';
+        final time = updatedDateTime.hour.toString() + ":" + updatedDateTime.minute.toString() + ":" + updatedDateTime.second.toString();
+        activityList += content == '' ? '' :content + " at " + time + "\n";
+
+        return ListView(
+          physics: const BouncingScrollPhysics(),
+          padding: const EdgeInsets.all(8.0),
+          children: [
+            Text('•\t\tActivity (updated: $updatedDateTime)'),
+            SizedBox(height: 10.0),
+            Text(activityList)
+          ]
+        );
+      }
+    );
   }
 }
