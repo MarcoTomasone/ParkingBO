@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +25,19 @@ class _CurrentLocationState extends State<CurrentLocation> {
   void initState() {
     super.initState();
     _getPermissionLocation();
+    if (currentLocation != "Permission Denied") {
+      Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+          .then((Position? position) {
+        setState(() {
+          currentLocation = (position == null
+              ? "Unknown"
+              : "${position.latitude}, ${position.longitude}");
+        });
+      }).catchError((e) {
+        print(e);
+      });
+      ;
+    }
   }
 
   void _getPermissionLocation() async {
@@ -43,26 +56,15 @@ class _CurrentLocationState extends State<CurrentLocation> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    if (currentLocation != "Permission Denied") {
-      Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
-          .then((Position? position) {
-        setState(() {
-          currentLocation = (position == null
-              ? "Unknown"
-              : "${position.latitude}, ${position.longitude}");
-        });
-      }).catchError((e) {
-        print(e);
-      });
-      ;
-    }
+  dispose() {
+    debugPrint("dispose");
+    super.dispose();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Location"),
-        centerTitle: true
-      ),
+      appBar: AppBar(title: Text("Location"), centerTitle: true),
       body: SingleChildScrollView(
         child: Container(
           child: Column(
