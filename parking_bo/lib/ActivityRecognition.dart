@@ -19,8 +19,8 @@ class _ActivityRecognitionState extends State<ActivityRecognition> {
 
   void _onActivityReceive(Activity activity) async {
     dev.log('Activity Detected >> ${activity.toJson()}');
-    //if(activity.confidence == ActivityConfidence.HIGH)
-      //sendUserActivity(activity);
+    if(activity.confidence == ActivityConfidence.HIGH)
+      sendUserActivity(activity);
     _activityStreamController.sink.add(activity);
   }
 

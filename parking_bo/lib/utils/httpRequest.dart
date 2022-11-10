@@ -6,13 +6,13 @@ import 'package:flutter_activity_recognition/flutter_activity_recognition.dart';
 const url = 'http://192.168.1.67:8000';
 
 Future<http.Response> sendUserActivity(Activity activity) async {
-  var body = json.encode(activity.toJson());
-  
+  final request = {'type': activity.type.toString(), 'confidence': activity.confidence.toString()};
   final response = await http.post(
     Uri.parse('${url}/sendActivity'),
-    body:  body,
+    body:  json.encode(request),
     headers: {
       "Content-Type": "application/json",
+      "Accept" : "application/json"
     }
   );
   if (response.statusCode == 200) {
