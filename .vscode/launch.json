@@ -1,0 +1,28 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "parking_bo",
+            "cwd": "parking_bo",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "parking_bo (profile mode)",
+            "cwd": "parking_bo",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "parking_bo (release mode)",
+            "cwd": "parking_bo",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}
