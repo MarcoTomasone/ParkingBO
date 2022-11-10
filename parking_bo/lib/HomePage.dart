@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'ActivityRecognition.dart';
+import 'MapWidget.dart';
 import 'PositionRecognition.dart';
 
 class HomePage extends StatelessWidget {
@@ -29,6 +30,16 @@ class HomePage extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                         builder: (context) => CurrentLocation()),
+                  );
+                },
+              ),
+              ElevatedButton(
+                child: Text('Map'),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MapWidget()),
                   );
                 },
               ),
