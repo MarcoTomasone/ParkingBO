@@ -1,12 +1,18 @@
 import 'dart:developer' as dev;
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'newTypes.dart';
 import 'package:flutter_activity_recognition/flutter_activity_recognition.dart';
 
+//Per fare localhost su real mobile ci va l'ip del computer su cui fate girare il server
+//Per fare localhost sull'emulatore dovrebbe andare il seguente ip = 10.0.2.2
 const url = 'http://192.168.1.67:8000';
 
-Future<http.Response> sendUserActivity(Activity activity) async {
-  final request = {'type': activity.type.toString(), 'confidence': activity.confidence.toString()};
+/**
+ * This function is used to send to the server the users's activity
+ */
+Future<http.Response> sendTransition(ParkingType type) async {
+  final request = {'type': type.toString(), 'position': 'position.toJson()'};
   final response = await http.post(
     Uri.parse('${url}/sendActivity'),
     body:  json.encode(request),
@@ -17,11 +23,10 @@ Future<http.Response> sendUserActivity(Activity activity) async {
   );
   if (response.statusCode == 200) {
     // If the server did return a 200 CREATED response,
-    dev.log("The user's activity was sent successfully");
+    dev.log("The user's transition was sent successfully");
   } else {
-    // If the server did not return a 201 CREATED response,
     // then throw an exception.
-    throw Exception('Failed to send activity');
+    throw Exception('Failed to send transition');
   };
   return response;
 }

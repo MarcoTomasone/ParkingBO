@@ -4,6 +4,7 @@ import 'dart:developer' as dev;
 import 'package:flutter/material.dart';
 import 'package:flutter_activity_recognition/flutter_activity_recognition.dart';
 import './utils/httpRequest.dart';
+import './utils/newTypes.dart';
 
 void main() => runApp(ActivityRecognition());
 
@@ -14,13 +15,17 @@ class ActivityRecognition extends StatefulWidget {
 
 class _ActivityRecognitionState extends State<ActivityRecognition> {
   final _activityStreamController = StreamController<Activity>();
+  //Imposto inizialmente l'ultima attività su UNKNOWN
+  ActivityType lastActivity = ActivityType.UNKNOWN;
   StreamSubscription<Activity>? _activityStreamSubscription;
   String activityList = '';
 
   void _onActivityReceive(Activity activity) async {
     dev.log('Activity Detected >> ${activity.toJson()}');
-    //if(activity.confidence == ActivityConfidence.HIGH)
-      //sendUserActivity(activity);
+    if(activity.confidence == ActivityConfidence.HIGH) {
+      lastActivity = activity.type;
+      detectTransition(activity);
+    }
     _activityStreamController.sink.add(activity);
   }
 
@@ -93,5 +98,19 @@ class _ActivityRecognitionState extends State<ActivityRecognition> {
         );
       }
     );
+  }
+
+  void detectTransition(Activity activity) {
+    ActivityType currentActivity = activity.type;
+    if(currentActivity != lastActivity) {
+      //Vuol dire che stiamo uscendo da un parcheggio
+      if(lastActivity == ActivityType.WALKING && currentActivity == ActivityType.IN_VEHICLE) {
+        sendTransition(ParkingType.EXITING);
+      }
+      //Vuol dire che abbiamo appena parcheggiato
+      else if(lastActivity == ActivityType.IN_VEHICLE && currentActivity == ActivityType.WALKING) {
+        sendTransition(ParkingType.ENTERING);
+      }
+    }
   }
 }
