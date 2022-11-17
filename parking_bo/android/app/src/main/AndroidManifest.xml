@@ -11,7 +11,7 @@
    <application
 
    
-        android:label="parking_bo"
+        android:label="ParkingBO"
         android:icon="@mipmap/ic_launcher">
          <!-- Activity Rec Permissions -->
 
