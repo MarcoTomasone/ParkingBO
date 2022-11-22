@@ -1,10 +1,12 @@
 const http = require('http');
 const express = require('express');
-const userActivity = require('./userActivity');
 const bodyParser = require('body-parser');
+const userActivity = require('./userActivity');
+const databasepg = require('./databasepg');
 
 const app = express();
 const port = 8000;
+
 
 // configure the app to use bodyParser()
 app.use(bodyParser.urlencoded({
@@ -14,6 +16,8 @@ app.use(bodyParser.json());
 
 
 userActivity.createRoutes(app);
+//userActivity.insertPosition('ROMA');
+//databasepg.doQuery('SELECT * FROM utenti');
 
 const server = http.createServer(app);
 server.listen(port, () => {

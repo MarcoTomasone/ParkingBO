@@ -1,3 +1,5 @@
+const databasepg = require("./databasepg");
+
 module.exports = {
     createRoutes: (app) => {
         app.post('/sendTransition', (req, res) => {
@@ -16,5 +18,12 @@ module.exports = {
             }             
         });
 
+    },
+
+    insertPosition: (spatialData) => {
+        const text = `INSERT INTO users(userid, position) VALUES($1, $2) RETURNING *`;
+        const values = [2, spatialData];
+        databasepg.doQuery(text, values);
     }
+
 }
