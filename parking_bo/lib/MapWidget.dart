@@ -10,7 +10,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:geojson/geojson.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:parking_bo/PositionRecognition.dart';
+import 'PositionRecognition.dart';
+import 'ActivityRecognitionClass.dart';
+import 'package:flutter_activity_recognition/flutter_activity_recognition.dart' as ar;
+
 
 final LocationSettings locationSettings = LocationSettings(
   accuracy: LocationAccuracy.high,
@@ -18,19 +21,27 @@ final LocationSettings locationSettings = LocationSettings(
 );
 
 class MapWidget extends StatefulWidget {
-  var mapCenter = new LatLng(44.493754, 11.343095);
-  var vertex1 = new LatLng(44.500000, 11.343095);
-  var vertex3 = new LatLng(44.483754, 11.363295);
-
+  //Initialize Activity Recognition class
+ 
   @override
   _MapWidgetState createState() => _MapWidgetState();
 }
 
-class _MapWidgetState extends State<MapWidget> {
+class _MapWidgetState extends State<MapWidget> { 
   /// Data for the Flutter map polylines layer
   final polygons = <Polygon>[];
-  LatLng location = LatLng(44.493754, 11.343095);
+  ar.ActivityType currentActivity = ar.ActivityType.UNKNOWN; 
+  LatLng location = LatLng(44.493754, 11.343095); //Coordinates of Bologna
   late CenterOnLocationUpdate _centerOnLocationUpdate;
+  late ActivityRecognition activityRecognition; //= new ActivityRecognition(updateCurrentActivity);
+
+
+  void updateCurrentActivity(ar.ActivityType activityType){
+    setState(() {
+      currentActivity = activityType;
+    });
+  }
+
 
   Future<void> parseAndDrawAssetsOnMap() async {
     final geo = GeoJson();
@@ -50,9 +61,9 @@ class _MapWidgetState extends State<MapWidget> {
     final features = await geo.parse(data, verbose: true);
   }
 
+
   void _getPermissionLocation() async {
     LocationPermission permission;
-
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
@@ -65,8 +76,10 @@ class _MapWidgetState extends State<MapWidget> {
     ;
   }
 
+
   @override
   void initState() {
+    activityRecognition = new ActivityRecognition(updateCurrentActivity);
     parseAndDrawAssetsOnMap();
     _getPermissionLocation();
     _centerOnLocationUpdate = CenterOnLocationUpdate.always;
@@ -78,17 +91,32 @@ class _MapWidgetState extends State<MapWidget> {
     });
   }
 
+
   @override
   dispose() {
     super.dispose();
+    activityRecognition.dispose();
   }
+
+
+  IconData getMarkerType(){
+    if(currentActivity == ar.ActivityType.IN_VEHICLE)
+      return Icons.navigation; // CASE: DRIVING
+    else if(currentActivity == ar.ActivityType.WALKING)
+      return Icons.my_location; // CASE: Walking
+    else if(currentActivity == ar.ActivityType.STILL)
+      return Icons.accessible_forward;
+    else 
+      return Icons.circle; //CASE: Still, Unknown
+    }
+
 
   @override
   Widget build(BuildContext context) {
     return FlutterMap(
       options: MapOptions(
         center: location,
-        zoom: 18,
+        zoom: 13,
         onPositionChanged: (MapPosition position, bool hasGesture) {
           if (hasGesture) {
             setState(
@@ -108,7 +136,7 @@ class _MapWidgetState extends State<MapWidget> {
           ),
         MarkerLayer(markers: [
           Marker(point: location, builder: (ctx) => Icon(
-            Icons.my_location,                          //TODO:cambiare l'icona quando passa da moving a driving e viceversa on Icons.Navigation
+            getMarkerType(),  //TODO:cambiare l'icona quando passa da moving a driving e viceversa on Icons.Navigation         
           color: Colors.blueAccent,)),
         ])
       ],

@@ -20,6 +20,8 @@ class _ActivityRecognitionState extends State<ActivityRecognition> {
   StreamSubscription<Activity>? _activityStreamSubscription;
   String activityList = '';
 
+
+
   void _onActivityReceive(Activity activity) async {
     dev.log('Activity Detected >> ${activity.toJson()}');
     //Took only the activities that interest us

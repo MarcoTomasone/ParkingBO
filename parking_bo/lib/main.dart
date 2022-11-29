@@ -1,3 +1,4 @@
+import 'package:ParkingBO/MapWidget.dart';
 import 'package:flutter/material.dart';
 import 'HomePage.dart';
 void main() {
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(),
+      home: MapWidget(),
     );
   }
 }
