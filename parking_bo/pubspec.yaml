@@ -36,6 +36,7 @@ dependencies:
   latlong2: ^0.8.1
   geojson: ^1.0.0
   flutter_map_location_marker: ^5.0.0+1
+  fluttertoast: ^8.1.1
 
 dev_dependencies:
   flutter_test:

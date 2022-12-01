@@ -46,7 +46,7 @@ class ActivityRecognition {
     } 
 
   void _handleError(dynamic error) {
-    dev.log('Catch Error >> $error');
+    dev.log('Catch Error NON STO TRACCIANDO>> $error');
   }
 
   void detectTransition(Activity activity) {
@@ -70,7 +70,7 @@ class ActivityRecognition {
       lastActivity = activity.type;
       detectTransition(activity);
     }
-    updateCurrentActivity(activity);
+    updateCurrentActivity(activity.type);
     //_activityStreamController.sink.add(activity); //TODO: Update _currentActivity in MapWidget to rebuild the marker 
   }
  

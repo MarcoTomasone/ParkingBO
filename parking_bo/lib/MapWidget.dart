@@ -10,9 +10,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:geojson/geojson.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'PositionRecognition.dart';
 import 'ActivityRecognitionClass.dart';
 import 'package:flutter_activity_recognition/flutter_activity_recognition.dart' as ar;
+import 'package:fluttertoast/fluttertoast.dart';
+import 'dart:developer' as dev;
 
 
 final LocationSettings locationSettings = LocationSettings(
@@ -40,6 +41,15 @@ class _MapWidgetState extends State<MapWidget> {
     setState(() {
       currentActivity = activityType;
     });
+    Fluttertoast.showToast(
+        msg: "New Activity Detected: " + activityType.toString(),
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0
+    );
   }
 
 
@@ -77,11 +87,12 @@ class _MapWidgetState extends State<MapWidget> {
   }
 
 
+
   @override
   void initState() {
+    _getPermissionLocation();
     activityRecognition = new ActivityRecognition(updateCurrentActivity);
     parseAndDrawAssetsOnMap();
-    _getPermissionLocation();
     _centerOnLocationUpdate = CenterOnLocationUpdate.always;
     Geolocator.getPositionStream(locationSettings: locationSettings)
         .listen((Position position) {
@@ -100,14 +111,20 @@ class _MapWidgetState extends State<MapWidget> {
 
 
   IconData getMarkerType(){
+    /*Fluttertoast.showToast(
+        msg: currentActivity.toString(),
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0
+    );*/
     if(currentActivity == ar.ActivityType.IN_VEHICLE)
       return Icons.navigation; // CASE: DRIVING
     else if(currentActivity == ar.ActivityType.WALKING)
-      return Icons.my_location; // CASE: Walking
-    else if(currentActivity == ar.ActivityType.STILL)
-      return Icons.accessible_forward;
+      return Icons.circle; // CASE: Walking
     else 
-      return Icons.circle; //CASE: Still, Unknown
+      return Icons.my_location; //CASE: Still, Unknown
     }
 
 
@@ -137,7 +154,7 @@ class _MapWidgetState extends State<MapWidget> {
         MarkerLayer(markers: [
           Marker(point: location, builder: (ctx) => Icon(
             getMarkerType(),  //TODO:cambiare l'icona quando passa da moving a driving e viceversa on Icons.Navigation         
-          color: Colors.blueAccent,)),
+          color: Colors.red,)),
         ])
       ],
     );
