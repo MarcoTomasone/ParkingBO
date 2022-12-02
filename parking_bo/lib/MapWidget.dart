@@ -5,7 +5,6 @@ import 'package:flutter_map/plugin_api.dart'; // Only import if required functio
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:geojson/geojson.dart';
@@ -13,7 +12,6 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'ActivityRecognitionClass.dart';
 import 'package:flutter_activity_recognition/flutter_activity_recognition.dart' as ar;
 import 'package:fluttertoast/fluttertoast.dart';
-import 'dart:developer' as dev;
 
 
 final LocationSettings locationSettings = LocationSettings(
@@ -45,7 +43,7 @@ class _MapWidgetState extends State<MapWidget> {
         msg: "New Activity Detected: " + activityType.toString(),
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
-        timeInSecForIosWeb: 1,
+        timeInSecForIosWeb: 3,
         backgroundColor: Colors.red,
         textColor: Colors.white,
         fontSize: 16.0
@@ -53,7 +51,7 @@ class _MapWidgetState extends State<MapWidget> {
   }
 
 
-  Future<void> parseAndDrawAssetsOnMap() async {
+  Future<void> drawPolygonsOnMap() async {
     final geo = GeoJson();
     geo.processedPolygons.listen((GeoJsonPolygon polygon) {
       /// when a line is parsed add it to the map right away
@@ -72,27 +70,15 @@ class _MapWidgetState extends State<MapWidget> {
   }
 
 
-  void _getPermissionLocation() async {
-    LocationPermission permission;
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        print("Permission denied");
-        /**In caso tornare indietro */
-        return;
-      }
-    }
-    ;
-  }
+ 
 
 
 
   @override
-  void initState() {
-    _getPermissionLocation();
+  void initState(){
+    //_getPermissionLocation();
     activityRecognition = new ActivityRecognition(updateCurrentActivity);
-    parseAndDrawAssetsOnMap();
+    drawPolygonsOnMap();
     _centerOnLocationUpdate = CenterOnLocationUpdate.always;
     Geolocator.getPositionStream(locationSettings: locationSettings)
         .listen((Position position) {
@@ -111,14 +97,6 @@ class _MapWidgetState extends State<MapWidget> {
 
 
   IconData getMarkerType(){
-    /*Fluttertoast.showToast(
-        msg: currentActivity.toString(),
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0
-    );*/
     if(currentActivity == ar.ActivityType.IN_VEHICLE)
       return Icons.navigation; // CASE: DRIVING
     else if(currentActivity == ar.ActivityType.WALKING)
@@ -153,10 +131,11 @@ class _MapWidgetState extends State<MapWidget> {
           ),
         MarkerLayer(markers: [
           Marker(point: location, builder: (ctx) => Icon(
-            getMarkerType(),  //TODO:cambiare l'icona quando passa da moving a driving e viceversa on Icons.Navigation         
-          color: Colors.red,)),
+            getMarkerType(),          
+            color: Colors.red,)
+          ),
         ])
-      ],
+      ], //Children
     );
   }
 }

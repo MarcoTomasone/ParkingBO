@@ -1,13 +1,14 @@
 import 'dart:async';
 import 'dart:developer' as dev;
-
+import 'package:geolocator/geolocator.dart' as geo;
 import 'package:flutter/material.dart';
-import 'package:flutter_activity_recognition/flutter_activity_recognition.dart';
+import 'package:flutter_activity_recognition/flutter_activity_recognition.dart' ;
 import './utils/httpRequest.dart';
 import './utils/newTypes.dart';
+import 'package:permission_handler/permission_handler.dart';
+import './NoPermissionGrantsWidget.dart';
 
 class ActivityRecognition {
-  //final _activityStreamController = StreamController<Activity>();  //TODO: ???????????
   //Initially set the last activity to UNKNOWN
   ActivityType lastActivity = ActivityType.UNKNOWN;
   StreamSubscription<Activity>? _activityStreamSubscription;
@@ -21,14 +22,14 @@ class ActivityRecognition {
     debugPrint("Activity Detected START LISTENER");
     this.updateCurrentActivity = updateCurrentActivity;
     
-    isPermissionGrants();
+    checkPermissions();
     // Subscribe to the activity stream.
     _activityStreamSubscription = activityRecognition.activityStream
     .handleError(_handleError)
     .listen(_onActivityReceive);
   }
 
-  Future<bool> isPermissionGrants() async {
+/*  Future<bool> isPermissionGrants() async {
     // Check if the user has granted permission. If not, request permission.
     PermissionRequestResult reqResult;
     reqResult = await activityRecognition.checkPermission();
@@ -44,6 +45,41 @@ class ActivityRecognition {
     }
     return true;
     } 
+
+    void _getPermissionLocation() async {
+      geo.LocationPermission permission;
+      permission = await geo.Geolocator.checkPermission();
+      if (permission == geo.LocationPermission.denied) {
+        permission = await geo.Geolocator.requestPermission();
+        if (permission == geo.LocationPermission.denied) {
+          print("Permission denied");
+          /**In caso tornare indietro */
+          return;
+        }
+      }
+  }
+*/
+  void checkPermissions() async {
+    Map<Permission, PermissionStatus> statuses = await[
+      Permission.location,
+      Permission.activityRecognition,
+    ].request();
+
+    bool allGranted = true;
+
+    statuses.forEach((key, value) { 
+      if( value != PermissionStatus.granted)
+        allGranted = false;
+    });
+
+    debugPrint(allGranted.toString());
+    if(!allGranted){
+      //TODO: Caricare No Permision Grants Widget
+    }
+}
+
+
+  
 
   void _handleError(dynamic error) {
     dev.log('Catch Error NON STO TRACCIANDO>> $error');
@@ -71,7 +107,6 @@ class ActivityRecognition {
       detectTransition(activity);
     }
     updateCurrentActivity(activity.type);
-    //_activityStreamController.sink.add(activity); //TODO: Update _currentActivity in MapWidget to rebuild the marker 
   }
  
   void dispose() {
