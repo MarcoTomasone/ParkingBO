@@ -1,18 +1,20 @@
+import 'package:ParkingBO/utils/httpRequest.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart'; // Suitable for most situations
 import 'package:flutter_map/plugin_api.dart'; // Only import if required functionality is not exposed by default
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
+import './utils/newTypes.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:geojson/geojson.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'ActivityRecognitionClass.dart';
-import 'package:flutter_activity_recognition/flutter_activity_recognition.dart' as ar;
+import 'package:flutter_activity_recognition/flutter_activity_recognition.dart'
+    as ar;
 import 'package:fluttertoast/fluttertoast.dart';
-
 
 final LocationSettings locationSettings = LocationSettings(
   accuracy: LocationAccuracy.high,
@@ -21,21 +23,44 @@ final LocationSettings locationSettings = LocationSettings(
 
 class MapWidget extends StatefulWidget {
   //Initialize Activity Recognition class
- 
+
   @override
   _MapWidgetState createState() => _MapWidgetState();
 }
 
-class _MapWidgetState extends State<MapWidget> { 
+class _MapWidgetState extends State<MapWidget> {
   /// Data for the Flutter map polylines layer
   final polygons = <Polygon>[];
-  ar.ActivityType currentActivity = ar.ActivityType.UNKNOWN; 
+  ar.ActivityType currentActivity = ar.ActivityType.UNKNOWN;
   LatLng location = LatLng(44.493754, 11.343095); //Coordinates of Bologna
   late CenterOnLocationUpdate _centerOnLocationUpdate;
-  late ActivityRecognition activityRecognition; //= new ActivityRecognition(updateCurrentActivity);
+  late ActivityRecognition
+      activityRecognition; //= new ActivityRecognition(updateCurrentActivity);
 
-
-  void updateCurrentActivity(ar.ActivityType activityType){
+  void updateCurrentActivity(ar.ActivityType activityType) {
+    if (currentActivity == ar.ActivityType.IN_VEHICLE &&
+        activityType == ar.ActivityType.WALKING) {
+      Fluttertoast.showToast(
+          msg: "Change from driving to walking",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+      sendTransition(ParkingType.EXITING,location);
+    } else if (currentActivity == ar.ActivityType.WALKING &&
+        activityType == ar.ActivityType.IN_VEHICLE) {
+      Fluttertoast.showToast(
+          msg: "Change from walking to driving",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+      sendTransition(ParkingType.ENTERING,location);
+    }
     setState(() {
       currentActivity = activityType;
     });
@@ -46,10 +71,8 @@ class _MapWidgetState extends State<MapWidget> {
         timeInSecForIosWeb: 3,
         backgroundColor: Colors.red,
         textColor: Colors.white,
-        fontSize: 16.0
-    );
+        fontSize: 16.0);
   }
-
 
   Future<void> drawPolygonsOnMap() async {
     final geo = GeoJson();
@@ -69,13 +92,8 @@ class _MapWidgetState extends State<MapWidget> {
     final features = await geo.parse(data, verbose: true);
   }
 
-
- 
-
-
-
   @override
-  void initState(){
+  void initState() {
     //_getPermissionLocation();
     activityRecognition = new ActivityRecognition(updateCurrentActivity);
     drawPolygonsOnMap();
@@ -86,8 +104,9 @@ class _MapWidgetState extends State<MapWidget> {
         location = LatLng(position.latitude, position.longitude);
       });
     });
-  }
 
+    sendTransition(ParkingType.ENTERING,location);
+  }
 
   @override
   dispose() {
@@ -95,16 +114,14 @@ class _MapWidgetState extends State<MapWidget> {
     activityRecognition.dispose();
   }
 
-
-  IconData getMarkerType(){
-    if(currentActivity == ar.ActivityType.IN_VEHICLE)
+  IconData getMarkerType() {
+    if (currentActivity == ar.ActivityType.IN_VEHICLE)
       return Icons.navigation; // CASE: DRIVING
-    else if(currentActivity == ar.ActivityType.WALKING)
+    else if (currentActivity == ar.ActivityType.WALKING)
       return Icons.circle; // CASE: Walking
-    else 
+    else
       return Icons.my_location; //CASE: Still, Unknown
-    }
-
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -128,12 +145,14 @@ class _MapWidgetState extends State<MapWidget> {
         PolygonLayer(polygonCulling: false, polygons: polygons),
         CurrentLocationLayer(
           centerOnLocationUpdate: _centerOnLocationUpdate,
-          ),
+        ),
         MarkerLayer(markers: [
-          Marker(point: location, builder: (ctx) => Icon(
-            getMarkerType(),          
-            color: Colors.red,)
-          ),
+          Marker(
+              point: location,
+              builder: (ctx) => Icon(
+                    getMarkerType(),
+                    color: Colors.red,
+                  )),
         ])
       ], //Children
     );
