@@ -2,7 +2,7 @@
 import 'package:ParkingBO/MapWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:permission_handler/permission_handler.dart';
 class SplashScreen extends StatefulWidget{
   const SplashScreen({Key? key}) : super(key : key);
   
@@ -12,15 +12,34 @@ class SplashScreen extends StatefulWidget{
 //TODO: Use spinkit to add animation https://www.youtube.com/watch?v=CHYKlj-wawI
 class _SplashScreenState extends State<SplashScreen>{
 
+   Future<bool> checkPermissions() async {
+    Map<Permission, PermissionStatus> statuses = await[
+      Permission.location,
+      Permission.activityRecognition,
+    ].request();
+
+    bool allGranted = true;
+
+    statuses.forEach((key, value) { 
+      if( value != PermissionStatus.granted)
+        allGranted = false;
+    });
+
+    debugPrint(allGranted.toString());
+    return true;
+}
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(seconds: 3)).then((value){
-      Navigator.of(context).pushReplacement(CupertinoPageRoute(
-        builder: (ctx) =>  MapWidget()
-      ));
-    });
+    checkPermissions().whenComplete( () => {
+      Future.delayed(Duration(seconds: 1)).then((value){
+        Navigator.of(context).pushReplacement(CupertinoPageRoute(
+          builder: (ctx) =>  MapWidget()
+        ));
+      })
+  });
   }
+  
   @override
   Widget build(BuildContext context) {
    return Scaffold(

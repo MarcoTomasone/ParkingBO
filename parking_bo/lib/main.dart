@@ -10,26 +10,12 @@ void main() {
 
 class MyApp extends StatelessWidget {
 
-  void checkPermissions() async {
-    Map<Permission, PermissionStatus> statuses = await[
-      Permission.location,
-      Permission.activityRecognition,
-    ].request();
+ 
 
-    bool allGranted = true;
-
-    statuses.forEach((key, value) { 
-      if( value != PermissionStatus.granted)
-        allGranted = false;
-    });
-
-    debugPrint(allGranted.toString());
-    
-}
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    checkPermissions();
+    //checkPermissions();
     return MaterialApp(
       title: 'ParkingBO',
       theme: ThemeData(

@@ -93,7 +93,7 @@ class _MapWidgetState extends State<MapWidget> {
     final features = await geo.parse(data, verbose: true);
   }
  
-  void _getPermissionLocation() async {
+  Future<bool> _getPermissionLocation() async {
       LocationPermission permission;
       permission = await Geolocator.checkPermission();
       if (permission == LocationPermission.denied) {
@@ -101,26 +101,29 @@ class _MapWidgetState extends State<MapWidget> {
         if (permission == LocationPermission.denied) {
           print("Permission denied");
           /**In caso tornare indietro */
-          return;
+          return false;
         }
       }
+      return true;
   }
 
-  @override
-  void initState() {
-    _getPermissionLocation();
-    activityRecognition = new ActivityRecognition(updateCurrentActivity);
-    drawPolygonsOnMap();
-    //setFirstTimeLocation();
-    //fetchLocation();
-    _centerOnLocationUpdate = CenterOnLocationUpdate.always;
+   createLocationListener(){
     Geolocator.getPositionStream(locationSettings: locationSettings)
             .listen((Position position) {
       setState(() {
         currentLocation = LatLng(position.latitude, position.longitude);
       });   
     });
+   
+  }
 
+  @override
+  void initState() {
+    _centerOnLocationUpdate = CenterOnLocationUpdate.always;
+    _getPermissionLocation();
+    activityRecognition = new ActivityRecognition(updateCurrentActivity);
+    drawPolygonsOnMap();
+    createLocationListener();
     sendTransition(ParkingType.ENTERING, currentLocation);
   }
 
