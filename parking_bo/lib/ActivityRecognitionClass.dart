@@ -53,11 +53,11 @@ class ActivityRecognition {
     if(currentActivity != lastActivity) {
       //We are exiting a parking lot
       if(lastActivity == ActivityType.WALKING && currentActivity == ActivityType.IN_VEHICLE) {
-        sendTransition(ParkingType.EXITING);
+       // sendTransition(ParkingType.EXITING);
       }
       //We just parked
       else if(lastActivity == ActivityType.IN_VEHICLE && currentActivity == ActivityType.WALKING) {
-        sendTransition(ParkingType.ENTERING);
+       // sendTransition(ParkingType.ENTERING);
       }
     }
   }*/

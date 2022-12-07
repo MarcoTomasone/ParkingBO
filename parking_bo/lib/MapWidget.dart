@@ -3,16 +3,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart'; // Suitable for most situations
 import 'package:flutter_map/plugin_api.dart'; // Only import if required functionality is not exposed by default
-//import 'package:location/location.dart'; //Used for get user Location
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
+import './utils/newTypes.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:geojson/geojson.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'ActivityRecognitionClass.dart';
-import 'package:flutter_activity_recognition/flutter_activity_recognition.dart' as ar;
+import 'package:flutter_activity_recognition/flutter_activity_recognition.dart'
+    as ar;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:async';
 
@@ -23,12 +24,12 @@ final LocationSettings locationSettings = LocationSettings(
 
 class MapWidget extends StatefulWidget {
   //Initialize Activity Recognition class
- 
+
   @override
   _MapWidgetState createState() => _MapWidgetState();
 }
 
-class _MapWidgetState extends State<MapWidget> { 
+class _MapWidgetState extends State<MapWidget> {
   /// Data for the Flutter map polylines layer
   final polygons = <Polygon>[];
   ar.ActivityType currentActivity = ar.ActivityType.UNKNOWN; 
@@ -36,21 +37,6 @@ class _MapWidgetState extends State<MapWidget> {
   late CenterOnLocationUpdate _centerOnLocationUpdate;
   late ActivityRecognition activityRecognition; 
   
-/*
-  void updateCurrentActivity(ar.ActivityType activityType){
-    setState(() {
-      currentActivity = activityType;
-    });
-    Fluttertoast.showToast(
-        msg: "New Activity Detected: " + activityType.toString(),
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIosWeb: 3,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0
-    );
-  }*/
   void updateCurrentActivity(ar.ActivityType activityType) {
 
     if (currentActivity == ar.ActivityType.IN_VEHICLE &&
@@ -63,7 +49,7 @@ class _MapWidgetState extends State<MapWidget> {
           backgroundColor: Colors.red,
           textColor: Colors.white,
           fontSize: 16.0);
-      sendTransition(ParkingType.EXITING, location);
+      sendTransition(ParkingType.EXITING, currentLocation);
     } else if (currentActivity == ar.ActivityType.WALKING &&
         activityType == ar.ActivityType.IN_VEHICLE) {
       Fluttertoast.showToast(
@@ -74,7 +60,7 @@ class _MapWidgetState extends State<MapWidget> {
           backgroundColor: Colors.red,
           textColor: Colors.white,
           fontSize: 16.0);
-      sendTransition(ParkingType.ENTERING, location);
+      sendTransition(ParkingType.ENTERING, currentLocation);
     }
     Fluttertoast.showToast(
         msg: "New Activity Detected: " + activityType.toString(),
@@ -83,12 +69,11 @@ class _MapWidgetState extends State<MapWidget> {
         timeInSecForIosWeb: 3,
         backgroundColor: Colors.red,
         textColor: Colors.white,
-        fontSize: 16.0);
+        fontSize: 16.0);
     setState(() {
       currentActivity = activityType;
     });
   }
-
 
   Future<void> drawPolygonsOnMap() async {
     final geo = GeoJson();
@@ -135,8 +120,9 @@ class _MapWidgetState extends State<MapWidget> {
         currentLocation = LatLng(position.latitude, position.longitude);
       });   
     });
-  }
 
+    sendTransition(ParkingType.ENTERING, currentLocation);
+  }
 
   @override
   dispose() {
@@ -149,9 +135,9 @@ class _MapWidgetState extends State<MapWidget> {
     //TODO: switch instead of if
     if(currentActivity == ar.ActivityType.IN_VEHICLE)
       return Icons.navigation; // CASE: DRIVING
-    else if(currentActivity == ar.ActivityType.WALKING)
+    else if (currentActivity == ar.ActivityType.WALKING)
       return Icons.circle; // CASE: Walking
-    else 
+    else
       return Icons.my_location; //CASE: Still, Unknown
     }
 
