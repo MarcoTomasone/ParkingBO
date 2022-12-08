@@ -16,8 +16,10 @@ app.use(bodyParser.json());
 
 
 userActivity.createRoutes(app);
-//userActivity.insertPosition('ROMA');
-//databasepg.doQuery('SELECT * FROM utenti');
+//databasepg.check_zone([11.341679676337476, 44.50092740499525])
+
+
+
 
 const server = http.createServer(app);
 server.listen(port, () => {
