@@ -5,9 +5,3 @@ enum ParkingType {
   EXITING
 }
 
-class Position {
-  var latitude;
-  var longitude;
-
-  Map<Key,String> toJson() => {latitude: latitude, longitude: longitude};
-}
