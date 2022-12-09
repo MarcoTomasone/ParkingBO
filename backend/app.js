@@ -16,6 +16,7 @@ app.use(bodyParser.json());
 
 
 userActivity.createRoutes(app);
+databasepg.insert_activity('EXITING', [11.341679676337476, 44.50092740499525]);
 //databasepg.check_zone([11.341679676337476, 44.50092740499525])
 
 
