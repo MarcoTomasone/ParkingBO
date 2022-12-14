@@ -4,7 +4,7 @@ import 'package:geolocator/geolocator.dart' as geo;
 import 'package:flutter/material.dart';
 import 'package:flutter_activity_recognition/flutter_activity_recognition.dart' ;
 import './utils/httpRequest.dart';
-import './utils/newTypes.dart';
+import 'utils/utils.dart';
 import 'package:permission_handler/permission_handler.dart';
 import './NoPermissionGrantsWidget.dart';
 

@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart'; // Suitable for most situations
 import 'package:flutter_map/plugin_api.dart'; // Only import if required functionality is not exposed by default
 import 'package:geolocator/geolocator.dart';
+import 'package:http/http.dart';
 import 'package:latlong2/latlong.dart';
-import './utils/newTypes.dart';
+import './utils/utils.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:geojson/geojson.dart';
+import 'dart:developer' as dev;
 import 'package:flutter/services.dart' show rootBundle;
 import 'ActivityRecognitionClass.dart';
 import 'package:flutter_activity_recognition/flutter_activity_recognition.dart'
@@ -32,6 +34,7 @@ class MapWidget extends StatefulWidget {
 class _MapWidgetState extends State<MapWidget> {
   /// Data for the Flutter map polylines layer
   final polygons = <Polygon>[];
+  var id_user = null;
   ar.ActivityType currentActivity = ar.ActivityType.UNKNOWN; 
   LatLng currentLocation = LatLng(44.493754, 11.343095); //Coordinates of Bologna
   late CenterOnLocationUpdate _centerOnLocationUpdate;
@@ -49,8 +52,8 @@ class _MapWidgetState extends State<MapWidget> {
           backgroundColor: Colors.red,
           textColor: Colors.white,
           fontSize: 16.0);
-      sendTransition(ParkingType.EXITING, currentLocation);
-    } else if (currentActivity == ar.ActivityType.WALKING &&
+      //call_function(ParkingType.EXITING, currentLocation);
+      } else if (currentActivity == ar.ActivityType.WALKING &&
         activityType == ar.ActivityType.IN_VEHICLE) {
       Fluttertoast.showToast(
           msg: "Change from walking to driving",
@@ -60,7 +63,7 @@ class _MapWidgetState extends State<MapWidget> {
           backgroundColor: Colors.red,
           textColor: Colors.white,
           fontSize: 16.0);
-      sendTransition(ParkingType.ENTERING, currentLocation);
+      //call_function(ParkingType.ENTERING, currentLocation);
     }
     Fluttertoast.showToast(
         msg: "New Activity Detected: " + activityType.toString(),
@@ -124,7 +127,9 @@ class _MapWidgetState extends State<MapWidget> {
     activityRecognition = new ActivityRecognition(updateCurrentActivity);
     drawPolygonsOnMap();
     createLocationListener();
-    sendTransition(ParkingType.ENTERING, currentLocation);
+    //testing functions
+    //call_function(ParkingType.UNKNOWN, currentLocation);
+    //get_parkings(currentLocation);
   }
 
   @override
