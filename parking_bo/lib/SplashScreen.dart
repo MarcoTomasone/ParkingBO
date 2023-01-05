@@ -28,6 +28,7 @@ class _SplashScreenState extends State<SplashScreen>{
     debugPrint(allGranted.toString());
     return true;
 }
+  //TODO: If not permission load another activity
   @override
   void initState() {
     super.initState();

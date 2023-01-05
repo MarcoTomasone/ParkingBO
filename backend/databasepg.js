@@ -32,7 +32,7 @@ module.exports = {
             await update_parkings(parking_type, zone);
             return id_user; //return the id to attach to the app
         } catch (e) {
-            //console.error(e);
+            console.error(e);
             return e;
         }
         finally {
