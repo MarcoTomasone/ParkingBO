@@ -1,8 +1,9 @@
 const http = require('http');
 const express = require('express');
 const bodyParser = require('body-parser');
-const userActivity = require('./userActivity');
-const databasepg = require('./databasepg');
+const userActivity = require('./modules/userActivity');
+const frontend = require('./modules/frontend');
+const databasepg = require('./modules/databasepg');
 
 const app = express();
 const port = 8000;
@@ -14,7 +15,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-
+frontend.createRoutes(app);
 userActivity.createRoutes(app);
 //databasepg.insert_activity('ENTERING', [11.344333560704628, 44.50253708822598]);
 //databasepg.update_activity(null, 'UNKNOWN', [11.374815632916402, 44.498454238865584]);

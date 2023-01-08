@@ -112,7 +112,7 @@ module.exports = {
     },    
 
     /**
-     * This function return the number of parkings in the zone
+     * This function return the number of parkings in the zone from the position
      * @param {[lat, long]} position 
      * @returns number of parkings in the zone
      */
@@ -123,6 +123,27 @@ module.exports = {
             const zone = await find_zone(position);
             if (zone instanceof Error)
                 throw new Error(zone.message);
+            const result = await client.query(`SELECT parking FROM zone WHERE id_zone = ${zone}`);
+            const n_parkings = result.rows[0]['parking'];
+            return n_parkings;
+        } catch (e) {
+            console.error(e);
+            return e;
+        }
+        finally {
+            await client.end();
+        }
+    },
+
+    /**
+     * This function return the number of parkings in the zone from the zone id
+     * @param {[lat, long]} position 
+     * @returns number of parkings in the zone
+     */
+    getParkingsFromZone: async (zone) => {
+        const client = new Client(configuration);
+        await client.connect();
+        try {
             const result = await client.query(`SELECT parking FROM zone WHERE id_zone = ${zone}`);
             const n_parkings = result.rows[0]['parking'];
             return n_parkings;
