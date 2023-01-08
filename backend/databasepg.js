@@ -133,6 +133,30 @@ module.exports = {
         finally {
             await client.end();
         }
+    },
+
+    getParkingsInterpolation: async (position) => {
+        const client = new Client(configuration);
+        await client.connect();
+        try {
+            const zone = await find_zone(position);
+            let n_parkings;
+            //if (zone instanceof Error)
+            //    throw new Error(zone.message);
+            //if(get_nParkingEvents_for_zone(zone) < 5)
+                n_parkings = parkingIDWInterpolation(zone);
+            //else {
+            //    const result = await client.query(`SELECT parking FROM zone WHERE id_zone = ${zone}`);
+            //     n_parkings = result.rows[0]['parking'];
+           // }
+            //return n_parkings;
+        } catch (e) {
+            console.error(e);
+            return e;
+        }
+        finally {
+            await client.end();
+        }
     }
     
 }
@@ -232,4 +256,82 @@ const update_parkings = async (parking_type, zone) => {
         await client.end();
     }
 };
+
+const get_nParkingEvents_for_zone = async (zone) => {
+    const client = new Client(configuration);
+    await client.connect();
+    try {
+        const result = await client.query(`SELECT COUNT(*) FROM history WHERE zone = ${zone}`);
+        const nEvents = result.rows[0].count;
+        return nEvents;
+    } catch (e) {
+        console.error(e);
+        return e;
+    }
+    finally {
+        await client.end();
+    }
+};
+
+//https://en.wikipedia.org/wiki/Inverse_distance_weighting
+const parkingIDWInterpolation = async (zone) => {
+    const client = new Client(configuration);
+    await client.connect();
+    try {
+        //Access to data through nParkEventsForZone.rows.count and nParkEventsForZone.rows.zone
+        const nParkEventsForZone = await client.query(`SELECT zone, COUNT(*) FROM history GROUP BY zone`);
+        //Compute centroid for each zone
+        for(row in nParkEventsForZone.rows) {
+            centroid = await computeCentroid(nParkEventsForZone.rows[row].zone);
+            centroid = centroid.toString().replace("POINT(","").replace(")","").split(" ");
+            nParkEventsForZone.rows[row].centroid = [centroid[1], centroid[0]];
+        }
+        result = await computeCentroid(zone);
+        result = result.toString().replace("POINT(","").replace(")","").split(" ");
+        centroidOfZoneOfInterest = [result[1], result[0]];
+        //Compute distance between centroid of other zones and the zone of interest
+        for(row in nParkEventsForZone.rows) {
+            nParkEventsForZone.rows[row].distance = computeDistance(nParkEventsForZone.rows[row].centroid, centroidOfZoneOfInterest);
+        }
+        interpolatedValue = 0;
+        //Compute result
+        for(row in nParkEventsForZone.rows) {
+            interpolatedValue += nParkEventsForZone.rows[row].count * nParkEventsForZone.rows[row].distance;
+        }
+        
+        sumOfDistances = 0;
+        for(row in nParkEventsForZone.rows) 
+            sumOfDistances += nParkEventsForZone.rows[row].distance;
+        
+        interpolatedValue =interpolatedValue / sumOfDistances;
+        return interpolatedValue;
+    } catch (e) {
+        console.error(e);
+        return e;
+    }
+    finally {
+        await client.end();
+    }
+}
+
+const computeCentroid = async (zone) => {
+    const client = new Client(configuration);
+    await client.connect();
+    try {
+        const result = await client.query(`SELECT ST_AsText(ST_Centroid(polygon)) FROM zone WHERE id_zone = ${zone}`);
+        const centroid = result.rows[0].st_astext;
+        return centroid;
+    } catch (e) {
+        console.error(e);
+        return e;
+    }
+    finally {
+        await client.end();
+    }
+};
+
+const computeDistance = (p, q) =>{
+    distance = (Math.sqrt( Math.pow((q[0]-p[0]),2) + Math.pow((p[1]-q[1]),2)));
+    return distance;
+}
               
