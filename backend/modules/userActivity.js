@@ -64,6 +64,7 @@ module.exports = {
                 }
                 else {
                     const encoded = JSON.stringify({parkings: result});
+                    res.header("Access-Control-Allow-Origin", "*");
                     res.status(200).send(encoded);
                 }
             }

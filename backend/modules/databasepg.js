@@ -22,7 +22,7 @@ module.exports = {
         const geom = `${position[0]} ${position[1]}`;
         try {
             //find the zone of the user
-            const zone = await find_zone(position);
+            const zone = await module.exports.find_zone(position);
             if(zone instanceof Error)
                 throw new Error(zone.message)
             const result = await client.query(`INSERT INTO users(parking_type, zone, position) VALUES($1, $2, ST_GeomFromText('POINT(${geom})', 4326)) RETURNING id_user`, [parking_type, zone]);
@@ -55,7 +55,7 @@ module.exports = {
             const exist = await check_user(id);
             let result;
             if(exist > 0) {
-                const zone = await find_zone(position);
+                const zone = await module.exports.find_zone(position);
                 if(zone instanceof Error)
                     throw new Error(zone.message)
                 result = await client.query(`UPDATE users SET parking_type = $1, zone = $2, position = ST_GeomFromText('POINT(${geom})', 4326) WHERE id_user = $3 RETURNING id_user`, [parking_type, zone, id]);
@@ -91,7 +91,25 @@ module.exports = {
         finally {
             await client.end();  
         } 
-    },    
+    },
+
+    /**
+     * This function return all events from a zone
+     * @param {number} zone 
+     */
+    getAllEventsFromZone: async (zone) => {
+        const client = new Client(configuration);
+        await client.connect();
+        try {
+            const result = await client.query(`SELECT * FROM history WHERE zone = ${zone}`);
+            return result.rows;
+        } catch (e) {
+            console.error(e);
+        }
+        finally {
+            await client.end();
+        }
+    },
 
     /**
      * This function return all the users in the database
@@ -120,11 +138,32 @@ module.exports = {
         const client = new Client(configuration);
         await client.connect();
         try {
-            const zone = await find_zone(position);
+            const zone = await module.exports.find_zone(position);
             if (zone instanceof Error)
                 throw new Error(zone.message);
             const result = await client.query(`SELECT parking FROM zone WHERE id_zone = ${zone}`);
             const n_parkings = result.rows[0]['parking'];
+            return n_parkings;
+        } catch (e) {
+            console.error(e);
+            return e;
+        }
+        finally {
+            await client.end();
+        }
+    },
+
+    /**
+     * This function return the number of parkings in the zone from the zone id
+     * @param {[lat, long]} position 
+     * @returns number of parkings in the zone
+     */
+    getAllParkings: async () => {
+        const client = new Client(configuration);
+        await client.connect();
+        try {
+            const result = await client.query(`SELECT parking FROM zone`);
+            const n_parkings = result.rows;
             return n_parkings;
         } catch (e) {
             console.error(e);
@@ -160,12 +199,13 @@ module.exports = {
         const client = new Client(configuration);
         await client.connect();
         try {
-            const zone = await find_zone(position);
+            const zone = await module.exports.find_zone(position);
             let n_parkings;
             //if (zone instanceof Error)
             //    throw new Error(zone.message);
             //if(get_nParkingEvents_for_zone(zone) < 5)
-                n_parkings = parkingIDWInterpolation(zone);
+                n_parkings = await parkingIDWInterpolation(zone);
+                console.log(n_parkings);
             //else {
             //    const result = await client.query(`SELECT parking FROM zone WHERE id_zone = ${zone}`);
             //     n_parkings = result.rows[0]['parking'];
@@ -178,7 +218,34 @@ module.exports = {
         finally {
             await client.end();
         }
+    },
+
+    /**
+     * This function find the zone in which the user is
+     * @param {[lat, long]} position 
+     * @returns zone in which the user is
+     */
+    find_zone : async (position) => {
+    if(typeof(position) === 'string')
+        position = JSON.parse(position);
+    const client = new Client(configuration);
+    await client.connect();
+    try {
+        geom = `${position[0]} ${position[1]}`;
+        const result = await client.query(`SELECT Z.id_zone FROM zone as Z WHERE ST_Contains(Z.polygon, ST_GeomFromText('POINT(${geom})', 4326))`);
+        const zone = result.rows[0].id_zone;
+        return zone;
+    } catch (e) {
+        if(e.message == "Cannot read properties of undefined (reading 'id_zone')")
+            return new Error('Zone not found');
+        
+        console.error(e);
+        return e;
     }
+    finally {
+        await client.end();
+    }
+},
     
 }
 
@@ -206,31 +273,7 @@ const check_user = async (id) => {
 };
 
 
-/**
-     * This function find the zone in which the user is
-     * @param {[lat, long]} position 
-     * @returns zone in which the user is
-     */
-const find_zone = async (position) => {
-    if(typeof(position) === 'string')
-        position = JSON.parse(position);
-    const client = new Client(configuration);
-    await client.connect();
-    try {
-        geom = `${position[0]} ${position[1]}`;
-        const result = await client.query(`SELECT Z.id_zone FROM zone as Z WHERE ST_Contains(Z.polygon, ST_GeomFromText('POINT(${geom})', 4326))`);
-        const zone = result.rows[0].id_zone;
-        return zone;
-    } catch (e) {
-        //new Error(e);
-        return new Error('Zone not found');
-        console.error(e);
-        return e;
-    }
-    finally {
-        await client.end();
-    }
-};
+
 
 /**
      * This function insert a new event in history table of the database

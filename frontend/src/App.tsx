@@ -6,6 +6,7 @@ import Map from './components/Map';
 import K_means from './components/pages/K_means';
 import Heatmap from './components/pages/Heatmap';
 import Requests from './components/pages/Requests';
+import FullScreenDialog from './components/FullScreenDialog';
 
 class App extends React.Component {
   render() {

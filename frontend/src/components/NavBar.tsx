@@ -23,9 +23,12 @@ type State = {
 const pages: string[] = ['K-Means', 'Heatmap', 'Requests'];
  
 class NavBar extends React.Component<Props, State> {
-    state: State = {
-        anchorElNav: null,
-    };
+    constructor(props: Props) {
+        super(props);
+        this.state = {
+            anchorElNav: null,
+        };
+    }
    
     
     private handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>): void => {
@@ -38,7 +41,7 @@ class NavBar extends React.Component<Props, State> {
 
     render() {
         return (
-            <AppBar position="static" sx={{ bgcolor: "black" }}>
+            <AppBar position="static" sx={{ bgcolor: "rgba(0,0,0,0.88)" }}>
                 <Container maxWidth="xl">
                     <Toolbar disableGutters>
                         <Link to={"/"} style={{ textDecoration: 'none', color: "white" }}>

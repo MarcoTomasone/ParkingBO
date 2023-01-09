@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const databasepg = require('./databasepg');
 
 module.exports = {
     createRoutes: (app) => {
@@ -21,24 +22,48 @@ module.exports = {
         });
 
         //This function return the number of parkings in a zone
-        app.get('/getParkingsFromZone', async (req, res) => {
-            console.log("in get parkings from zone");
-            if(req.query.zone == null) {
+        app.get('/getAllParkings', async (req, res) => {
+            const result = await databasepg.getAllParkings();
+            if(result instanceof Error) {
                 await res.status(400).send("Bad request");
                 return;
             }
             else {
-                const zone = req.query.zone;
-                const result = await databasepg.getParkingsFromZone(zone);
-                if(result instanceof Error) {
-                    await res.status(400).send("Bad request");
-                    return;
-                }
-                else {
-                    const encoded = JSON.stringify({parkings: result});
-                    res.status(200).send(encoded);
-                }
+                const encoded = JSON.stringify({parkings: result});
+                res.header("Access-Control-Allow-Origin", "*");
+                res.status(200).send(encoded);
             }
+
+        });
+
+        //This function return the number of parkings in a zone
+        app.get('/getParkingsFromZone', async (req, res) => {
+            const zone = req.query.zone;
+            if(zone) {
+                const parkings = await databasepg.getParkingsFromZone(zone);
+                const encoded = JSON.stringify({parkings: parkings});
+                res.header("Access-Control-Allow-Origin", "*");
+                res.status(200).send(encoded);
+            }
+            else {
+                res.status(400).send("Bad request");
+            }
+
+        });
+
+        //This function return the number of parkings in a zone
+        app.get('/getAllEventsFromZone', async (req, res) => {
+            const zone = req.query.zone;
+            if(zone) {
+                const events = await databasepg.getAllEventsFromZone(zone);
+                const encoded = JSON.stringify({events: events});
+                res.header("Access-Control-Allow-Origin", "*");
+                res.status(200).send(encoded);
+            }
+            else {
+                res.status(400).send("Bad request");
+            }
+
         });
     }
 }
