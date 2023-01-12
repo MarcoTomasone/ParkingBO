@@ -11,6 +11,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
+import CardEvent from './CardEvent';
 import { TransitionProps } from '@mui/material/transitions';
 import { getAllEventsFromZOne, getParkings } from '../utils/requests';
 
@@ -29,7 +30,7 @@ type Props = {
 const FullScreenDialog =  React.forwardRef((props: Props, ref) => {
     const [open, setOpen] = React.useState(false);
     const [zone, setzone] = React.useState(0);
-    const [events, setEvents] = React.useState([]);
+    const [events, setEvents] = React.useState([<></>]);
     const [n_parkings, setNParkings] = React.useState(null);
 
     React.useImperativeHandle(ref, () => ({
@@ -39,25 +40,23 @@ const FullScreenDialog =  React.forwardRef((props: Props, ref) => {
                 setNParkings(data);
             });
             getAllEventsFromZOne(zone).then((events) => {
-                /*const allEvents: any  = events.map((event: any, index: any) => {
-                    return (
-                        <p key={`${event.id_event}`}>
-                            {event.type}
-                        </p>
+                const allEvents: any  = events!.map((event: any, index: any) => {
+                    if(event.parking_type == 'ENTERING') 
+                        return (
+                            <CardEvent event={event}></CardEvent>
                     );
                 });
-                console.log(allEvents)*/
-                console.log(events);
-                setEvents(events);
+                setEvents(allEvents);
             });
             setOpen(true);
+            //<CardEvent key={event.id_event+ "_" + index}></CardEvent>
         }
     }));
 
     const handleClose = () => {
         setOpen(false);
         setNParkings(null);
-        setEvents([]);
+        setEvents([<></>]);
     };
 
     return (
@@ -97,9 +96,7 @@ const FullScreenDialog =  React.forwardRef((props: Props, ref) => {
                     <h3> Events </h3>
                     {events.map((event: any, index: any) => (
                         <div>
-                            <Typography key={event.id_event + "id"}>ID Event: {event.id_event}</Typography>
-                            <Typography key={event.id_event + "type"}>Parking Type: {event.parking_type}</Typography>
-                            <br></br>
+                            {events}
                         </div>
                     ))}
                 </div>
