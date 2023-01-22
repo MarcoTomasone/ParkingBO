@@ -12,8 +12,8 @@ const configuration = {
 module.exports = {
     /**
      * This function insert a new user activity in the database
-     * @param {string} parking_type 
-     * @param {[lat, long]} position 
+     * @param {string} parking_type is the type of parking (ENTERING or EXITING)
+     * @param {[lat, long]} position is the position of the user
      * @returns user_id of the inserted user
      */
     insert_activity: async (parking_type, position) => {
@@ -42,9 +42,9 @@ module.exports = {
 
     /**
      * This function update the user activity in the database
-     * @param {int} id 
-     * @param {string} parking_type 
-     * @param {[lat, long]} position
+     * @param {int} id is the id of the user
+     * @param {string} parking_type is the type of parking (ENTERING or EXITING)
+     * @param {[lat, long]} position is the position of the user
      * @returns user_id of the updated user 
      */
     update_activity: async (id, parking_type, position) => {
@@ -78,7 +78,7 @@ module.exports = {
 
     /**
      * This function delete an user activity in the database by an id
-     * @param {int} id 
+     * @param {int} id is the id of the user
      */
     delete_activity: async (id) => {
         const client = new Client(configuration);
@@ -94,8 +94,48 @@ module.exports = {
     },
 
     /**
+     * This function insert a new parking request in the database
+     * @param {int} id is the id of the user
+     * @param {[lat, long]} position is the position of the user
+     * */
+    insertParkingRequest: async (id, position, zone) => {
+        const client = new Client(configuration);
+        await client.connect();
+        const geom = `${position[0]} ${position[1]}`;
+        try {
+            const result = await client.query(`INSERT INTO parking_requests(position, id_user, zone) VALUES(ST_GeomFromText('POINT(${geom})', 4326), $1, $2) RETURNING id_user`, [id, zone]);
+            //console.log(result);            
+        } catch (e) {
+            console.error(e);
+        }
+        finally {
+            await client.end();
+        }
+    },
+
+    /**
+     * This function get all parking requests from a zone
+     * @param {*} zone is the zone of which we want to know the parking requests
+     * @returns all parking requests from a zone
+     */
+    getParkingRequestsFromZone: async (zone) => {
+        const client = new Client(configuration);
+        await client.connect();
+        try {
+            const result = await client.query(`SELECT * FROM parking_requests WHERE zone = ${zone}`);
+            return result.rows;
+        } catch (e) {
+            console.error(e);
+        }
+        finally {
+            await client.end();
+        }
+    },
+    
+
+    /**
      * This function return all events from a zone
-     * @param {number} zone 
+     * @param {number} zone is the zone of which we want to know the events
      */
     getAllEventsFromZone: async (zone) => {
         const client = new Client(configuration);
@@ -131,7 +171,7 @@ module.exports = {
 
     /**
      * This function return the number of parkings in the zone from the position
-     * @param {[lat, long]} position 
+     * @param {[lat, long]} position is the position of the user
      * @returns number of parkings in the zone
      */
     getParkings: async (position) => {
@@ -141,6 +181,7 @@ module.exports = {
             const zone = await module.exports.find_zone(position);
             if (zone instanceof Error)
                 throw new Error(zone.message);
+            await module.exports.insertParkingRequest(0, position, zone);
             const result = await client.query(`SELECT parking FROM zone WHERE id_zone = ${zone}`);
             const n_parkings = result.rows[0]['parking'];
             return n_parkings;
@@ -155,7 +196,7 @@ module.exports = {
 
     /**
      * This function return the number of parkings in the zone from the zone id
-     * @param {[lat, long]} position 
+     * @param {[lat, long]} position is the position of the user
      * @returns number of parkings in the zone
      */
     getAllParkings: async () => {
@@ -176,7 +217,7 @@ module.exports = {
 
     /**
      * This function return the number of parkings in the zone from the zone id
-     * @param {[lat, long]} position 
+     * @param {[lat, long]} position is the position of the user
      * @returns number of parkings in the zone
      */
     getParkingsFromZone: async (zone) => {
@@ -195,6 +236,11 @@ module.exports = {
         }
     },
 
+    /**
+     * This function get the number of parking with an interpolation
+     * @param {[lat, long]} position is the position of the user
+     * @returns the number of interpolated parking in the zone
+     */
     getParkingsInterpolation: async (position) => {
         const client = new Client(configuration);
         await client.connect();
@@ -222,7 +268,7 @@ module.exports = {
 
     /**
      * This function find the zone in which the user is
-     * @param {[lat, long]} position 
+     * @param {[lat, long]} position  is the position of the user
      * @returns zone in which the user is
      */
     find_zone : async (position) => {
@@ -253,7 +299,7 @@ module.exports = {
 
 /**
      * THis function check if the user exists in the database
-     * @param {id} id 
+     * @param {id} id is the id of the user
      * @returns true or false if the user exists
      */
 const check_user = async (id) => {
@@ -277,9 +323,9 @@ const check_user = async (id) => {
 
 /**
      * This function insert a new event in history table of the database
-     * @param {string} parking_type 
-     * @param {int} zone 
-     * @param {[lat, long]} position 
+     * @param {string} parking_type is the type of parking (ENTERING, EXITING)
+     * @param {int} zone is the zone in which the user is
+     * @param {[lat, long]} position is the position of the user
      */
 const insert_event_history = async (parking_type, zone, position) => {
     const client = new Client(configuration);
@@ -298,8 +344,8 @@ const insert_event_history = async (parking_type, zone, position) => {
 
 /**
  * This function update the parking number in the zone table
- * @param {string} parking_type 
- * @param {int} zone 
+ * @param {string} parking_type is the type of parking (ENTERING, EXITING)
+ * @param {int} zone is the zone in which the user is
  */
 const update_parkings = async (parking_type, zone) => {
     const client = new Client(configuration);
@@ -321,6 +367,11 @@ const update_parkings = async (parking_type, zone) => {
     }
 };
 
+/**
+ * This function get the number of parking events in a zone
+ * @param {int} zone is the zone in which the user is 
+ * @returns the number of parking events in the zone
+ */
 const get_nParkingEvents_for_zone = async (zone) => {
     const client = new Client(configuration);
     await client.connect();

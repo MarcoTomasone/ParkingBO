@@ -19,6 +19,8 @@ module.exports = {
                     res.status(404).send("File not found");
                 }
             }
+            else
+                res.status(400).send("Bad request");
         });
 
         //This function return the number of parkings in a zone
@@ -34,6 +36,25 @@ module.exports = {
                 res.status(200).send(encoded);
             }
 
+        });
+
+        //This function return the number of parking requests in a zone
+        app.get('/getParkingRequests', async (req, res) => {
+            const zone = req.query.zone;
+                if(zone) {
+                    const result = await databasepg.getParkingRequestsFromZone(zone);
+                    if(result instanceof Error) {
+                        await res.status(400).send("Bad request");
+                        return;
+                    }
+                    else {
+                        const encoded = JSON.stringify({requests: result});
+                        res.header("Access-Control-Allow-Origin", "*");
+                        res.status(200).send(encoded);
+                    }
+                }
+                else
+                    res.status(400).send("Bad request");
         });
 
         //This function return the number of parkings in a zone

@@ -7,7 +7,7 @@ import K_means from './components/pages/K_means';
 import Heatmap from './components/pages/Heatmap';
 import Requests from './components/pages/Requests';
 import FullScreenDialog from './components/FullScreenDialog';
-import CardEvent from './components/CardEvent';
+import CardEvent from './components/CardRequest';
 
 class App extends React.Component {
   render() {

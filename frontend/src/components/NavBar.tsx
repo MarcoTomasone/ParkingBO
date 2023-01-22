@@ -20,7 +20,7 @@ type State = {
 };
 
 
-const pages: string[] = ['K-Means', 'Heatmap', 'Requests'];
+const pages: string[] = ['K_Means', 'Heatmap', 'Requests'];
  
 class NavBar extends React.Component<Props, State> {
     constructor(props: Props) {
@@ -41,7 +41,7 @@ class NavBar extends React.Component<Props, State> {
 
     render() {
         return (
-            <AppBar position="static" sx={{ bgcolor: "rgba(0,0,0,0.88)" }}>
+            <AppBar key="NavBar"  sx={{ position:"sticky", bgcolor: "rgb(28,28,28)" }}>
                 <Container maxWidth="xl">
                     <Toolbar disableGutters>
                         <Link to={"/"} style={{ textDecoration: 'none', color: "white" }}>
@@ -69,6 +69,7 @@ class NavBar extends React.Component<Props, State> {
                                 letterSpacing: '.3rem',
                                 color: 'inherit',
                                 textDecoration: 'none',
+                                fontSize: '20pt',
                             }}
                             >
                             ParkingBo
@@ -134,12 +135,12 @@ class NavBar extends React.Component<Props, State> {
                     </Link>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                     {pages.map((page) => (
-                        <Link key={page} to={page} style={{ textDecoration: 'none', marginRight: 250}} >
+                        <Link key={page} to={page} style={{ textDecoration: 'none', marginRight: 250 }} >
                             <Button
                                 style={{}}
                                 key={page}
                                 onClick={this.handleCloseNavMenu}
-                                sx={{ my: 2, color: 'white', display: 'block' }}
+                                sx={{ my: 2, color: 'white', display: 'block', fontSize: '14pt' }}
                                 >
                                 {page}
                             </Button>

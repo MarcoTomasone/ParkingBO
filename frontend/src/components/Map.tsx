@@ -1,6 +1,6 @@
 import * as React from 'react';
 import ReactDOMServer from 'react-dom/server';
-import { MapContainer, TileLayer, Marker, Popup, GeoJSON, Polygon } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, GeoJSON, ZoomControl } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Position } from '../utils/types';
 import { zone } from '../supports/zone';
@@ -97,11 +97,11 @@ class Map extends React.Component<Props, State> {
     render() {
         return (
             <>
-                <MapContainer center={position} zoom={14} scrollWheelZoom={false} style={{height: "100vh"}}>
+                <MapContainer center={position} zoom={14} scrollWheelZoom={false} style={{height: "100vh"}} zoomControl={false}>
                     <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    />
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                     {this.state.polygons}
+                    <ZoomControl position="bottomright" />
                 </MapContainer>
                 <FullScreenDialog ref={this.state.dialog} />
             </>

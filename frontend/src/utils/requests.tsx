@@ -10,6 +10,16 @@ const getData = async (data: string) => {
     }
 };
 
+const getParkingRequestFromZone = async (zone: number) => {
+    // 'await' the data
+    const response = await axios.get("http://localhost:8000/getParkingRequests", { params: {zone: zone}});
+    if(response.status === 200) {
+        return response.data.requests;
+    } else {
+        return null;
+    }
+};
+
 const getAllParkings = async () => {
     // 'await' the data
     const response = await axios.get("http://localhost:8000/getAllParkings");
@@ -42,7 +52,7 @@ const getParkings = async (zone: number) => {
  * @param zone a number that represents the zone  
  * @returns an array of events
  */
-const getAllEventsFromZOne = async (zone: number) => {
+const getAllEventsFromZone = async (zone: number) => {
     // 'await' the data
     const response = await axios.get("http://localhost:8000/getAllEventsFromZone", {params: {zone: zone}});
     if(response.status === 200) {
@@ -53,4 +63,4 @@ const getAllEventsFromZOne = async (zone: number) => {
     }
 };
 
-export { getData, getAllParkings, getParkings, getAllEventsFromZOne };
+export { getData, getParkingRequestFromZone, getAllParkings, getParkings, getAllEventsFromZone };
