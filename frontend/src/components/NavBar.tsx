@@ -20,7 +20,7 @@ type State = {
 };
 
 
-const pages: string[] = ['K_Means', 'Heatmap', 'Requests'];
+const pages: string[] = ['K_Means', 'Heatmap'];
  
 class NavBar extends React.Component<Props, State> {
     constructor(props: Props) {
@@ -58,7 +58,7 @@ class NavBar extends React.Component<Props, State> {
                         </ Link>
                         <Link to={"/"} style={{ textDecoration: 'none', color: "white" }} >
                             <Typography
-                            style={{marginRight: 250}}
+                            style={{marginRight: 400}}
                             variant="h6"
                             noWrap
                             sx={{
@@ -135,7 +135,7 @@ class NavBar extends React.Component<Props, State> {
                     </Link>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                     {pages.map((page) => (
-                        <Link key={page} to={page} style={{ textDecoration: 'none', marginRight: 250 }} >
+                        <Link key={page} to={page} style={{ textDecoration: 'none', marginRight: 400 }} >
                             <Button
                                 style={{}}
                                 key={page}

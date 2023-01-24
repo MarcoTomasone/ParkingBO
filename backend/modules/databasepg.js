@@ -122,7 +122,25 @@ module.exports = {
         const client = new Client(configuration);
         await client.connect();
         try {
-            const result = await client.query(`SELECT * FROM parking_requests WHERE zone = ${zone}`);
+            const result = await client.query(`SELECT id_request, ST_X(position) as x, ST_Y(position) as y FROM parking_requests WHERE zone = ${zone}`);
+            return result.rows;
+        } catch (e) {
+            console.error(e);
+        }
+        finally {
+            await client.end();
+        }
+    },
+
+    /**
+     * This function get all parking events in history table
+     * @returns all parking events in history table
+     */
+    getPointsParkingEvents: async () => {
+        const client = new Client(configuration);
+        await client.connect();
+        try {
+            const result = await client.query(`SELECT ST_X(position) as x, ST_Y(position) as y FROM history WHERE parking_type = 'ENTERING'`);
             return result.rows;
         } catch (e) {
             console.error(e);

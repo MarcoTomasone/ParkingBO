@@ -11,14 +11,14 @@ type Props = {
 
 export default function CardEvent(props: Props) {
   return (
-    <Card sx={{ display: 'flex', backgroundColor: 'rgb(28,28,28)', color:  'white', marginBottom: '5px' }}>
+    <Card sx={{ display: 'flex', backgroundColor: 'white', color:  'black', marginBottom: '5px' }}>
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <CardContent sx={{ flex: '1 0 auto' }}>
           <Typography component="div" variant="h5">
             Parking request event: {props.request.id_request}
           </Typography>
           <Typography component="div" variant="h6">
-            Position: {props.request.position}
+            Position: {props.request.x}, {props.request.y}
           </Typography>
         </CardContent>
       </Box>

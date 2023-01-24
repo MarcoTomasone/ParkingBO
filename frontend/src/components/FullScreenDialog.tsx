@@ -3,9 +3,10 @@ import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import Divider from '@mui/material/Divider';
+import List from '@mui/material/List';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -16,6 +17,7 @@ import CardEvent from './CardRequest';
 import { TransitionProps } from '@mui/material/transitions';
 import { getAllEventsFromZone, getParkings, getParkingRequestFromZone } from '../utils/requests';
 import Container from '@mui/material/Container';
+import { CardContent, CardHeader } from '@mui/material';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -27,10 +29,10 @@ const Transition = React.forwardRef(function Transition(
 });
 
 const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: '#fffeef',
+    backgroundColor: 'white',
     ...theme.typography.body2,
     padding: theme.spacing(1),
-    textAlign: 'left',
+    textAlign: 'center',
     fontSize: '20pt',
     color: 'black',
 }));
@@ -53,14 +55,14 @@ const FullScreenDialog =  React.forwardRef((props: Props, ref) => {
             getParkingRequestFromZone(zone).then((requests) => {
                 const allRequests: any  = requests!.map((request: any, index: any) => {
                     return (
-                        <CardEvent key={"card_" + request.id_request} request={request}></CardEvent>
+                        <CardEvent key={"card_" + index} request={request}></CardEvent>
                     );
                 });
                 setRequests(allRequests);
             });
             setOpen(true);
             //<CardEvent key={event.id_event+ "_" + index}></CardEvent>
-        }
+        },
     }));
 
     const handleClose = () => {
@@ -88,7 +90,7 @@ const FullScreenDialog =  React.forwardRef((props: Props, ref) => {
                     >
                         <CloseIcon />
                     </IconButton>
-                    <Typography align="center" variant="h6" style={{flexGrow: 1, textAlign: 'center', fontSize: "23pt"}}>
+                    <Typography align="center" variant="h6" style={{flexGrow: 1, textAlign: 'center', fontSize: "20pt"}}>
                         Zone {zone}
                     </Typography>
                     <Button autoFocus color="inherit" onClick={handleClose} sx={{ fontSize: "14pt" }}>
@@ -96,31 +98,41 @@ const FullScreenDialog =  React.forwardRef((props: Props, ref) => {
                     </Button>
                 </Toolbar>
             </AppBar>
-            <Box sx={{ flexGrow: 1 }}>
-                <Grid container spacing={2} sx={{ paddingTop: '5px' }}>
-                    <Grid item xs={6}>
-                        <Item>Free parking:</Item>
+        
+            <Card sx={{margin: '25px', bgcolor: "rgb(28,28,28)", overflow:'visible'}}> 
+                <CardContent>         
+                    <Grid container spacing={2} sx={{ padding: '15px'}}>
+                        <Grid item xs={6}>
+                            <Item>Free parking:</Item>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Item>{n_parkings}</Item>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Item> Requests in this zone:</Item>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Item> {requests.length} </Item>
+                        </Grid>
                     </Grid>
-                    <Grid item xs={6}>
-                        <Item>{n_parkings}</Item>
+                </CardContent>
+            </Card>
+
+            {requests.length > 0 &&
+            <Card className="card_content" sx={{margin: '25px', bgcolor: "rgb(28,28,28)", overflow: 'auto'}}>
+                <CardContent >
+                    <Grid container spacing={2} sx={{ padding: '15px' }}>
+                        <Grid item xs={12} >
+                            {requests.map((request: any, index: any) => (
+                                <>
+                                    {request}
+                                </>
+                            ))}
+                        </Grid>
                     </Grid>
-                    <Grid item xs={6}>
-                        <Item> Requests in this zone:</Item>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <Item> {requests.length} </Item>
-                    </Grid>
-                </Grid>
-                <Grid container spacing={2} sx={{ paddingTop: '30px' }}>
-                    <Grid item xs={12}>
-                        {requests.map((request: any, index: any) => (
-                            <div>
-                                {request}
-                            </div>
-                        ))}
-                    </Grid>
-                </Grid>
-            </Box>
+                </CardContent>
+            </Card>
+        }
         </Dialog>
         </div>
     );

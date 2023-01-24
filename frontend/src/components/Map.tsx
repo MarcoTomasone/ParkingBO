@@ -37,13 +37,8 @@ class Map extends React.Component<Props, State> {
     
     private getPolygons(): any {
         const polygons: any = zone;
-        /*for(let polygon in zone.features[0].geometry.coordinates) {
-            const position : any = [zone.features[0].geometry.coordinates[polygon]];
-            polygons.push(<Polygon key={"zone_" + polygon} positions={position} />);
-        }*/
         if (polygons) {
-            this.setState({polygons: <GeoJSON attribution='zone' data={polygons} onEachFeature={this.onEachFeature} style={{color: "#008b8b", fillColor: "#008b8b"}}  />});
-            //this.setState({polygons: polygons});
+            this.setState({polygons: <GeoJSON key="polygons" attribution="&copy; credits due..."  data={polygons} onEachFeature={this.onEachFeature} style={{color: "#008b8b", fillColor: "#008b8b"}}  />});
         }
     }
 
@@ -96,15 +91,20 @@ class Map extends React.Component<Props, State> {
 
     render() {
         return (
-            <>
-                <MapContainer center={position} zoom={14} scrollWheelZoom={false} style={{height: "100vh"}} zoomControl={false}>
+            <div>
+                <MapContainer 
+                    center={position}
+                    zoom={14}
+                    scrollWheelZoom={false}
+                    zoomControl={false}
+                    style={{height: "100vh"}}>
                     <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                     {this.state.polygons}
                     <ZoomControl position="bottomright" />
                 </MapContainer>
-                <FullScreenDialog ref={this.state.dialog} />
-            </>
+                <FullScreenDialog key="dialog" ref={this.state.dialog} />
+            </div>
         );
     }
 };

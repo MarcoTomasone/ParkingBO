@@ -20,6 +20,17 @@ const getParkingRequestFromZone = async (zone: number) => {
     }
 };
 
+const kmeans = async (size: number) => {
+    // 'await' the data
+    const response = await axios.get("http://localhost:8000/kmeans", { params: {size: size}});
+    if(response.status === 200) {
+        return response.data;
+    }
+    else {
+        return null;
+    }
+}
+
 const getAllParkings = async () => {
     // 'await' the data
     const response = await axios.get("http://localhost:8000/getAllParkings");
@@ -63,4 +74,4 @@ const getAllEventsFromZone = async (zone: number) => {
     }
 };
 
-export { getData, getParkingRequestFromZone, getAllParkings, getParkings, getAllEventsFromZone };
+export { getData, kmeans, getParkingRequestFromZone, getAllParkings, getParkings, getAllEventsFromZone };
