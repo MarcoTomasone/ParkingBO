@@ -20,7 +20,7 @@ userActivity.createRoutes(app);
 //databasepg.insert_activity('ENTERING', [11.344333560704627, 44.50253708822598]); //ZONE 3
 //databasepg.insert_activity('ENTERING', [11.330262, 44.504243]); //ZONE 7
 //databasepg.find_zone([11.346645867644199, 44.48810035688256]).then((result) => {console.log(result);});
-//databasepg.getParkingsInterpolation([11.344333560704627, 44.50253708822598]);
+databasepg.getParkingsInterpolation([11.344333560704627, 44.50253708822598]);
 //databasepg.insertParkingRequest(0, [11.346639157565917, 44.50244800031392], 3)
 //databasepg.getParkingRequestsFromZone(3).then((result) => {console.log(result);});
 

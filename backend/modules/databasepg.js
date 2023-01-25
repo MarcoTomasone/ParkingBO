@@ -247,9 +247,9 @@ module.exports = {
         try {
             const zone = await module.exports.find_zone(position);
             let n_parkings;
-            //if (zone instanceof Error)
-            //    throw new Error(zone.message);
-            //if(get_nParkingEvents_for_zone(zone) < 5)
+            if (zone instanceof Error)
+                throw new Error(zone.message);
+            //if(get_nParkingEvents_for_zone(zone) < 5) //TODO: prendere total_parking - parking in zone 
                 n_parkings = await parkingIDWInterpolation(zone);
                 console.log(n_parkings);
             //else {
@@ -394,7 +394,7 @@ const parkingIDWInterpolation = async (zone) => {
     await client.connect();
     try {
         //Access to data through nParkEventsForZone.rows.count and nParkEventsForZone.rows.zone
-        const nParkEventsForZone = await client.query(`SELECT zone, COUNT(*) FROM history GROUP BY zone`);
+        const nParkEventsForZone = await client.query(`SELECT parking FROM zone WHERE id_zone = ${zone}`);
         //Compute centroid for each zone
         for(row in nParkEventsForZone.rows) {
             centroid = await computeCentroid(nParkEventsForZone.rows[row].zone);
