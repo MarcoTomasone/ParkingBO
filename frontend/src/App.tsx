@@ -3,9 +3,8 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NavBar from './components/NavBar';
 import Map from './components/Map';
-import K_means from './components/pages/K_means';
+import MapKmeans from './components/pages/MapKmeans';
 import Heatmap from './components/pages/Heatmap';
-import Requests from './components/pages/Requests';
 import FullScreenDialog from './components/FullScreenDialog';
 import CardEvent from './components/CardRequest';
 
@@ -15,10 +14,9 @@ class App extends React.Component {
       <Router>
         <NavBar />
         <Routes>
-          <Route path="/" element={<Map />} />
-          <Route path="/k-means" element={<K_means />} />
-          <Route path="/heatmap" element={<Heatmap />} />
-          <Route path="/requests" element={<Requests />} />
+          <Route key="Map" path="/" element={<Map />} />
+          <Route key="K_means" path="/k_means" element={<MapKmeans />} />
+          <Route key="Heatmap" path="/heatmap" element={<Heatmap />} />
         </Routes>
       </Router>
     );

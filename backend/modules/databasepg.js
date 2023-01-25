@@ -122,7 +122,25 @@ module.exports = {
         const client = new Client(configuration);
         await client.connect();
         try {
-            const result = await client.query(`SELECT * FROM parking_requests WHERE zone = ${zone}`);
+            const result = await client.query(`SELECT id_request, ST_X(position) as x, ST_Y(position) as y FROM parking_requests WHERE zone = ${zone}`);
+            return result.rows;
+        } catch (e) {
+            console.error(e);
+        }
+        finally {
+            await client.end();
+        }
+    },
+
+    /**
+     * This function get all parking events in history table
+     * @returns all parking events in history table
+     */
+    getPointsParkingEvents: async () => {
+        const client = new Client(configuration);
+        await client.connect();
+        try {
+            const result = await client.query(`SELECT ST_X(position) as x, ST_Y(position) as y FROM history WHERE parking_type = 'ENTERING'`);
             return result.rows;
         } catch (e) {
             console.error(e);
@@ -272,26 +290,26 @@ module.exports = {
      * @returns zone in which the user is
      */
     find_zone : async (position) => {
-    if(typeof(position) === 'string')
-        position = JSON.parse(position);
-    const client = new Client(configuration);
-    await client.connect();
-    try {
-        geom = `${position[0]} ${position[1]}`;
-        const result = await client.query(`SELECT Z.id_zone FROM zone as Z WHERE ST_Contains(Z.polygon, ST_GeomFromText('POINT(${geom})', 4326))`);
-        const zone = result.rows[0].id_zone;
-        return zone;
-    } catch (e) {
-        if(e.message == "Cannot read properties of undefined (reading 'id_zone')")
-            return new Error('Zone not found');
-        
-        console.error(e);
-        return e;
-    }
-    finally {
-        await client.end();
-    }
-},
+        if(typeof(position) === 'string')
+            position = JSON.parse(position);
+        const client = new Client(configuration);
+        await client.connect();
+        try {
+            geom = `${position[0]} ${position[1]}`;
+            const result = await client.query(`SELECT Z.id_zone FROM zone as Z WHERE ST_Contains(Z.polygon, ST_GeomFromText('POINT(${geom})', 4326))`);
+            const zone = result.rows[0].id_zone;
+            return zone;
+        } catch (e) {
+            if(e.message == "Cannot read properties of undefined (reading 'id_zone')")
+                return new Error('Zone not found');
+            
+            console.error(e);
+            return e;
+        }
+        finally {
+            await client.end();
+        }
+    },
     
 }
 

@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const userActivity = require('./modules/userActivity');
 const frontend = require('./modules/frontend');
+const kmeans = require('./modules/k_means');
 const databasepg = require('./modules/databasepg');
 
 const app = express();
@@ -17,12 +18,14 @@ app.use(bodyParser.json());
 
 frontend.createRoutes(app);
 userActivity.createRoutes(app);
-//databasepg.insert_activity('ENTERING', [11.344333560704627, 44.50253708822598]); //ZONE 3
-//databasepg.insert_activity('ENTERING', [11.330262, 44.504243]); //ZONE 7
+kmeans.createRoutes(app);
+
+//databasepg.insert_activity('ENTERING', [11.333112801431849, 44.49986947592486]); //ZONE 1
 //databasepg.find_zone([11.346645867644199, 44.48810035688256]).then((result) => {console.log(result);});
 databasepg.getParkingsInterpolation([11.344333560704627, 44.50253708822598]);
 //databasepg.insertParkingRequest(0, [11.346639157565917, 44.50244800031392], 3)
 //databasepg.getParkingRequestsFromZone(3).then((result) => {console.log(result);});
+//databasepg.getPointsParkingEvents().then((result) => {console.log(result);});
 
 //uno = [11.332168663873928, 44.493318684275344]
 //due = [11.333112801431849, 44.49986947592486]

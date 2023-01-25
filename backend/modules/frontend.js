@@ -38,7 +38,7 @@ module.exports = {
 
         });
 
-        //This function return the number of parking requests in a zone
+        //This function return the parking requests in a zone
         app.get('/getParkingRequests', async (req, res) => {
             const zone = req.query.zone;
                 if(zone) {
