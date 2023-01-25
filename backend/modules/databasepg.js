@@ -290,26 +290,26 @@ module.exports = {
      * @returns zone in which the user is
      */
     find_zone : async (position) => {
-    if(typeof(position) === 'string')
-        position = JSON.parse(position);
-    const client = new Client(configuration);
-    await client.connect();
-    try {
-        geom = `${position[0]} ${position[1]}`;
-        const result = await client.query(`SELECT Z.id_zone FROM zone as Z WHERE ST_Contains(Z.polygon, ST_GeomFromText('POINT(${geom})', 4326))`);
-        const zone = result.rows[0].id_zone;
-        return zone;
-    } catch (e) {
-        if(e.message == "Cannot read properties of undefined (reading 'id_zone')")
-            return new Error('Zone not found');
-        
-        console.error(e);
-        return e;
-    }
-    finally {
-        await client.end();
-    }
-},
+        if(typeof(position) === 'string')
+            position = JSON.parse(position);
+        const client = new Client(configuration);
+        await client.connect();
+        try {
+            geom = `${position[0]} ${position[1]}`;
+            const result = await client.query(`SELECT Z.id_zone FROM zone as Z WHERE ST_Contains(Z.polygon, ST_GeomFromText('POINT(${geom})', 4326))`);
+            const zone = result.rows[0].id_zone;
+            return zone;
+        } catch (e) {
+            if(e.message == "Cannot read properties of undefined (reading 'id_zone')")
+                return new Error('Zone not found');
+            
+            console.error(e);
+            return e;
+        }
+        finally {
+            await client.end();
+        }
+    },
     
 }
 
