@@ -51,13 +51,11 @@ class MapKmeans extends React.Component<Props, State> {
 
     private handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         const value = event.target.value;
-        if(value == "") this.setState({colorField: "primary"});
+        if(value == "") this.setState({markers: [], colorField: "primary"});
         else {
             const size = Number(value);
-            if(size <= 0 || isNaN(size)) {
-                this.setState({colorField: "error"});
-                this.setState({markers: []});
-            }
+            if(size <= 0 || isNaN(size))
+                this.setState({markers: [], colorField: "error"});
             else {
                 this.setState({colorField: "success"});
                 this.getClusterMarkers(size);
@@ -99,7 +97,8 @@ class MapKmeans extends React.Component<Props, State> {
       <div>
         <MapContainer
           style={{ height: "100vh", opacity: "0.9" }}
-          zoom={12}
+          zoomSnap={0.25}
+          zoom={12.25}
           maxZoom={20}
           center={[44.495852858541745, 11.339634125175587]}
           attributionControl={false}>
@@ -110,7 +109,7 @@ class MapKmeans extends React.Component<Props, State> {
             <AttributionControl position="bottomright" prefix={false} />
             {this.state.markers}
         </MapContainer>
-        <div style={{backgroundColor: "rgba(28,28,28, 0.70)", borderRadius: '25px', position: 'absolute', width: 450, height: 220, top: 300, left: 50, zIndex: 2}}>
+        <div style={{backgroundColor: "rgba(28,28,28, 0.88)", borderRadius: '25px', position: 'absolute', width: 450, height: 220, top: 300, left: 50, zIndex: 2}}>
             <Typography  variant="h6" color="white" sx={{paddingTop: 5, paddingLeft: 2}}>
                 Scrivi il numero di cluster che vuoi ottenere
             </Typography>
