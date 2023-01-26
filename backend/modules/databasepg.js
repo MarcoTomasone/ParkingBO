@@ -165,7 +165,7 @@ module.exports = {
         const client = new Client(configuration);
         await client.connect();
         try {
-            const result = await client.query(`SELECT ST_X(position) as x, ST_Y(position) as y, COUNT(*) as nParking FROM history WHERE parking_type = 'ENTERING' GROUP BY x,y`);
+            const result = await client.query(`SELECT ST_X(position) as x, ST_Y(position) as y, zone, COUNT(*) as nParking FROM history WHERE parking_type = 'ENTERING' GROUP BY x,y,zone`);
             return result.rows;
         } catch (e) {
             console.error(e);
