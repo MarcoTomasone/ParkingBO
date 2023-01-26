@@ -15,8 +15,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import CardEvent from './CardRequest';
 import { TransitionProps } from '@mui/material/transitions';
-import { getAllEventsFromZone, getParkings, getParkingRequestFromZone } from '../utils/requests';
-import Container from '@mui/material/Container';
+import { getParkings, getParkingRequestFromZone } from '../utils/requests';
 import { CardContent, CardHeader } from '@mui/material';
 
 const Transition = React.forwardRef(function Transition(

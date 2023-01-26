@@ -5,3 +5,15 @@
 body {
     overflow: hidden; /* Hide scrollbars */
 }
+
+.card_content::-webkit-scrollbar {
+    display: none;
+}
+.popup {
+    text-align: center;
+}
+/*.myCluster {
+    background-color: #fff;
+    text-align: center;
+    border-radius: 25px;
+}*/
