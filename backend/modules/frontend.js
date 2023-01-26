@@ -13,6 +13,7 @@ module.exports = {
                 const filePath = path.join(__dirname, "/../files/" + data);
                 if(fs.existsSync(filePath)) {
                     const file = fs.readFileSync(filePath, 'utf8');
+                    res.header("Access-Control-Allow-Origin", "*");
                     res.status(200).send(file);
                     
                 }

@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { MapContainer, Marker, TileLayer, AttributionControl, GeoJSON } from "react-leaflet";
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import { TextField, Card, CardContent, Typography, Switch, FormControl, Grid  } from '@mui/material';
-import { zone } from '../../supports/zone';
-import { kmeans } from '../../utils/requests';
+import { kmeans, getData } from '../../utils/requests';
 import "leaflet/dist/leaflet.css";
 const L = require('leaflet');
 
@@ -12,6 +11,7 @@ enum clusterType {
     AllClusters = "all_clusters",
     OnlyCentroid = "only_centroid",
 }
+
 
 const carIcon = L.icon({
     iconUrl: require('../../supports/car_icon.png'),
@@ -60,8 +60,9 @@ class MapKmeans extends React.Component<Props, State> {
     /**
      * This method is used to get Polygons from the zone.geojson local file
      */
-    private getPolygons(): any {
-        const polygons: any = zone;
+    private async getPolygons(): Promise<void> {
+        //get the polygons from the zone.geojson file stored in the server
+        const polygons: any = await getData('zone.geojson');
         if (polygons) {
             this.setState({polygons: <GeoJSON key="polygons" attribution="&copy; credits due..."  data={polygons} style={{color: "#008b8b", fillColor: "#008b8b"}}  />});
         }
