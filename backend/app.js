@@ -18,7 +18,6 @@ app.use(bodyParser.json());
 
 frontend.createRoutes(app);
 userActivity.createRoutes(app);
-kmeans.createRoutes(app);
 heatmap.createRoutes(app);
 
 //databasepg.insert_activity('ENTERING', [11.333112801431849, 44.49986947592486]); //ZONE 1

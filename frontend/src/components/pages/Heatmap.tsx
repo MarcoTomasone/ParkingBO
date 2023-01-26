@@ -8,7 +8,6 @@ type State = {
     points: any;
 };
 
-const position: any = [44.495852858541745, 11.339634125175587];
 class Heatmap extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props); 
@@ -19,7 +18,6 @@ class Heatmap extends React.Component<Props, State> {
 
     async componentDidMount(): Promise<void> {
       const result : any  = await heatmap();
-      console.log(result);
       this.setState({points: result});
     }
 
@@ -27,10 +25,14 @@ class Heatmap extends React.Component<Props, State> {
    render() {
     return (
         <div>
-          <MapContainer center={[0,0]} zoom={13}  style={{height: "100vh"}}>
+          <MapContainer   
+            center={[44.495852858541745, 11.339634125175587]}
+            style={{ height: "100vh", opacity: "0.9" }}
+            zoomSnap={0.25}
+            zoom={13}
+            maxZoom={20}
+            attributionControl={false}>
             <HeatmapLayer
-              fitBoundsOnLoad
-              fitBoundsOnUpdate
               points={this.state.points}
               longitudeExtractor={(m : any) => m[0]}
               latitudeExtractor={(m : any) => m[1]}

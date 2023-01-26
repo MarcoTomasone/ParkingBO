@@ -48,7 +48,6 @@ const kmeans = async (size: number) => {
 const heatmap = async () => {
     // 'await' the data
     const response = await axios.get("http://localhost:8000/heatmap");
-    console.log(response)
     if(response.status === 200) {
         return response.data;
     }
