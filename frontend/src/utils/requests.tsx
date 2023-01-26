@@ -30,6 +30,17 @@ const kmeans = async (size: number) => {
         return null;
     }
 }
+const heatmap = async () => {
+    // 'await' the data
+    const response = await axios.get("http://localhost:8000/heatmap");
+    console.log(response)
+    if(response.status === 200) {
+        return response.data;
+    }
+    else {
+        return null;
+    }
+}
 
 const getAllParkings = async () => {
     // 'await' the data
@@ -74,4 +85,4 @@ const getAllEventsFromZone = async (zone: number) => {
     }
 };
 
-export { getData, kmeans, getParkingRequestFromZone, getAllParkings, getParkings, getAllEventsFromZone };
+export { getData, kmeans, heatmap, getParkingRequestFromZone, getAllParkings, getParkings, getAllEventsFromZone };

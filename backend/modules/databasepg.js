@@ -149,6 +149,24 @@ module.exports = {
             await client.end();
         }
     },
+
+     /**
+     * Get for each point the number of parking events
+     * @returns all parking events in history table
+     */
+     getPointsParkingEventsGrouped: async () => {
+        const client = new Client(configuration);
+        await client.connect();
+        try {
+            const result = await client.query(`SELECT ST_X(position) as x, ST_Y(position) as y, COUNT(*) as nParking FROM history WHERE parking_type = 'ENTERING' GROUP BY x,y`);
+            return result.rows;
+        } catch (e) {
+            console.error(e);
+        }
+        finally {
+            await client.end();
+        }
+    },
     
 
     /**
