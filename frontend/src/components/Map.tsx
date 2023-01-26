@@ -1,11 +1,7 @@
 import * as React from 'react';
-import ReactDOMServer from 'react-dom/server';
-import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet';
+import { MapContainer, TileLayer, GeoJSON, Tooltip } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { Position } from '../utils/types';
-import { zone } from '../supports/zone';
-import { getAllParkings } from '../utils/requests';
-import { getCenter } from '../utils/utils';
+import { getAllParkings, getData } from '../utils/requests';
 import FullScreenDialog from './FullScreenDialog';
 
 type Props = {};
@@ -13,7 +9,6 @@ type Props = {};
 type State = {
     n_parkings: number[];
     polygons: any;
-    zoneAnalized: number ;
     dialog: any;
 };
 //default position of the map
@@ -26,7 +21,6 @@ class Map extends React.Component<Props, State> {
             n_parkings: [0,0,0,0,0,0,0],
             polygons: null,
             dialog: React.createRef(),
-            zoneAnalized: 0
         };
     }
 
@@ -35,13 +29,20 @@ class Map extends React.Component<Props, State> {
         this.getPolygons();
     }
     
-    private getPolygons(): any {
-        const polygons: any = zone;
+    /**
+     * This method is used to get the polygons from the zone.geojson file
+     */
+    private async getPolygons(): Promise<void> {
+        //get the polygons from the zone.geojson file stored in the server
+        const polygons: any = await getData('zone.geojson');
         if (polygons) {
             this.setState({polygons: <GeoJSON key="polygons" attribution="&copy; credits due..."  data={polygons} onEachFeature={this.onEachFeature} style={{color: "#008b8b", fillColor: "#008b8b"}}  />});
         }
     }
 
+    /**
+     * This method is used to get the number of parking spaces for each zone
+     */
     private async getParkings(): Promise<any> {
         const result: any | null = await getAllParkings();
         const parkings: any[] = [];
@@ -54,8 +55,14 @@ class Map extends React.Component<Props, State> {
         else return "The number of parking spaces in this area could not be found";
     }
 
-
+    /**
+     * This method is called for each feature of the geojson file (for each Polygon)
+     */
     private onEachFeature = async (feature: any, layer: any) => {
+        n_zone ++;
+        if(n_zone == 8)
+            n_zone = 1;
+        feature.properties.zone = n_zone;
         const highlightFeature = (e: any) => {
             let layer = e.target;
             layer.setStyle({
@@ -71,21 +78,13 @@ class Map extends React.Component<Props, State> {
                 fillColor: "#008b8b"
             });
         };
-
-        n_zone ++;
-        if(n_zone == 8)
-            n_zone = 1;
-        feature.properties.zone = n_zone;
+        
         layer.on({
           mouseover: highlightFeature,
           mouseout: resetHighlight,
           click: () => { this.state.dialog.current.handleClickOpen(feature.properties.zone)}
         });
-
-        /*const popupContent = ReactDOMServer.renderToString(
-            <h1> This is the zone:  {n_zone} </h1>
-        );
-        layer.bindPopup(popupContent);*/
+        layer.bindTooltip("Zone " + n_zone, {permanent: true, direction: "center"})
 
       };
 

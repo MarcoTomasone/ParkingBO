@@ -3,7 +3,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const userActivity = require('./modules/userActivity');
 const frontend = require('./modules/frontend');
-const kmeans = require('./modules/k_means');
 const databasepg = require('./modules/databasepg');
 const heatmap = require('./modules/heatmap');
 

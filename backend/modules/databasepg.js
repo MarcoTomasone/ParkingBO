@@ -7,6 +7,13 @@ const configuration = {
     database: 'User_Activity',
 }
 
+/*
+Per resettare l'autoincrement di una tabella
+DELETE FROM history;
+DELETE FROM users;
+SELECT setval(pg_get_serial_sequence('history', 'id_event'), 1);
+SELECT setval(pg_get_serial_sequence('users', 'id_user'), 1);
+*/
 
 
 module.exports = {
@@ -169,23 +176,6 @@ module.exports = {
     },
     
 
-    /**
-     * This function return all events from a zone
-     * @param {number} zone is the zone of which we want to know the events
-     */
-    getAllEventsFromZone: async (zone) => {
-        const client = new Client(configuration);
-        await client.connect();
-        try {
-            const result = await client.query(`SELECT * FROM history WHERE zone = ${zone}`);
-            return result.rows;
-        } catch (e) {
-            console.error(e);
-        }
-        finally {
-            await client.end();
-        }
-    },
 
     /**
      * This function return all the users in the database

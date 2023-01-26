@@ -1,10 +1,11 @@
 const fs = require('fs');
 const path = require('path');
 const databasepg = require('./databasepg');
+const kmeans = require('node-kmeans');
 
 module.exports = {
     createRoutes: (app) => {
-        //This function return a file saved in the server
+        //This function get the data from the local file system
         app.get('/getData', async (req, res) => {
             const data = req.query.data;
             if(data) {
@@ -12,6 +13,7 @@ module.exports = {
                 const filePath = path.join(__dirname, "/../files/" + data);
                 if(fs.existsSync(filePath)) {
                     const file = fs.readFileSync(filePath, 'utf8');
+                    res.header("Access-Control-Allow-Origin", "*");
                     res.status(200).send(file);
                     
                 }
@@ -72,19 +74,29 @@ module.exports = {
 
         });
 
-        //This function return the number of parkings in a zone
-        app.get('/getAllEventsFromZone', async (req, res) => {
-            const zone = req.query.zone;
-            if(zone) {
-                const events = await databasepg.getAllEventsFromZone(zone);
-                const encoded = JSON.stringify({events: events});
-                res.header("Access-Control-Allow-Origin", "*");
-                res.status(200).send(encoded);
+        //This function get the clusters data from kmeans algorithm
+        app.get('/kmeans', async (req, res) => {
+            var size = req.query.size;
+            var data = await databasepg.getPointsParkingEvents();
+            if(size) {
+                let vectors = new Array();
+                for (let i = 0 ; i < data.length ; i++) {
+                    vectors[i] = [ data[i].x , data[i].y ];
+                }
+                kmeans.clusterize(vectors, {k: size}, (err,result) => {
+                    if (err)
+                        return res.status(400).send({'status' : 'Error'});
+                    else {
+                        const encoded = JSON.stringify(result);
+                        res.header("Access-Control-Allow-Origin", "*");
+                        return res.status(200).send(encoded);
+                    }
+                });
             }
             else {
-                res.status(400).send("Bad request");
+                res.header("Access-Control-Allow-Origin", "*");
+                return res.status(400).send({'status' : 'Bad Request'});
             }
-
         });
     }
 }
