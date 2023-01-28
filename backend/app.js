@@ -25,7 +25,7 @@ heatmap.createRoutes(app);
 //databasepg.getParkingsInterpolation([11.344333560704627, 44.50253708822598]);
 //databasepg.insertParkingRequest(0, [11.346639157565917, 44.50244800031392], 3)
 //databasepg.getParkingRequestsFromZone(3).then((result) => {console.log(result);});
-databasepg.getPointsParkingEventsGrouped().then((result) => {console.log(result);});
+//databasepg.getPointsParkingEventsGrouped().then((result) => {console.log(result);});
 
 //uno = [11.332168663873928, 44.493318684275344]
 //due = [11.333112801431849, 44.49986947592486]

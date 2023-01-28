@@ -16,8 +16,8 @@ class Heatmap extends React.Component<Props, State> {
         super(props); 
         this.state = {
             points: [],
-            polygons: null,
-            showFullHeatmap: false
+            polygons: [],
+            showFullHeatmap: true
         };
     }
 
@@ -65,11 +65,11 @@ class Heatmap extends React.Component<Props, State> {
     let heatmapLayer: any[] = []; 
     if(!this.state.showFullHeatmap == true) 
         heatmapLayer.push(<HeatmapLayer
-        points={this.state.points}
-        longitudeExtractor={(m : any) => m[0]}
-        latitudeExtractor={(m : any) => m[1]}
-        intensityExtractor={(m : any) => parseFloat(m[2])} 
-        radius={10}
+            points={this.state.points}
+            longitudeExtractor={(m : any) => m[0]}
+            latitudeExtractor={(m : any) => m[1]}
+            intensityExtractor={(m : any) => parseFloat(m[2])} 
+            radius={10}
         />);
     else {
         //Transform the points array into a dict using zone as a key 
