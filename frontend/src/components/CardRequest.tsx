@@ -18,15 +18,10 @@ export default function CardEvent(props: Props) {
             Parking request event: {props.request.id_request}
           </Typography>
           <Typography component="div" variant="h6">
-            Position: {props.request.x}, {props.request.y}
+            Position: [{props.request.x}, {props.request.y}]
           </Typography>
         </CardContent>
       </Box>
-      <CardMedia
-        component="img"
-        sx={{ width: 151 }}
-        image="../images/parking.png"
-      />
     </Card>
   );
 }
