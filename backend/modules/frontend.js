@@ -98,6 +98,22 @@ module.exports = {
                 return res.status(400).send({'status' : 'Bad Request'});
             }
         });
+        /*Return a dict with the points grouped by zone 
+        *
+        *   zone1 : [[x,y,nparking],[x,y,nparking]...]
+        *   zone2 : [[x,y,nparking],[x,y,nparking]...]
+        * */
+        app.get('/heatmap', async (req, res) => {
+            var data = await databasepg.getPointsParkingEventsGrouped();
+            let pointsDict = {};
+            for (let i = 0 ; i < data.length ; i++) {
+                 //Transform the points array into a dict using zone as a key 
+                if(pointsDict[data[i].zone] == null) pointsDict[data[i].zone] = [];
+                    pointsDict[data[i].zone].push([data[i].x , data[i].y , data[i].nparking]);
+            }
+            res.header("Access-Control-Allow-Origin", "*");
+            return res.status(200).send(JSON.stringify(pointsDict));
+        });
     }
 }
 
