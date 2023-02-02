@@ -8,7 +8,7 @@ import 'package:flutter_activity_recognition/flutter_activity_recognition.dart';
 
 //Per fare localhost su real mobile ci va l'ip del computer su cui fate girare il server
 //Per fare localhost sull'emulatore dovrebbe andare il seguente ip = 10.0.2.2
-const url = 'http://192.168.1.67:8000';
+const url = 'http://192.168.146.34:8000';
 
 /**
  * This function is used to send a transition to the server
@@ -48,7 +48,7 @@ Future<int?> getParkings(LatLng position) async {
   queryParameters.forEach((key, value) => stringQueryParameters[key] = value.toString());
   dev.log(stringQueryParameters.toString());
 
-  final uri = Uri.http("192.168.1.228:8000", '/getParkings', stringQueryParameters);
+  final uri = Uri.http("192.168.146.34:8000", '/getParkings', stringQueryParameters);
   final response = await http.get(uri, headers: {
     HttpHeaders.contentTypeHeader: 'application/json',
   });
