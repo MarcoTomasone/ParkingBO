@@ -12,25 +12,14 @@ enum clusterType {
     OnlyCentroid = "only_centroid",
 }
 
-
 const carIcon = L.icon({
     iconUrl: require('../../supports/car_icon.png'),
-    iconSize: [45,45],
-    iconAnchor: [32, 64],
-    popupAnchor: null,
-    shadowUrl: null,
-    shadowSize: null,
-    shadowAnchor: null
+    iconSize: [32,32],
 });
 
 const markerIcon = L.icon({
     iconUrl: require('../../supports/marker_icon.png'),
     iconSize: [32,32],
-    iconAnchor: [32, 64],
-    popupAnchor: null,
-    shadowUrl: null,
-    shadowSize: null,
-    shadowAnchor: null
 });
 
 type Props = {};
@@ -125,35 +114,35 @@ class Kmeans extends React.Component<Props, State> {
                 //if we have to render only the centroid of each cluster
                 if(this.state.render == clusterType.OnlyCentroid) {
                     cont++;
-                    clusters.push(<MarkerClusterGroup
-                        key={"cluster_" + cont}
-                        spiderfyDistanceMultiplier={1}
-                        showCoverageOnHover={false}>
+                    clusters.push(
                         <Marker
                             key={cont + "_marker"}
                             position={[element.centroid[1], element.centroid[0]]} //reverse coords
                             title={element.centroid[0]}
                             icon={markerIcon}>
-                        </Marker></MarkerClusterGroup>);
+                        </Marker>);
                     
                 }
                 //if we have to render all elements of each cluster
                 else {                
                     element.cluster.forEach((coord: any, index: number) => {
                         cont++;
-                        markers.push(<Marker
-                            key={cont + "_marker"}
-                            position={[coord[1], coord[0]]} //reverse coords
-                            title={coord[1]}
-                            icon={carIcon}
-                        ></Marker>)
+                        markers.push(
+                        <MarkerClusterGroup showCoverageOnHover={true}>
+                            <Marker
+                                key={cont + "_marker"}
+                                position={[coord[1], coord[0]]} //reverse coords
+                                title={coord[1]}
+                                icon={carIcon}
+                            ></Marker>
+                        </MarkerClusterGroup>)
                     });
                 
                     clusters.push(
                         <MarkerClusterGroup
                             key={"cluster_" + cont}
                             spiderfyDistanceMultiplier={1}
-                            showCoverageOnHover={false}>
+                            showCoverageOnHover={true}>
                                 {markers}
                         </MarkerClusterGroup>
                     );
@@ -179,8 +168,8 @@ class Kmeans extends React.Component<Props, State> {
           maxZoom={20}
           center={[44.495852858541745, 11.339634125175587]}
           attributionControl={false}>
-            <TileLayer url="https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png"
-            attribution="Map by <a href='http://stamen.com' target='_blank'>Stamen Design</a> | &copy; <a href='https://www.openstreetmap.org/copyright' target='_blank'>OpenStreetMap</a> contributors"
+            <TileLayer url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
+                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' 
             />
             {this.state.polygons}
             <AttributionControl position="bottomright" prefix={false} />
