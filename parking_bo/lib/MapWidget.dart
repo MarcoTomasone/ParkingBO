@@ -34,14 +34,15 @@ class MapWidget extends StatefulWidget {
 class _MapWidgetState extends State<MapWidget> {
   /// Data for the Flutter map polylines layer
   final polygons = <Polygon>[];
+  int? freeParking = 0 ;
   var id_user = null;
-  ar.ActivityType currentActivity = ar.ActivityType.UNKNOWN; 
-  LatLng currentLocation = LatLng(44.493754, 11.343095); //Coordinates of Bologna
+  ar.ActivityType currentActivity = ar.ActivityType.UNKNOWN;
+  LatLng currentLocation =
+      LatLng(44.493754, 11.343095); //Coordinates of Bologna
   late CenterOnLocationUpdate _centerOnLocationUpdate;
-  late ActivityRecognition activityRecognition; 
-  
-  void updateCurrentActivity(ar.ActivityType activityType) {
+  late ActivityRecognition activityRecognition;
 
+  void updateCurrentActivity(ar.ActivityType activityType) {
     if (currentActivity == ar.ActivityType.IN_VEHICLE &&
         activityType == ar.ActivityType.WALKING) {
       Fluttertoast.showToast(
@@ -53,7 +54,7 @@ class _MapWidgetState extends State<MapWidget> {
           textColor: Colors.white,
           fontSize: 16.0);
       //call_function(ParkingType.EXITING, currentLocation);
-      } else if (currentActivity == ar.ActivityType.WALKING &&
+    } else if (currentActivity == ar.ActivityType.WALKING &&
         activityType == ar.ActivityType.IN_VEHICLE) {
       Fluttertoast.showToast(
           msg: "Change from walking to driving",
@@ -86,38 +87,40 @@ class _MapWidgetState extends State<MapWidget> {
       polygon.geoSeries.forEach((element) {
         myPoints = element.toLatLng();
       });
+      
       setState(() => polygons.add(Polygon(
           points: myPoints,
-          color: Colors.lightBlue.shade50.withOpacity(0.6),
-          isFilled: true)));
+          color: Colors.lightBlue.shade50.withOpacity(0.4),
+          isFilled: true,
+          borderColor: Colors.lightBlue.shade400,
+          borderStrokeWidth: 3)));
     });
     geo.endSignal.listen((_) => geo.dispose());
     final data = await rootBundle.loadString('assets/zone.geojson');
     final features = await geo.parse(data, verbose: true);
   }
- 
+
   Future<bool> _getPermissionLocation() async {
-      LocationPermission permission;
-      permission = await Geolocator.checkPermission();
+    LocationPermission permission;
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        permission = await Geolocator.requestPermission();
-        if (permission == LocationPermission.denied) {
-          print("Permission denied");
-          /**In caso tornare indietro */
-          return false;
-        }
+        print("Permission denied");
+        /**In caso tornare indietro */
+        return false;
       }
-      return true;
+    }
+    return true;
   }
 
-   createLocationListener(){
+  createLocationListener() {
     Geolocator.getPositionStream(locationSettings: locationSettings)
-            .listen((Position position) {
+        .listen((Position position) {
       setState(() {
         currentLocation = LatLng(position.latitude, position.longitude);
-      });   
+      });
     });
-   
   }
 
   @override
@@ -138,23 +141,33 @@ class _MapWidgetState extends State<MapWidget> {
     activityRecognition.dispose();
   }
 
-
-  IconData getMarkerType(){
+  IconData getMarkerType() {
     //TODO: switch instead of if
-    if(currentActivity == ar.ActivityType.IN_VEHICLE)
+    if (currentActivity == ar.ActivityType.IN_VEHICLE)
       return Icons.navigation; // CASE: DRIVING
     else if (currentActivity == ar.ActivityType.WALKING)
       return Icons.circle; // CASE: Walking
     else
       return Icons.my_location; //CASE: Still, Unknown
-    }
+  }
 
-@override
+  @override
   Widget build(BuildContext context) {
     return FlutterMap(
       options: MapOptions(
         center: currentLocation,
         zoom: 18,
+        onTap: (tapPosition, point) async => {
+          freeParking = await getParkings(point),
+          Fluttertoast.showToast(
+            msg: "In this area we have " + freeParking.toString() + " free parking",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: (freeParking != null && freeParking! > 0)? Colors.green : Colors.red,
+            textColor: Colors.white,
+            fontSize: 14.0),
+        } ,
         onPositionChanged: (MapPosition position, bool hasGesture) {
           if (hasGesture) {
             setState(

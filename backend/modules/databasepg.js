@@ -108,10 +108,11 @@ module.exports = {
     insertParkingRequest: async (id, position, zone) => {
         const client = new Client(configuration);
         await client.connect();
-        const geom = `${position[0]} ${position[1]}`;
+        if(typeof(position) === 'string')
+            position = JSON.parse(position);
         try {
-            const result = await client.query(`INSERT INTO parking_requests(position, id_user, zone) VALUES(ST_GeomFromText('POINT(${geom})', 4326), $1, $2) RETURNING id_user`, [id, zone]);
-            //console.log(result);            
+            const geom = `${position[0]} ${position[1]}`;
+            const result = await client.query(`INSERT INTO parking_requests(position, id_user, zone) VALUES(ST_GeomFromText('POINT(${geom})', 4326), $1, $2) RETURNING id_user`, [id, zone]);           
         } catch (e) {
             console.error(e);
         }
@@ -303,7 +304,7 @@ module.exports = {
         const client = new Client(configuration);
         await client.connect();
         try {
-            geom = `${position[0]} ${position[1]}`;
+            const geom = `${position[0]} ${position[1]}`;
             const result = await client.query(`SELECT Z.id_zone FROM zone as Z WHERE ST_Contains(Z.polygon, ST_GeomFromText('POINT(${geom})', 4326))`);
             const zone = result.rows[0].id_zone;
             return zone;
