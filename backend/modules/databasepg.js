@@ -325,14 +325,23 @@ module.exports = {
             let n_parkings;
             if (zone instanceof Error)
             throw new Error(zone.message);
-            //if(get_nParkingEvents_for_zone(zone) < 5) //TODO: prendere total_parking - parking in zone 
+            const parkingInZone = await get_nParkingEvents_for_zone(zone);
+            console.log("Eventi di parcheggio in zona: " + zone)
+            console.log(parkingInZone);
+            if(parkingInZone < 5){ //TODO: prendere total_parking - parking in zone 
+                console.log("I'm interpolating the result from other zones")
                 n_parkings = await parkingIDWInterpolation(zone);
+                console.log("Posti occupati interpolati in zona: " + zone)
                 console.log(n_parkings);
-                //else {
-            //    const result = await client.query(`SELECT parking FROM zones WHERE id_zone = ${zone}`);
-            //     n_parkings = result.rows[0]['parking'];
-           // }
-            //return n_parkings;
+                const total_parking = await client.query(`SELECT total_parking FROM zones WHERE id_zone = ${zone}`);
+                n_parkings =  total_parking.rows[0]['total_parking'] - parseInt(n_parkings);
+            } else {
+                n_parkings = await module.exports.getParkingsFromZone(zone);
+            }
+            console.log("Posti liberi in zona: " + zone)
+            console.log(n_parkings);
+            return n_parkings;
+            
         } catch (e) {
             console.error(e);
             return e;
@@ -607,8 +616,8 @@ const get_nParkingEvents_for_zone = async (zone) => {
     const client = new Client(configuration);
     await client.connect();
     try {
-        const result = await client.query(`SELECT COUNT(*) FROM history WHERE zone = ${zone}`);
-        const nEvents = result.rows[0].count;
+        const result = await client.query(`SELECT (total_parking - available_parking) as nEvents FROM zones WHERE id_zone = ${zone}`);
+        const nEvents = result.rows[0].nevents;
         return nEvents;
     } catch (e) {
         console.error(e);
@@ -625,7 +634,7 @@ const parkingIDWInterpolation = async (zone) => {
     await client.connect();
     try {
         //Access to data through nParkEventsForZone.rows.count and nParkEventsForZone.rows.zone
-        const nParkEventsForZone = await client.query(`SELECT available_parking FROM zones WHERE id_zone = ${zone}`);
+        const nParkEventsForZone = await client.query(`SELECT (total_parking - available_parking) as count, id_zone as zone FROM zones`);
         //Compute centroid for each zone
         for(row in nParkEventsForZone.rows) {
             centroid = await computeCentroid(nParkEventsForZone.rows[row].zone);
