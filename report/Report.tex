@@ -1,0 +1,35 @@
+\documentclass[12pt, a4paper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+\usepackage{float}
+\usepackage{newlfont}
+\usepackage{hyperref}
+\usepackage{multirow}
+\usepackage{subfiles}
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage[toc,page]{appendix}
+
+\setlength{\parindent}{0pt}
+\textwidth=450pt\oddsidemargin=0pt
+\graphicspath{ {./images/} }
+\raggedbottom
+
+
+\author{Luca Genova  1038843\\ 
+        Marco Benito Tomasone 1038815\\
+        Simone Boldrini 1038792\\}
+\date{2022-2023}
+\title{Progetto di Sistemi Context Aware:\\
+       Smart Parking System\\
+       A.A. 2021-2022}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+%Chapter 1: Introduzione
+\subfile{chapters/Introduzione/Introduzione.tex}
+
+
+\end{document}

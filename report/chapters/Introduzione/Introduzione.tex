@@ -1,0 +1,21 @@
+\documentclass[../../Report.tex]{subfiles}
+\usepackage[italian]{babel}
+
+\begin{document}
+    \chapter{Introduzione}
+    Il parcheggio è una delle sfide più comuni che i conducenti affrontano quotidianamente nelle città. Trovare un posto auto libero in una zona affollata può richiedere molto tempo e aumentare il traffico, causando stress e frustrazione per i conducenti. Per risolvere questi problemi, è stato proposto un sistema di parcheggio intelligente che monitora la disponibilità dei posti auto in una zona specifica della città di Bologna. Il sistema fornisce informazioni sul numero di posti auto liberi, aiutando i conducenti a trovare rapidamente un posto dove parcheggiare.\\
+    Il sistema si basa sul riconoscimento dell'attività dell'utente e della posizione per determinare lo stato di guida o cammino dell'utente e fornire informazioni sullo stato dei parcheggi disponibili. Questo è il cuore del progetto e consente di tenere conto degli eventi di ingresso (WALKING $\rightarrow$ DRIVING) e uscita (DRIVING $\rightarrow$ WALKING) dall'auto.\\
+    L'esecuzione di questo progetto è stato suddiviso in due fasi:
+    \begin{itemize}
+        \item La prima fase consiste nel realizzare il sistema di parcheggio intelligente che monitora la disponibilità dei posti auto in una zona specifica della città di Bologna.Esso è diviso in tre parti:
+        \begin{itemize}
+            \item \textbf{Un'app}: l'applicazione mobile che permette ai conducenti di visualizzare le informazioni sullo stato dei posti auto in una zona specifica. La funzionalità dell'app è basata sul riconoscimento della posizione e dell'attività dell'utente.
+            \item \textbf{Un frontend}: il sito web che permette agli amministratori di visualizzare le informazioni sulle richieste di parcheggio in una zona specifica, di utilizzare l'algoritmo K-means per visualizzare gli eventi di parcheggio in cluster e anche di visualizzare la heatmap di essi.
+            \item \textbf{Un server}: il server che gestisce le richieste dell'applicazione e fornisce le informazioni sullo stato dei posti auto interrogando un database PostgreSQL (con estensione PostGIS) tramite query spaziali.
+        \end{itemize}
+        \item La seconda fase consiste nell'analizzare le prestazioni di tre diversi algoritmi di clustering: K-means, Random Forest e Gaussian Naive Bayes. Questi algoritmi vengono, poi, confrontati con le prestazioni del sistema integrato all'interno dell'applicazione, per determinare quale sia il più adatto per essere implementato all'interno di essa. In questo modo, è possibile ottenere una soluzione più precisa e affidabile per fornire informazioni sullo stato dei posti auto disponibili. 
+    \end{itemize}
+
+    Il presente report, quindi, fornisce una descrizione dettagliata del funzionamento del sistema di parcheggio intelligente e analizza le sue prestazioni e la sua fattibilità. Verrà presentato il design del sistema, le tecnologie utilizzate e i risultati delle prove effettuate. Inoltre, verrà fornita una valutazione complessiva del sistema e verranno proposte possibili soluzioni per eventuali problemi riscontrati.
+
+\end{document}
