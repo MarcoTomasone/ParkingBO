@@ -33,7 +33,7 @@ userActivity.createRoutes(app);
 //cinque = [11.354406834747014, 44.495193428653465]
 //sei = [11.346645867644199, 44.48810035688256]
 //sette = [11.33273458625832, 44.50581479439516]
-// databasepg.create_database(100);
+//databasepg.create_database(100);
 
 const server = http.createServer(app);
 server.listen(port, () => {

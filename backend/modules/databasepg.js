@@ -1,6 +1,7 @@
 const { Client } = require('pg');
 const fs = require('fs');
 const path = require('path');
+const { ClientRequest } = require('http');
 const create_configuration = {
     host: 'localhost',
     user: 'postgres',
@@ -394,6 +395,17 @@ module.exports = {
             }
         }
         
+    const transformGeojsonToPolygonList = (geojson) => {
+        //console.log(geojson.features[0].geometry.coordinates.flat(1).toString());
+        const coordinatesList = geojson.geometry.coordinates.flat(1);
+        let geom = '';
+        coordinatesList.forEach(element => {
+            geom += `${element[0]} ${element[1]}, `;
+        });
+        geom = geom.substring(0, geom.length - 2); //remove the last comma and last space
+        return geom;
+    }
+
     /**
      * This function inizialize the zone table, it must be called only once
      * Takes the number of parking for zone1 and inizialize other in function of the area of others
@@ -402,13 +414,36 @@ module.exports = {
      */
     const initialize_zone_table = async (total_parking_zone1, client) => {
         try {
+            //Create an empty table
+            await create_zones_table(client);
+            
             //Get the geojson file and read it
             const filePath = path.join(__dirname, "/../files/zone.geojson");
             const file = fs.readFileSync(filePath, 'utf8');
-            var features = JSON.parse(file);
+            var features = JSON.parse(file).features;
+            //Compute area of first zone
+            let coordinates = transformGeojsonToPolygonList(features[0]);
+            const polygon = `POLYGON((${coordinates}))`;
             
-            await create_zones_table(client);
+            //compute area of the polygon using ST_Area
+            const result = await client.query(`SELECT ST_Area('${polygon}') as area`);
+            const areaZone1 = result.rows[0].area;
+            const total_parking = total_parking_zone1 ;
+            const available_parking = total_parking;
+            await client.query(`INSERT INTO zones (total_parking, available_parking, polygon) VALUES (${total_parking}, ${available_parking}, ST_GeomFromText('${polygon}', 4326))`);
             
+            for(let i = 1; i < features.length; i++) {
+                let coordinates = transformGeojsonToPolygonList(features[i]);
+                const polygon = `POLYGON((${coordinates}))`;
+                //compute area of the polygon using ST_Area
+                const result = await client.query(`SELECT ST_Area('${polygon}') as area`);
+                const area = result.rows[0].area;
+                //compute the number of parking in the zone using the area of the zone and the area of zone1
+                const total_parking = total_parking_zone1 * (area/ areaZone1);
+                const available_parking = total_parking;
+                await client.query(`INSERT INTO zones (total_parking, available_parking, polygon) VALUES (${total_parking}, ${available_parking}, ST_GeomFromText('${polygon}', 4326))`);
+            }
+            console.log("Table zones initialized");
         }
         catch (e) {
             console.error(e);
