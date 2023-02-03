@@ -51,7 +51,7 @@ class Kmeans extends React.Component<Props, State> {
      */
     private async getPolygons(): Promise<void> {
         //get the polygons from the zone.geojson file stored in the server
-        const polygons: any = await getData('zone.geojson');
+        const polygons = await getData('zone.geojson');
         if (polygons) {
             this.setState({polygons: <GeoJSON key="polygons" attribution="&copy; credits due..."  data={polygons} style={{color: "#008b8b", fillColor: "#008b8b"}}  />});
         }

@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const userActivity = require('./modules/userActivity');
 const frontend = require('./modules/frontend');
 const databasepg = require('./modules/databasepg');
+const { inizialize_zone_table } = require('./modules/databasepg');
 
 const app = express();
 const port = 8000;
@@ -32,7 +33,7 @@ userActivity.createRoutes(app);
 //cinque = [11.354406834747014, 44.495193428653465]
 //sei = [11.346645867644199, 44.48810035688256]
 //sette = [11.33273458625832, 44.50581479439516]
-
+//databasepg.create_database(100);
 
 const server = http.createServer(app);
 server.listen(port, () => {
