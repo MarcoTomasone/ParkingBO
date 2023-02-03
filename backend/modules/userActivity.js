@@ -46,14 +46,14 @@ module.exports = {
 
 
         //This function return the number of parkings in a zone
-        app.get('/getParkings', async (req, res) => {
+        app.get('/getParkingsFromPosition', async (req, res) => {
             if(req.query.coordinates == null) {
                 await res.status(400).send("Bad request");
                 return;
             }
             else {
                 const position = req.query.coordinates;
-                const result = await databasepg.getParkings(position);
+                const result = await databasepg.getParkingsFromPosition(position);
                 if(result instanceof Error) {
                     //if the user is not in a parking zone, return an error
                     if(result.message == "Zone not found")
