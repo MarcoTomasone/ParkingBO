@@ -48,7 +48,7 @@ Future<int?> getParkings(LatLng position) async {
   queryParameters.forEach((key, value) => stringQueryParameters[key] = value.toString());
   dev.log(stringQueryParameters.toString());
 
-  final uri = Uri.http("192.168.146.34:8000", '/getParkings', stringQueryParameters);
+  final uri = Uri.http("192.168.146.34:8000", '/getParkingsFromPosition', stringQueryParameters);
   final response = await http.get(uri, headers: {
     HttpHeaders.contentTypeHeader: 'application/json',
   });
