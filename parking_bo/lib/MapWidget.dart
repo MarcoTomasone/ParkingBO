@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+import 'package:ParkingBO/utils/SensorsClass.dart';
 import 'package:ParkingBO/utils/httpRequest.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,7 @@ import 'package:flutter_activity_recognition/flutter_activity_recognition.dart'
     as ar;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:async';
+import './utils/SensorsClass.dart';
 
 final LocationSettings locationSettings = LocationSettings(
   accuracy: LocationAccuracy.high,
@@ -56,25 +58,20 @@ class _MapWidgetState extends State<MapWidget> {
   List<Map<String, double>> gyroscopeList = [];
   List<Map<String, double>> magnetometerList = [];
   List<Map<String, double>> uAccelerometerList = [];
+  List<SensorClass> general = [];
+  
 
-  List<List<List<Map<String, double>>>> general = [];
+
 
   void updateCurrentActivity(ar.ActivityType activityType) {
     List<String> target = ['target', activityType.toString()];
-    List<dynamic> list = [
-      List.from(accelerometerList),
-      List.from(gyroscopeList),
-      List.from(magnetometerList),
-      List.from(uAccelerometerList),
-      List.from(target)
-    ];
-
+    SensorClass list = SensorClass(List.from(accelerometerList), List.from(gyroscopeList), List.from(magnetometerList), List.from(uAccelerometerList), List.from(target));
     accelerometerList = [];
     gyroscopeList = [];
     magnetometerList = [];
     uAccelerometerList = [];
-
-    general.add(list.cast());
+    general.add(list);
+    print(general);
     if (currentActivity == ar.ActivityType.IN_VEHICLE &&
         activityType == ar.ActivityType.WALKING) {
       Fluttertoast.showToast(
@@ -187,6 +184,7 @@ class _MapWidgetState extends State<MapWidget> {
     print("Start Listen Sensor");
 
     accel = accelerometerEvents.listen((AccelerometerEvent event) {
+      
       accelerometerList.add({'x': event.x, 'y': event.y, 'z': event.z});
       print(event);
     });
@@ -215,10 +213,10 @@ class _MapWidgetState extends State<MapWidget> {
     gyro?.cancel();
     magnetometer?.cancel();
 
-    var elem;
-    for (elem in general) {
+    print(general);
+    /*for (var elem in general) {
       print(elem);
-    }
+    }*/
   }
 
   @override
