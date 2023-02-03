@@ -53,7 +53,7 @@ module.exports = {
             }
             else {
                 const position = req.query.coordinates;
-                const result = await databasepg.getParkingsFromPosition(position);
+                const result = await databasepg.getParkingsInterpolation(position);
                 if(result instanceof Error) {
                     //if the user is not in a parking zone, return an error
                     if(result.message == "Zone not found")

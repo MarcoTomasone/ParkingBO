@@ -1,11 +1,15 @@
+import 'dart:ffi';
+
 import 'package:ParkingBO/utils/httpRequest.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart'; // Suitable for most situations
 import 'package:flutter_map/plugin_api.dart'; // Only import if required functionality is not exposed by default
+import 'package:flutter_sensors/flutter_sensors.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:sensors_plus/sensors_plus.dart';
 import './utils/utils.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:flutter/foundation.dart';
@@ -34,7 +38,8 @@ class MapWidget extends StatefulWidget {
 class _MapWidgetState extends State<MapWidget> {
   /// Data for the Flutter map polylines layer
   final polygons = <Polygon>[];
-  int? freeParking = 0 ;
+  bool start_listen = false;
+  int? freeParking = 0;
   var id_user = null;
   ar.ActivityType currentActivity = ar.ActivityType.UNKNOWN;
   LatLng currentLocation =
@@ -42,7 +47,34 @@ class _MapWidgetState extends State<MapWidget> {
   late CenterOnLocationUpdate _centerOnLocationUpdate;
   late ActivityRecognition activityRecognition;
 
+  StreamSubscription? accel;
+  StreamSubscription? gyro;
+  StreamSubscription? magnetometer;
+  StreamSubscription? userAccelerometer;
+
+  List<Map<String, double>> accelerometerList = [];
+  List<Map<String, double>> gyroscopeList = [];
+  List<Map<String, double>> magnetometerList = [];
+  List<Map<String, double>> uAccelerometerList = [];
+
+  List<List<List<Map<String, double>>>> general = [];
+
   void updateCurrentActivity(ar.ActivityType activityType) {
+    List<String> target = ['target', activityType.toString()];
+    List<dynamic> list = [
+      List.from(accelerometerList),
+      List.from(gyroscopeList),
+      List.from(magnetometerList),
+      List.from(uAccelerometerList),
+      List.from(target)
+    ];
+
+    accelerometerList = [];
+    gyroscopeList = [];
+    magnetometerList = [];
+    uAccelerometerList = [];
+
+    general.add(list.cast());
     if (currentActivity == ar.ActivityType.IN_VEHICLE &&
         activityType == ar.ActivityType.WALKING) {
       Fluttertoast.showToast(
@@ -87,7 +119,7 @@ class _MapWidgetState extends State<MapWidget> {
       polygon.geoSeries.forEach((element) {
         myPoints = element.toLatLng();
       });
-      
+
       setState(() => polygons.add(Polygon(
           points: myPoints,
           color: Colors.lightBlue.shade50.withOpacity(0.4),
@@ -151,6 +183,44 @@ class _MapWidgetState extends State<MapWidget> {
       return Icons.my_location; //CASE: Still, Unknown
   }
 
+  Future<void> listen_sensor() async {
+    print("Start Listen Sensor");
+
+    accel = accelerometerEvents.listen((AccelerometerEvent event) {
+      accelerometerList.add({'x': event.x, 'y': event.y, 'z': event.z});
+      print(event);
+    });
+    // [AccelerometerEvent (x: 0.0, y: 9.8, z: 0.0)]
+
+    userAccelerometer =
+        userAccelerometerEvents.listen((UserAccelerometerEvent event) {
+      uAccelerometerList.add({'x': event.x, 'y': event.y, 'z': event.z});
+    });
+    // [UserAccelerometerEvent (x: 0.0, y: 0.0, z: 0.0)]
+
+    gyro = gyroscopeEvents.listen((GyroscopeEvent event) {
+      gyroscopeList.add({'x': event.x, 'y': event.y, 'z': event.z});
+    });
+    // [GyroscopeEvent (x: 0.0, y: 0.0, z: 0.0)]
+
+    magnetometer = magnetometerEvents.listen((MagnetometerEvent event) {
+      magnetometerList.add({'x': event.x, 'y': event.y, 'z': event.z});
+    });
+  }
+
+  void stop_sensor() {
+    print("Stop Listen Sensor");
+    accel?.cancel();
+    userAccelerometer?.cancel();
+    gyro?.cancel();
+    magnetometer?.cancel();
+
+    var elem;
+    for (elem in general) {
+      print(elem);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return FlutterMap(
@@ -160,14 +230,18 @@ class _MapWidgetState extends State<MapWidget> {
         onTap: (tapPosition, point) async => {
           freeParking = await getParkings(point),
           Fluttertoast.showToast(
-            msg: "In this area we have " + freeParking.toString() + " free parking",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            timeInSecForIosWeb: 1,
-            backgroundColor: (freeParking != null && freeParking! > 0)? Colors.green : Colors.red,
-            textColor: Colors.white,
-            fontSize: 14.0),
-        } ,
+              msg: "In this area we have " +
+                  freeParking.toString() +
+                  " free parking",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: (freeParking != null && freeParking! > 0)
+                  ? Colors.green
+                  : Colors.red,
+              textColor: Colors.white,
+              fontSize: 14.0),
+        },
         onPositionChanged: (MapPosition position, bool hasGesture) {
           if (hasGesture) {
             setState(
@@ -192,7 +266,19 @@ class _MapWidgetState extends State<MapWidget> {
                     getMarkerType(),
                     color: Colors.red,
                   )),
-        ])
+        ]),
+        Align(
+            alignment: Alignment.bottomCenter,
+            child: ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    start_listen = !start_listen;
+                  });
+                  start_listen ? listen_sensor() : stop_sensor();
+                },
+                child: start_listen
+                    ? const Text('Stop Listen')
+                    : const Text('Listen Sensor')))
       ], //Children
     );
   }

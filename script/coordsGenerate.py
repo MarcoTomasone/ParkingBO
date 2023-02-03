@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import json
+import random
 from shapely.geometry import Point, Polygon
 import os
 
@@ -21,8 +22,11 @@ for index, feature in enumerate(data['features']):
     polygons.append(data['features'][index]['geometry']['coordinates'][0])
 
 allFakePoints = []
+count = 0
 for polygon in polygons:
-    allFakePoints.append(Random_Points_in_Polygon(Polygon(polygon), 30))
+    if(count < 6):
+        allFakePoints.append(Random_Points_in_Polygon(Polygon(polygon), random.randint(30, 60)))
+    count = count + 1
 
 with open('../backend/files/fake_coordinates.json', 'w') as outfile:
     json.dump(allFakePoints, outfile)
