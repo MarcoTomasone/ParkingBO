@@ -23,6 +23,8 @@ import 'package:flutter_activity_recognition/flutter_activity_recognition.dart'
     as ar;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:async';
+import 'dart:convert';
+import 'utils/SaveFile.dart';
 import './utils/SensorsClass.dart';
 
 final LocationSettings locationSettings = LocationSettings(
@@ -59,13 +61,15 @@ class _MapWidgetState extends State<MapWidget> {
   List<Map<String, double>> magnetometerList = [];
   List<Map<String, double>> uAccelerometerList = [];
   List<SensorClass> general = [];
-  
-
-
 
   void updateCurrentActivity(ar.ActivityType activityType) {
     List<String> target = ['target', activityType.toString()];
-    SensorClass list = SensorClass(List.from(accelerometerList), List.from(gyroscopeList), List.from(magnetometerList), List.from(uAccelerometerList), List.from(target));
+    SensorClass list = SensorClass(
+        List.from(accelerometerList),
+        List.from(gyroscopeList),
+        List.from(magnetometerList),
+        List.from(uAccelerometerList),
+        List.from(target));
     accelerometerList = [];
     gyroscopeList = [];
     magnetometerList = [];
@@ -181,12 +185,10 @@ class _MapWidgetState extends State<MapWidget> {
   }
 
   Future<void> listen_sensor() async {
-    print("Start Listen Sensor");
+    print("=====================Start Listen Sensor=====================");
 
     accel = accelerometerEvents.listen((AccelerometerEvent event) {
-      
       accelerometerList.add({'x': event.x, 'y': event.y, 'z': event.z});
-      print(event);
     });
     // [AccelerometerEvent (x: 0.0, y: 9.8, z: 0.0)]
 
@@ -207,16 +209,13 @@ class _MapWidgetState extends State<MapWidget> {
   }
 
   void stop_sensor() {
-    print("Stop Listen Sensor");
+    print("=======================Stop Listen Sensor====================");
     accel?.cancel();
     userAccelerometer?.cancel();
     gyro?.cancel();
     magnetometer?.cancel();
 
-    print(general);
-    /*for (var elem in general) {
-      print(elem);
-    }*/
+    SaveFile.writeToFile(jsonEncode(general));
   }
 
   @override

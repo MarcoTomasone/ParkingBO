@@ -38,11 +38,10 @@ dependencies:
   fluttertoast: ^8.1.1
   location: ^4.4.0
   shared_preferences: ^2.0.15
-  sensors_plus: ^2.0.1
+  sensors_plus: ^2.0.0
   flutter_sensors: ^1.0.1
-  sensors: ^2.0.3
-
-
+  path_provider: ^2.0.12
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
