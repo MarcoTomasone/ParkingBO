@@ -1,9 +1,14 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.6) (preloaded format=pdflatex 2021.9.5)  6 FEB 2023 19:07
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.6) (preloaded format=pdflatex 2021.9.5)  6 FEB 2023 19:49
 entering extended mode
-**"c:/Users/dino9/Desktop/UNI/MAGISTRALE/SISTEMI CONTEX-AWARE/Progetto/ParkingBO/report/Report.tex"
-(c:/Users/dino9/Desktop/UNI/MAGISTRALE/SISTEMI CONTEX-AWARE/Progetto/ParkingBO/report/Report.tex
+**"c:/Users/dino9/Desktop/UNI/MAGISTRALE/SISTEMI CONTEX-AWARE/Progetto/ParkingBO/report/chapters/Analisi algoritmi/Analisi_algoritmi.tex"
+(c:/Users/dino9/Desktop/UNI/MAGISTRALE/SISTEMI CONTEX-AWARE/Progetto/ParkingBO/report/chapters/Analisi algoritmi/Analisi_algoritmi.tex
 LaTeX2e <2021-06-01>
-L3 programming layer <2021-06-01> (C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex/latex/base\report.cls
+L3 programming layer <2021-06-01> (C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex/latex/subfiles\subfiles.cls
+Document Class: subfiles 2020/11/14 v2.2 Multi-file projects (class)
+Preamble taken from file `../../Report.tex'
+(C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex/latex/import\import.sty
+Package: import 2020/04/01  v 6.2
+) (c:\Users\dino9\Desktop\UNI\MAGISTRALE\SISTEMI CONTEX-AWARE\Progetto\ParkingBO\report\Report.tex (C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex/latex/base\report.cls
 Document Class: report 2021/02/12 v1.4n Standard LaTeX document class
 (C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex/latex/base\size12.clo
 File: size12.clo 2021/02/12 v1.4n Standard LaTeX file (size option)
@@ -180,9 +185,7 @@ Package: multirow 2021/03/15 v2.8 Span multiple rows of a table
 \bigstrutjot=\dimen144
 ) (C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex/latex/subfiles\subfiles.sty
 Package: subfiles 2020/11/14 v2.2 Multi-file projects (package)
- (C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex/latex/import\import.sty
-Package: import 2020/04/01  v 6.2
-)) (C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphicx.sty
+) (C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphicx.sty
 Package: graphicx 2020/12/05 v1.2c Enhanced LaTeX Graphics (DPC,SPQR)
  (C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphics.sty
 Package: graphics 2021/03/04 v1.4d Standard LaTeX Graphics (DPC,SPQR)
@@ -235,33 +238,33 @@ Package: appendix 2020/02/08 v1.2c extra appendix facilities
 \c@@pps=\count284
 \c@@ppsavesec=\count285
 \c@@ppsaveapp=\count286
-) (C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
+))) (C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
 File: l3backend-pdftex.def 2021-05-07 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count287
 \l__pdf_internal_box=\box52
-) (Report.aux)
-\openout1 = `Report.aux'.
+) (c:\Users\dino9\Desktop\UNI\MAGISTRALE\SISTEMI CONTEX-AWARE\Progetto\ParkingBO\report\chapters\Analisi algoritmi\Analisi_algoritmi.aux)
+\openout1 = `Analisi_algoritmi.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Info: Redefining \it@ocap on input line 27.
-LaTeX Info: Redefining \it@ccap on input line 27.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Info: Redefining \it@ocap on input line 4.
+LaTeX Info: Redefining \it@ccap on input line 4.
 
 
 File italian.ldf warning: 
@@ -269,9 +272,9 @@ italian.ldf    With OT1 encoding guillemets are poorly faked
 italian.ldf    Use T1 encoding
 italian.ldf    or specify a font with command \CaporaliFrom
 italian.ldf    See the documentation concerning the babel-italian typesetting 
-italian.ldf    on input line 27.
+italian.ldf    on input line 4.
 
-Package hyperref Info: Link coloring OFF on input line 27.
+Package hyperref Info: Link coloring OFF on input line 4.
 (C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
  (C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex/latex/refcount\refcount.sty
@@ -281,12 +284,12 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count288
 )
-LaTeX Info: Redefining \ref on input line 27.
-LaTeX Info: Redefining \pageref on input line 27.
-LaTeX Info: Redefining \nameref on input line 27.
- (Report.out) (Report.out)
+LaTeX Info: Redefining \ref on input line 4.
+LaTeX Info: Redefining \pageref on input line 4.
+LaTeX Info: Redefining \nameref on input line 4.
+ (c:\Users\dino9\Desktop\UNI\MAGISTRALE\SISTEMI CONTEX-AWARE\Progetto\ParkingBO\report\chapters\Analisi algoritmi\Analisi_algoritmi.out) (c:\Users\dino9\Desktop\UNI\MAGISTRALE\SISTEMI CONTEX-AWARE\Progetto\ParkingBO\report\chapters\Analisi algoritmi\Analisi_algoritmi.out)
 \@outlinefile=\write3
-\openout3 = `Report.out'.
+\openout3 = `Analisi_algoritmi.out'.
 
  (C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -310,60 +313,56 @@ File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: subfig package v1.3 is loaded.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <14.4> on input line 29.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 29.
-LaTeX Font Info:    Trying to load font information for U+lasy on input line 29.
- (C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex/latex/base\ulasy.fd
-File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
-) [1
 
-{C:/Users/dino9/AppData/Local/MiKTeX/pdftex/config/pdftex.map}] (Report.toc
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 5.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 5.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 5.
-)
-\tf@toc=\write4
-\openout4 = `Report.toc'.
-
- (chapters/Introduzione/Introduzione.texpdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.5     \chapter
-                {Introduzione} [1
-
-]
 Capitolo 1.
-[2
 
-]) (chapters/Data Mining/DataMining.tex [3]
-Capitolo 2.
-[4
+Underfull \hbox (badness 10000) in paragraph at lines 6--8
 
-]) (chapters/Data Mining/DataMining.tex [5]
-Capitolo 3.
-[6
+ []
 
-]) [7] (Report.aux)
-Package rerunfilecheck Info: File `Report.out' has not changed.
-(rerunfilecheck)             Checksum: 9112B3F90416EA2974735124D82BF419;483.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 14.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 14.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 14.
+LaTeX Font Info:    Trying to load font information for U+lasy on input line 14.
+(C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex/latex/base\ulasy.fd
+File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
+)
+Overfull \hbox (63.5181pt too wide) in paragraph at lines 14--43
+ [][] 
+ []
+
+[1
+
+
+{C:/Users/dino9/AppData/Local/MiKTeX/pdftex/config/pdftex.map}]
+Underfull \hbox (badness 10000) in paragraph at lines 45--48
+
+ []
+
+[2]
+Underfull \hbox (badness 10000) in paragraph at lines 85--86
+
+ []
+
+[3] [4] [5] (c:\Users\dino9\Desktop\UNI\MAGISTRALE\SISTEMI CONTEX-AWARE\Progetto\ParkingBO\report\chapters\Analisi algoritmi\Analisi_algoritmi.aux)
+Package rerunfilecheck Info: File `Analisi_algoritmi.out' has not changed.
+(rerunfilecheck)             Checksum: C688A3E2479F1A2602BC3A93764B9B97;1243.
  ) 
 Here is how much of TeX's memory you used:
- 10757 strings out of 478864
- 168859 string characters out of 2848661
- 492918 words of memory out of 3000000
- 28505 multiletter control sequences out of 15000+600000
- 410217 words of font info for 53 fonts, out of 8000000 for 9000
+ 10753 strings out of 478864
+ 169551 string characters out of 2848661
+ 497154 words of memory out of 3000000
+ 28507 multiletter control sequences out of 15000+600000
+ 409292 words of font info for 48 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 69i,6n,79p,747b,486s stack positions out of 5000i,500n,10000p,200000b,80000s
- <C:\Users\dino9\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk><C:/Users/dino9/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/dino9/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/dino9/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/dino9/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/dino9/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on Report.pdf (8 pages, 83820 bytes).
+ 89i,11n,96p,586b,400s stack positions out of 5000i,500n,10000p,200000b,80000s
+ <C:\Users\dino9\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk><C:/Users/dino9/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/dino9/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/dino9/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb>
+Output written on "c:\Users\dino9\Desktop\UNI\MAGISTRALE\SISTEMI CONTEX-AWARE\Progetto\ParkingBO\report\chapters\Analisi algoritmi\Analisi_algoritmi.pdf" (5 pages, 65453 bytes).
 PDF statistics:
- 100 PDF objects out of 1000 (max. 8388607)
- 14 named destinations out of 1000 (max. 500000)
- 41 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 86 PDF objects out of 1000 (max. 8388607)
+ 19 named destinations out of 1000 (max. 500000)
+ 57 words of extra memory for PDF output out of 10000 (max. 10000000)
 

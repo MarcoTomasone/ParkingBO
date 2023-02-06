@@ -1,0 +1,137 @@
+\documentclass[../../Report.tex]{subfiles}
+\usepackage[italian]{babel}
+
+\begin{document}
+\chapter{Valutazione degli Algoritmi di Classificazione}
+Nella presente fase del progetto, è stata effettuata la valutazione di tre algoritmi di classificazione: \textbf{KNN}, \textbf{Random Forest} e \textbf{Gaussian Bayes}. L'obiettivo era quello di eseguire un confronto tra i tre algoritmi e di determinare quale di essi fosse più preciso nel classificare i dati utilizzando il dataset HAR fornito.\\
+La valutazione è stata effettuata attraverso la misurazione dell'accuratezza degli algoritmi e il confronto dei risultati ottenuti. Questo ha permesso di determinare quale algoritmo fosse il più adatto per il problema di riconoscimento delle attività svolte dall'utente.\\   
+
+\section{Dataset, data mining e tecnologie utilizzate}
+Il dataset utilizzato per l'analisi ci è stato fornito dal professor Marco Di Felice. Il dataset è composto da 62.584 osservazioni e 13 colonne riguardanti il valore dei sensori di uno smartphone android e l'attività dell'utente, come seguente:
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|p{0.7\linewidth}|}
+        \hline
+        \textbf{accelerometer\#mean} & la media delle osservazioni dell'accelerometro. \\
+        \hline
+        \textbf{accelerometer\#min} & l'osservazione minima dell'accelerometro. \\
+        \hline
+        \textbf{accelerometer\#max} & l'osservazione massima dell'accelerometro. \\
+        \hline
+        \textbf{accelerometer\#std} & la deviazione standard delle osservazioni dell'accelerometro. \\
+        \hline
+        \textbf{gyroscope\#mean} & la media delle osservazioni del giroscopio. \\
+        \hline
+        \textbf{gyroscope\#min} &  l'osservazione minima del giroscopio. \\
+        \hline
+        \textbf{gyroscope\#max} &  l'osservazione massima del giroscopio. \\
+        \hline
+        \textbf{gyroscope\#std} & la deviazione standard delle osservazioni del giroscopio. \\
+        \hline
+        \textbf{gyroscopeuncalibrated\#mean} & la media delle osservazioni del giroscopio non calibrato. \\
+        \hline
+        \textbf{gyroscopeuncalibrated\#min} &  l'osservazione minima del giroscopio non calibrato. \\
+        \hline
+        \textbf{gyroscopeuncalibrated\#max} & l'osservazione massima del giroscopio non calibrato. \\
+        \hline
+        \textbf{gyroscopeuncalibrated\#std} & la deviazione standard delle osservazioni del giroscopio non calibrato.\\
+        \hline
+        \textbf{target} & l'attività svolta dall'utente. \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Per il data mining è stato utilizzato il linguaggio di programmazione \emph{Python} e per il training e prediction dei modelli la libreria \emph{Scikit-learn}.\\
+Non è stato fatto un grande preprocessing dei dati, in quanto il dataset è stato fornito abbbastanza pulito. I dati sono stati lavorati al fine di eliminare i valori nan e di normalizzare i dati. Inoltre sono state eliminate tutte le tuple che non riguardavano le attività di interesse (WALKING e DRIVING).\\
+Per tutti e tre gli algoritmi il dataset è stato suddiviso in training e testing set. Per il training è stato utilizzato l'80\% dei dati e per il testing il 20\%.\\
+
+\section{Gli algoritmi}
+Come già detto precedentemente, in questa fase di valutazione degli algoritmi di classificazione, sono stati considerati tre differenti approcci: il \textbf{KNN}, il \textbf{Random Forest} e il \textbf{Gaussian Naive Bayes}.\\
+Questi algoritmi rappresentano tre approcci distinti alla risoluzione del problema di classificazione, ciascuno con i suoi punti di forza e limiti. Il \textbf{KNN} utilizza una logica basata sulla vicinanza dei dati, il \textbf{Random Forest} è un algoritmo di ensemble che utilizza molteplici alberi di decisione e il \textbf{Gaussian Naive Bayes} si basa sull'assunzione che le feature sono distribuite normalmente.\\
+In questa sezione, verranno descritti in dettaglio ciascuno di questi algoritmi e verrà presentato un confronto tra i loro risultati e le loro prestazioni.
+\subsection{KNN}
+Per quanto riguarda il KNN è stato deciso di effettuare un tuning degli iperparametri per il KNN, con lo scopo di ottenere una prestazione ottimale del modello.\\
+I parametri che sono stati modificati sono stati:
+\begin{itemize}
+    \item \textbf{n\_neighbors}: che rappresenta il numero di vicini considerati nella classificazione
+    \item \textbf{weights}: che determina il peso dei vicini nella classificazione
+    \item \textbf{leaf-size}: che rappresenta la dimensione massima di una foglia dell'albero di ricerca
+    \item \textbf{p}: che determina la potenza della metrica utilizzata nella calcoli della distanza tra i vicini
+\end{itemize}
+Il tuning degli iperparametri è stato effettuato utilizzando la funzione \emph{GridSearchCV} di \emph{Scikit-learn}. Questa funzione permette di eseguire una ricerca su una griglia di valori per gli iperparametri, testando tutte le possibili combinazioni e selezionando quella che produce la migliore prestazione in termini di accuratezza.\\
+L'obiettivo di questa ottimizzazione era quello di migliorare la precisione del modello KNN e di fornire una soluzione ottimale per la classificazione dei dati. Il risultato ottenuto ha dimostrato che l'ottimizzazione degli iperparametri è stata efficace e ha contribuito a migliorare la performance del modello.
+
+\subsubsection{Risultati}
+I risultati del tuning degli iperparametri utilizzando il dataset precedentemente descritto sono riportati nella tabella seguente:
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|c|}
+        \hline
+         & \textbf{Best value} \\
+        \hline
+        \textbf{n\_neighbors} & 5 \\
+        \hline
+        \textbf{weights} & uniform \\
+        \hline
+        \textbf{leaf\_size} & 30 \\
+        \hline
+        \textbf{p} & 2 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Con questi parametri siamo riusciti ad ottenere un'accuratezza finale del 90.5\%.\\
+
+\subsection{Random Forest}
+Come per il KNN, anche per il Random Forest è stato effettuato un tuning degli iperparametri, sempre con \emph{GridSearchCV}, per ottenere una prestazione ottimale del modello.\
+I parametri che sono stati modificati sono stati:
+\begin{itemize}
+\item \textbf{n\_estimators}: che rappresenta il numero di alberi decisionali nella foresta
+\item \textbf{max\_depth}: che rappresenta la profondità massima degli alberi decisionali
+\item \textbf{min\_samples\_split}: che rappresenta il numero minimo di campioni richiesti per dividere un nodo interno
+\item \textbf{min\_samples\_leaf}: che rappresenta il numero minimo di campioni richiesti per costruire una foglia dell'albero
+\end{itemize}
+Il tuning degli iperparametri è stato effettuato utilizzando la funzione \emph{GridSearchCV} di \emph{Scikit-learn}.\\
+L'obiettivo di questa ottimizzazione era quello di migliorare la precisione del modello Random Forest e di fornire una soluzione ottimale per la classificazione dei dati. Il risultato ottenuto ha dimostrato che l'ottimizzazione degli iperparametri è stata efficace e ha contribuito a migliorare la performance del modello.
+
+\subsubsection{Risultati}
+I risultati del tuning degli iperparametri utilizzando il dataset precedentemente descritto sono riportati nella tabella seguente:
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|c|}
+        \hline
+        & \textbf{Best value} \\
+        \hline
+        \textbf{n\_estimators} & 100 \\
+        \hline
+        \textbf{max\_depth} & 5 \\
+        \hline
+        \textbf{min\_samples\_split} & 2 \\
+        \hline
+        \textbf{min\_samples\_leaf} & 1 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Con questi parametri siamo riusciti ad ottenere un'accuratezza finale del 91.2\%.
+
+\subsection{Gaussian Naive Bayes}
+Per quanto riguarda il Gaussian Naive Bayes, abbiamo deciso di utilizzare questo algoritmo per la classificazione dei dati in quanto si tratta di un metodo semplice e veloce per la classificazione basato sull'assunzione che le feature siano distribuite secondo una distribuzione normale.\\
+In questo caso, non era necessario effettuare un tuning degli iperparametri, in quanto il Gaussian Naive Bayes non ha parametri che possono essere ottimizzati per migliorare le sue prestazioni.
+
+\subsubsection{Risultati}
+il modello Gaussian Naive Bayes ha fornito un'accuratezza del 81.82\%, che risulta essere un risultato inferiore rispetto ai modelli KNN e Random Forest.
+
+\section{Confronto dei risultati}
+Illustriamo di seguito le confusion matrix dei modelli KNN, Random Forest e Gaussian Naive Bayes, ottenute utilizzando il dataset precedentemente descritto.
+
+%confusion matrix KNN
+%confusion matrix Random Forest
+%confusion matrix Gaussian Naive Bayes
+
+%ANALIZZA I RISULTATI E CONFRONTALI
+
+\end{document}

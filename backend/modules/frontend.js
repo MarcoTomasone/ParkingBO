@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const databasepg = require('./databasepg');
 const kmeans = require('node-kmeans');
+var clustering = require('density-clustering');
 
 module.exports = {
     createRoutes: (app) => {

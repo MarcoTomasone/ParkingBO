@@ -19,7 +19,8 @@ const carIcon = L.icon({
 
 const markerIcon = L.icon({
     iconUrl: require('../../supports/marker_icon.png'),
-    iconSize: [32,32],
+    iconSize: [28, 46],
+    iconAnchor: [17, 46]
 });
 
 type Props = {};
@@ -166,6 +167,7 @@ class Kmeans extends React.Component<Props, State> {
           zoomSnap={0.25}
           zoom={12.25}
           maxZoom={20}
+          scrollWheelZoom={false}
           center={[44.495852858541745, 11.339634125175587]}
           attributionControl={false}>
             <TileLayer url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
