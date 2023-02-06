@@ -22,10 +22,16 @@ type State = {
 
 };
 
-const markerIcon = L.icon({
+const redMarkerIcon = L.icon({
     iconUrl: require('../../supports/marker_icon.png'),
     iconSize: [32,32],
 });
+
+const greenMarkerIcon = L.icon({
+    iconUrl: require('../../supports/car_icon.png'),
+    iconSize: [32,32],
+});
+
 
 let n_zone : number = 0;
 class Heatmap extends React.Component<Props, State> {
@@ -66,6 +72,7 @@ class Heatmap extends React.Component<Props, State> {
         }
     }
 
+    //TODO: change green and red marker to set availability
     private async getEChargers(): Promise<void> {
         const stations: any = await eChargers();
         //Create a list of marker to add to the map
@@ -73,12 +80,18 @@ class Heatmap extends React.Component<Props, State> {
         if (stations) {
             var markers = [];
             for (const station of stations.chargers) {
-            markers.push(<Marker
+               station.n_charging_points_available > 2 ?
+                markers.push(<Marker
                     key={station.id}
                     position={[station.y, station.x,]} //reverse coords
-                    icon={markerIcon}>
-                     </Marker>
-            )
+                    icon={greenMarkerIcon} 
+                    />) 
+                : 
+                markers.push(<Marker
+                    key={station.id}
+                    position={[station.y, station.x,]} //reverse coords
+                    icon={redMarkerIcon} 
+                />) 
         }   
              this.setState({eChargers: markers});
         }

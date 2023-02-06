@@ -43,6 +43,7 @@ class MapWidget extends StatefulWidget {
 class _MapWidgetState extends State<MapWidget> {
   /// Data for the Flutter map polylines layer
   final polygons = <Polygon>[];
+  final markers = <Marker>[];
   bool start_listen = false;
   userActivity? userActivitySel = userActivity.WALKING;
   int? freeParking = 0;
@@ -135,6 +136,22 @@ class _MapWidgetState extends State<MapWidget> {
     final features = await geo.parse(data, verbose: true);
   }
 
+  //Get markers from database and show them on map
+  Future<void> drawMarkersOnMap() async {
+    Map<String, dynamic> chargers  = await getChargingStations();
+    for(var element in chargers["chargers"]){
+      setState(() {
+         markers.add(
+          Marker( point: LatLng(element["y"], element["x"]), 
+                  builder: (ctx) => Icon(
+                      Icons.location_pin,
+                      color: element["n_charging_points_available"] > 2 ? Colors.green : Colors.red, //TODO: change control to > 0 when the database will be updated
+                    )),
+         );
+      });
+    }
+  }
+
   Future<bool> _getPermissionLocation() async {
     LocationPermission permission;
     permission = await Geolocator.checkPermission();
@@ -165,6 +182,7 @@ class _MapWidgetState extends State<MapWidget> {
     activityRecognition = new ActivityRecognition(updateCurrentActivity);
     drawPolygonsOnMap();
     createLocationListener();
+    drawMarkersOnMap();
     //testing functions
     //call_function(ParkingType.UNKNOWN, currentLocation);
     //get_parkings(currentLocation);
@@ -266,6 +284,7 @@ class _MapWidgetState extends State<MapWidget> {
                     color: Colors.red,
                   )),
         ]),
+        MarkerLayer(markers: markers),
         Container(
             alignment: Alignment.bottomCenter,
             child: Row(

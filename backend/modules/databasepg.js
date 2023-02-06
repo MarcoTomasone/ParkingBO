@@ -399,7 +399,28 @@ module.exports = {
         }
     
     },
-    
+
+    /**
+     * Function that returns the e-chargers near the user if exists, null else 
+     * @param {[lat, long]} position is the position of the user
+     * @returns the e-chargers near the user if exists, null else
+     */
+    checkNearEChargers: async (position) => {
+        const client = new Client(configuration);
+        await client.connect();
+        try {
+            const geom = `${position[0]} ${position[1]}`;
+            const result = await client.query(`SELECT id_station as id, n_charging_points_available, ST_X(point) as x, ST_Y(point) as y FROM charge_stations WHERE ST_DWithin(point, ST_GeomFromText('POINT(${geom})', 4326), 5, true)`);
+            const echargers = result.rows;
+            return echargers;
+        } catch (e) {
+            console.error(e);
+            return e;
+        }
+        finally {
+            await client.end();
+        }
+    },
 }
 
 /* -------------------------------------------------------UTILS-----------------------------------------------------------------------------*/
@@ -677,6 +698,31 @@ const update_parkings = async (parking_type, zone) => {
         else {
             //if the user is exiting from a parking, update the parking number in the zone table
             await client.query(`UPDATE zones SET available_parking = available_parking + 1 WHERE id_zone = $1`, [zone]);
+        }
+    } catch (e) {
+        console.error(e);
+    }
+    finally {
+        await client.end();
+    }
+};
+
+/**
+ * This function update the parking number in the zone table
+ * @param {string} parking_type is the type of parking (ENTERING, EXITING)
+ * @param {int} zone is the zone in which the user is
+ */
+const update_charging_station = async (parking_type, zone) => {
+    const client = new Client(configuration);
+    await client.connect();
+    try {
+        if(parking_type == 'ENTERING') {
+            //if the user is entering in a parking, update the parking number in the zone table
+            await client.query(`UPDATE charge_stations SET n_charging_points_available = n_charging_points_available - 1 WHERE id_station = $1`, [zone]);
+        }
+        else {
+            //if the user is exiting from a parking, update the parking number in the zone table
+            await client.query(`UPDATE charge_stations SET n_charging_points_available = n_charging_points_available + 1 WHERE id_station = $1`, [zone]);
         }
     } catch (e) {
         console.error(e);
