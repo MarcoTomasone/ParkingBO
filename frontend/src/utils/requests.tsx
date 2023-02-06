@@ -56,6 +56,17 @@ const heatmap = async () => {
     }
 }
 
+const eChargers = async () => {
+    // 'await' the data
+    const response = await axios.get("http://localhost:8000/e-chargers");
+    if(response.status === 200) {
+        return response.data;
+    }
+    else {
+        return null;
+    }
+}
+
 /**
  * This function is used to get the number of the parkings for each zone
  * @returns the number of parkings for each zone
@@ -88,4 +99,4 @@ const getParkings = async (zone: number) => {
 };
 
 
-export { getData, kmeans, heatmap, getParkingRequestFromZone, getAllParkings, getParkings };
+export { getData, kmeans, heatmap, getParkingRequestFromZone, getAllParkings, getParkings, eChargers};

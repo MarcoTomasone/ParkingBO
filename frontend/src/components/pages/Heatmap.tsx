@@ -2,8 +2,9 @@ import * as React from 'react';
 import { MapContainer, Marker, Popup, TileLayer, GeoJSON } from 'react-leaflet';
 import { TextField, Card, CardContent, Typography, Switch, FormControl, Grid  } from '@mui/material';
 import {HeatmapLayer} from 'react-leaflet-heatmap-layer-v3';
-import {heatmap,  getData} from '../../utils/requests';
+import {heatmap,  getData, eChargers} from '../../utils/requests';
 import { point, polygon } from 'leaflet';
+const L = require('leaflet');
 
 enum heatmapType {
     polygonsHeatmap = "polygons_heatmap",
@@ -17,8 +18,15 @@ type State = {
     polygons: any;
     heatmapType: heatmapType;
     heatmapLayer: any;
+    eChargers: any;
 
 };
+
+const markerIcon = L.icon({
+    iconUrl: require('../../supports/marker_icon.png'),
+    iconSize: [32,32],
+});
+
 let n_zone : number = 0;
 class Heatmap extends React.Component<Props, State> {
     constructor(props: Props) {
@@ -27,7 +35,8 @@ class Heatmap extends React.Component<Props, State> {
             points: {},
             polygons: [],
             heatmapType: heatmapType.polygonsHeatmap,
-            heatmapLayer: []
+            heatmapLayer: [],
+            eChargers: [],
         };
     }
 
@@ -36,6 +45,7 @@ class Heatmap extends React.Component<Props, State> {
         await this.setState({points: result});
         await this.getPolygons();
         this.getHeatmapLayer();
+        this.getEChargers();
     }
 
     private handleSwitchChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -55,6 +65,25 @@ class Heatmap extends React.Component<Props, State> {
             this.setState({polygons: <GeoJSON key="polygons" attribution="&copy; credits due..."  data={polygons} style={{color: "#008b8b", fillColor: "#008b8b"}}  />});
         }
     }
+
+    private async getEChargers(): Promise<void> {
+        const stations: any = await eChargers();
+        //Create a list of marker to add to the map
+        console.log(stations);
+        if (stations) {
+            var markers = [];
+            for (const station of stations.chargers) {
+            markers.push(<Marker
+                    key={station.id}
+                    position={[station.y, station.x,]} //reverse coords
+                    icon={markerIcon}>
+                     </Marker>
+            )
+        }   
+             this.setState({eChargers: markers});
+        }
+    }
+
 
     async getHeatmapLayer() {
         const result : any  = await heatmap();
@@ -100,7 +129,8 @@ class Heatmap extends React.Component<Props, State> {
                 zoom={13}
                 maxZoom={20}
                 attributionControl={false}>
-                {this.state.heatmapLayer}
+                    {this.state.eChargers}
+                    {this.state.heatmapLayer}
                 <TileLayer
                 url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' />

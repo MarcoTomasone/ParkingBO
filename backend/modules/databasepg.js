@@ -378,6 +378,27 @@ module.exports = {
             await client.end();
         }
     },
+
+    /** 
+     * 
+     * @returns all the e-chargers position and number of available slots
+    */
+    getEChargers: async () => {
+        const client = new Client(configuration);
+        await client.connect();
+        try {
+            const result = await client.query(`SELECT id_station as id, n_charging_points_available, ST_X(point) as x, ST_Y(point) as y FROM charge_stations`);
+            const echargers = result.rows;
+            return echargers;
+        } catch (e) {
+            console.error(e);
+            return e;
+        }
+        finally {
+            await client.end();
+        }
+    
+    },
     
 }
 
@@ -594,7 +615,7 @@ module.exports = {
             return e;
         }
     }
-    
+
 /**
      * THis function check if the user exists in the database
      * @param {id} id is the id of the user
