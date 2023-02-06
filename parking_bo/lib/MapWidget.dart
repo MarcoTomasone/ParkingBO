@@ -53,7 +53,7 @@ class _MapWidgetState extends State<MapWidget> {
       LatLng(44.493754, 11.343095); //Coordinates of Bologna
   late CenterOnLocationUpdate _centerOnLocationUpdate;
   late ActivityRecognition activityRecognition;
-
+  Timer? timer;
   StreamSubscription? accel;
   StreamSubscription? gyro;
   StreamSubscription? magnetometer;
@@ -209,26 +209,45 @@ class _MapWidgetState extends State<MapWidget> {
 
     accel = accelerometerEvents.listen((AccelerometerEvent event) {
       accelerometerList.add({'x': event.x, 'y': event.y, 'z': event.z});
+      accel?.pause();
     });
     // [AccelerometerEvent (x: 0.0, y: 9.8, z: 0.0)]
 
     userAccelerometer =
         userAccelerometerEvents.listen((UserAccelerometerEvent event) {
       uAccelerometerList.add({'x': event.x, 'y': event.y, 'z': event.z});
+      userAccelerometer?.pause();
+
     });
     // [UserAccelerometerEvent (x: 0.0, y: 0.0, z: 0.0)]
 
     gyro = gyroscopeEvents.listen((GyroscopeEvent event) {
       gyroscopeList.add({'x': event.x, 'y': event.y, 'z': event.z});
+      gyro?.pause();
     });
     // [GyroscopeEvent (x: 0.0, y: 0.0, z: 0.0)]
 
     magnetometer = magnetometerEvents.listen((MagnetometerEvent event) {
       magnetometerList.add({'x': event.x, 'y': event.y, 'z': event.z});
+      magnetometer?.pause();
     });
+
+    if (timer == null) {
+      timer = Timer.periodic(Duration(seconds: 1), (timer) {
+        gyro?.resume();
+        magnetometer?.resume();
+        userAccelerometer?.resume();
+        accel?.resume();
+      });
+    }
   }
 
   void stop_sensor() {
+    print("accelerometerList: " + accelerometerList.length.toString());
+    print("uAccelerometerList: " + uAccelerometerList.length.toString());
+    print("gyroscopeList: " + gyroscopeList.length.toString());
+    print("magnetometerList: " + magnetometerList.length.toString());
+
     print("=======================Stop Listen Sensor====================");
     accel?.cancel();
     userAccelerometer?.cancel();
@@ -288,7 +307,7 @@ class _MapWidgetState extends State<MapWidget> {
         Container(
             alignment: Alignment.bottomCenter,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly ,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
                     onPressed: () {
@@ -301,10 +320,11 @@ class _MapWidgetState extends State<MapWidget> {
                         ? const Text('Stop Listen')
                         : const Text('Listen Sensor')),
                 ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: (userActivitySel! == userActivity.WALKING)
-                        ? MaterialStateProperty.all(Colors.green)
-                        : MaterialStateProperty.all(Colors.blue)),
+                    style: ButtonStyle(
+                        backgroundColor:
+                            (userActivitySel! == userActivity.WALKING)
+                                ? MaterialStateProperty.all(Colors.green)
+                                : MaterialStateProperty.all(Colors.blue)),
                     onPressed: () {
                       setState(() {
                         userActivitySel = userActivity.WALKING;
@@ -312,10 +332,11 @@ class _MapWidgetState extends State<MapWidget> {
                     },
                     child: const Text('WALKING')),
                 ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: (userActivitySel! == userActivity.DRIVING)
-                        ? MaterialStateProperty.all(Colors.green)
-                        : MaterialStateProperty.all(Colors.blue)),
+                    style: ButtonStyle(
+                        backgroundColor:
+                            (userActivitySel! == userActivity.DRIVING)
+                                ? MaterialStateProperty.all(Colors.green)
+                                : MaterialStateProperty.all(Colors.blue)),
                     onPressed: () {
                       setState(() {
                         userActivitySel = userActivity.DRIVING;
