@@ -116,6 +116,7 @@ module.exports = {
         });
 
         app.get('/e-chargers', async (req, res) => {  
+            
             const result = await databasepg.getEChargers();
             if(result instanceof Error) {
                 await res.status(400).send("Bad request");

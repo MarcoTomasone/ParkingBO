@@ -1,6 +1,8 @@
 import 'dart:developer' as dev;
 import 'dart:convert';
+//import 'dart:html';
 import 'dart:io';
+//import 'dart:js_util';
 import 'package:http/http.dart' as http;
 import 'package:latlong2/latlong.dart';
 import 'utils.dart';
@@ -68,6 +70,21 @@ Future<int?> getParkings(LatLng position) async {
       throw Exception('Failed to get parkings');
     }
   }
+
 }
+
+Future<Map<String, dynamic>> getChargingStations() async {
+    final uri = Uri.http("192.168.50.149:8000", '/e-chargers');
+    final response = await http.get(uri);
+    if (response.statusCode == 200) {
+      // If the server did return a 200 CREATED response,
+      Map<String, dynamic> map = json.decode(response.body);
+      //dev.log(map["chargers"].toString());
+      return map;
+    } else {
+      dev.log(response.body);
+      throw Exception('Failed to get charging stations');
+    }
+  }
 
 
