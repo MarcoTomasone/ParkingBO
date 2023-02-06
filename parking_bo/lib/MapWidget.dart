@@ -1,5 +1,4 @@
 import 'dart:ffi';
-
 import 'package:ParkingBO/utils/SensorsClass.dart';
 import 'package:ParkingBO/utils/httpRequest.dart';
 import 'package:flutter/cupertino.dart';
@@ -32,6 +31,8 @@ final LocationSettings locationSettings = LocationSettings(
   distanceFilter: 1,
 );
 
+enum userActivity { DRIVING, WALKING }
+
 class MapWidget extends StatefulWidget {
   //Initialize Activity Recognition class
 
@@ -43,6 +44,7 @@ class _MapWidgetState extends State<MapWidget> {
   /// Data for the Flutter map polylines layer
   final polygons = <Polygon>[];
   bool start_listen = false;
+  userActivity? userActivitySel = userActivity.WALKING;
   int? freeParking = 0;
   var id_user = null;
   ar.ActivityType currentActivity = ar.ActivityType.UNKNOWN;
@@ -63,7 +65,7 @@ class _MapWidgetState extends State<MapWidget> {
   List<SensorClass> general = [];
 
   void updateCurrentActivity(ar.ActivityType activityType) {
-    List<String> target = ['target', activityType.toString()];
+    List<String> target = [userActivitySel.toString(), activityType.toString()];
     SensorClass list = SensorClass(
         List.from(accelerometerList),
         List.from(gyroscopeList),
@@ -264,18 +266,45 @@ class _MapWidgetState extends State<MapWidget> {
                     color: Colors.red,
                   )),
         ]),
-        Align(
+        Container(
             alignment: Alignment.bottomCenter,
-            child: ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    start_listen = !start_listen;
-                  });
-                  start_listen ? listen_sensor() : stop_sensor();
-                },
-                child: start_listen
-                    ? const Text('Stop Listen')
-                    : const Text('Listen Sensor')))
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly ,
+              children: [
+                ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        start_listen = !start_listen;
+                      });
+                      start_listen ? listen_sensor() : stop_sensor();
+                    },
+                    child: start_listen
+                        ? const Text('Stop Listen')
+                        : const Text('Listen Sensor')),
+                ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: (userActivitySel! == userActivity.WALKING)
+                        ? MaterialStateProperty.all(Colors.green)
+                        : MaterialStateProperty.all(Colors.blue)),
+                    onPressed: () {
+                      setState(() {
+                        userActivitySel = userActivity.WALKING;
+                      });
+                    },
+                    child: const Text('WALKING')),
+                ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: (userActivitySel! == userActivity.DRIVING)
+                        ? MaterialStateProperty.all(Colors.green)
+                        : MaterialStateProperty.all(Colors.blue)),
+                    onPressed: () {
+                      setState(() {
+                        userActivitySel = userActivity.DRIVING;
+                      });
+                    },
+                    child: const Text('DRIVING')),
+              ],
+            ))
       ], //Children
     );
   }
