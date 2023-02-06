@@ -48,6 +48,7 @@ module.exports = {
             await create_history_table(tableClient);
             await create_user_events_table(tableClient);
             await create_parking_requests_table(tableClient);
+            await initialize_charge_stations_table(tableClient);
             console.log("Database Created");
             return true;
         }
@@ -535,7 +536,64 @@ module.exports = {
             return e;
         }
     }
-
+    /** 
+     * This function creates a table for the charge stations
+     * This table has nine fields:
+     * id_station: the id of the station
+     * operator: the name of electric operator of the station
+     * location: the location of the station
+     * disctrict: the district of the station
+     * year: the year of installation of the station
+     * n_charging_points: the number of charging points of the station
+     * n_charging_points_available: the number of available charging points of the station
+     * state: the state of the station
+     * owner: the owner of the station
+     * point: the position of the station
+     * @param {*} client the client of the database
+     * 
+    */
+    const create_charge_stations_table = async (client) => {
+        try{
+            console.log("Creating table charge_stations");
+            await client.query(`CREATE TABLE IF NOT EXISTS charge_stations(
+                id_station SERIAL PRIMARY KEY,
+                operator TEXT NOT NULL,
+                location TEXT NOT NULL,
+                district TEXT NOT NULL,
+                year INT NOT NULL,
+                n_charging_points INT NOT NULL,
+                n_charging_points_available INT NOT NULL,
+                state TEXT NOT NULL,
+                owner TEXT NOT NULL,
+                point GEOMETRY(Point, 4326) NOT NULL
+            )`);
+            console.log("Table charge_stations created");   
+        }
+        catch (e) {
+            console.error(e);
+            return e;
+        }
+    }
+    
+    const initialize_charge_stations_table = async (client) => {
+        try{
+            await create_charge_stations_table(client);
+            console.log("Initializing table charge_stations");
+            const filePath = path.join(__dirname, "/../files/colonnine-elettriche.geojson");
+            const file = fs.readFileSync(filePath, 'utf8');
+            var features = JSON.parse(file).features;
+            for (var i = 0; i < features.length; i++) {
+                var properties = features[i].properties;
+                const geom = `${features[i].geometry.coordinates[0]} ${features[i].geometry.coordinates[1]}`;
+                await client.query(`INSERT INTO charge_stations (operator, location, district, year, n_charging_points, n_charging_points_available, state, owner, point) VALUES ('${properties.operatore}', '${properties.indirizzo}', '${properties.quartiere}', ${properties.anno}, ${properties.numstalli}, ${properties.numstalli}, '${properties.stato}', '${properties.proprieta}', ST_GeomFromText('POINT(${geom})', 4326))`);
+            }
+            console.log("Table charge_stations initialized");
+        }
+        catch (e) {
+            console.error(e);
+            return e;
+        }
+    }
     
 /**
      * THis function check if the user exists in the database

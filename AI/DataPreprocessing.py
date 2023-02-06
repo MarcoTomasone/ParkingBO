@@ -2,6 +2,7 @@ import pandas as pd
 
 def preprocessing():
     df = pd.read_csv('./supports/har_dataset.csv', sep=';', encoding='utf-8')
+    print(df)
     df = df[(df['target'] == 'Car') | (df['target'] == 'Walking')]
     #0 = Car & 1 = Walinkg
     for index, row in df.iterrows():
@@ -21,3 +22,4 @@ def preprocessing():
 
     return X,y
 
+preprocessing()
