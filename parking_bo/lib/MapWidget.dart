@@ -1,8 +1,9 @@
-import 'dart:ffi';
+import 'package:ParkingBO/utils/CollectionSensor.dart';
 import 'package:ParkingBO/utils/SensorsClass.dart';
 import 'package:ParkingBO/utils/httpRequest.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_map/flutter_map.dart'; // Suitable for most situations
 import 'package:flutter_map/plugin_api.dart'; // Only import if required functionality is not exposed by default
 import 'package:flutter_sensors/flutter_sensors.dart';
@@ -25,6 +26,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'utils/SaveFile.dart';
 import './utils/SensorsClass.dart';
+import 'utils/CollectionAxis.dart';
 
 final LocationSettings locationSettings = LocationSettings(
   accuracy: LocationAccuracy.high,
@@ -65,22 +67,21 @@ class _MapWidgetState extends State<MapWidget> {
   List<Map<String, double>> uAccelerometerList = [];
   List<SensorClass> general = [];
 
-  void updateCurrentActivity(ar.ActivityType activityType) {
-    List<Map<String, String>> target = [{
-      "expected": userActivitySel.toString(),
-      "detected": activityType.toString()
-    }];
+  CollectionSensor meanList = CollectionSensor();
+  CollectionSensor stdList = CollectionSensor();
+  CollectionSensor maxList = CollectionSensor();
+  CollectionSensor minList = CollectionSensor();
 
-    SensorClass list = SensorClass(
-        List.from(accelerometerList),
-        List.from(gyroscopeList),
-        List.from(magnetometerList),
-        List.from(uAccelerometerList),
-        target);
-    accelerometerList = [];
-    gyroscopeList = [];
-    magnetometerList = [];
-    uAccelerometerList = [];
+  void updateCurrentActivity(ar.ActivityType activityType) {
+    List<Map<String, String>> target = [
+      {
+        "expected": userActivitySel.toString(),
+        "detected": activityType.toString()
+      }
+    ];
+
+    
+    SensorClass list = SensorClass( maxList,minList,stdList,meanList,target);
 
     general.add(list);
     print(general);
@@ -216,46 +217,49 @@ class _MapWidgetState extends State<MapWidget> {
   Future<void> listen_sensor() async {
     print("=====================Start Listen Sensor=====================");
 
+    CollectionSensor collection = new CollectionSensor();
     accel = accelerometerEvents.listen((AccelerometerEvent event) {
-      accelerometerList.add({'x': event.x, 'y': event.y, 'z': event.z});
-      accel?.pause();
+      collection.addAccelerometerList(event.x, event.y, event.z);
+      //accelerometerList.add({'x': event.x, 'y': event.y, 'z': event.z});
+      //accel?.pause();
     });
     // [AccelerometerEvent (x: 0.0, y: 9.8, z: 0.0)]
 
     userAccelerometer =
         userAccelerometerEvents.listen((UserAccelerometerEvent event) {
-      uAccelerometerList.add({'x': event.x, 'y': event.y, 'z': event.z});
-      userAccelerometer?.pause();
+      collection.addUAccelerometerList(event.x, event.y, event.z);
+      //uAccelerometerList.add({'x': event.x, 'y': event.y, 'z': event.z});
+      //userAccelerometer?.pause();
     });
     // [UserAccelerometerEvent (x: 0.0, y: 0.0, z: 0.0)]
 
     gyro = gyroscopeEvents.listen((GyroscopeEvent event) {
-      gyroscopeList.add({'x': event.x, 'y': event.y, 'z': event.z});
-      gyro?.pause();
+      collection.addGyroscopeList(event.x, event.y, event.z);
+
+      //gyroscopeList.add({'x': event.x, 'y': event.y, 'z': event.z});
+      ///gyro?.pause();
     });
     // [GyroscopeEvent (x: 0.0, y: 0.0, z: 0.0)]
 
     magnetometer = magnetometerEvents.listen((MagnetometerEvent event) {
-      magnetometerList.add({'x': event.x, 'y': event.y, 'z': event.z});
-      magnetometer?.pause();
+      collection.addMagnetometerList(event.x, event.y, event.z);
+      //magnetometerList.add({'x': event.x, 'y': event.y, 'z': event.z});
+      //magnetometer?.pause();
     });
 
     if (timer == null) {
       timer = Timer.periodic(Duration(seconds: 1), (timer) {
-        gyro?.resume();
+        /*gyro?.resume();
         magnetometer?.resume();
         userAccelerometer?.resume();
-        accel?.resume();
+        accel?.resume();*/
+
+        collection.step(maxList, minList, meanList, stdList);
       });
     }
   }
 
   void stop_sensor() {
-    print("accelerometerList: " + accelerometerList.length.toString());
-    print("uAccelerometerList: " + uAccelerometerList.length.toString());
-    print("gyroscopeList: " + gyroscopeList.length.toString());
-    print("magnetometerList: " + magnetometerList.length.toString());
-
     print("=======================Stop Listen Sensor====================");
     accel?.cancel();
     userAccelerometer?.cancel();
