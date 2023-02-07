@@ -13,10 +13,11 @@ import 'dart:developer' as dev;
  * This enum is used to define the type of the transition
  */
 enum ParkingType {
-  UNKNOWN,
   ENTERING,
   EXITING
 }
+
+
 
 /**
  * This function is used to do the call to the server

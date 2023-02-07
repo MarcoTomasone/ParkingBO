@@ -66,17 +66,22 @@ class _MapWidgetState extends State<MapWidget> {
   List<SensorClass> general = [];
 
   void updateCurrentActivity(ar.ActivityType activityType) {
-    List<String> target = [userActivitySel.toString(), activityType.toString()];
+    List<Map<String, String>> target = [{
+      "expected": userActivitySel.toString(),
+      "detected": activityType.toString()
+    }];
+
     SensorClass list = SensorClass(
         List.from(accelerometerList),
         List.from(gyroscopeList),
         List.from(magnetometerList),
         List.from(uAccelerometerList),
-        List.from(target));
+        target);
     accelerometerList = [];
     gyroscopeList = [];
     magnetometerList = [];
     uAccelerometerList = [];
+
     general.add(list);
     print(general);
     if (currentActivity == ar.ActivityType.IN_VEHICLE &&
@@ -138,16 +143,20 @@ class _MapWidgetState extends State<MapWidget> {
 
   //Get markers from database and show them on map
   Future<void> drawMarkersOnMap() async {
-    Map<String, dynamic> chargers  = await getChargingStations();
-    for(var element in chargers["chargers"]){
+    Map<String, dynamic> chargers = await getChargingStations();
+    for (var element in chargers["chargers"]) {
       setState(() {
-         markers.add(
-          Marker( point: LatLng(element["y"], element["x"]), 
-                  builder: (ctx) => Icon(
-                      Icons.location_pin,
-                      color: element["n_charging_points_available"] > 2 ? Colors.green : Colors.red, //TODO: change control to > 0 when the database will be updated
-                    )),
-         );
+        markers.add(
+          Marker(
+              point: LatLng(element["y"], element["x"]),
+              builder: (ctx) => Icon(
+                    Icons.location_pin,
+                    color: element["n_charging_points_available"] > 2
+                        ? Colors.green
+                        : Colors
+                            .red, //TODO: change control to > 0 when the database will be updated
+                  )),
+        );
       });
     }
   }
@@ -182,7 +191,7 @@ class _MapWidgetState extends State<MapWidget> {
     activityRecognition = new ActivityRecognition(updateCurrentActivity);
     drawPolygonsOnMap();
     createLocationListener();
-    drawMarkersOnMap();
+    //drawMarkersOnMap();
     //testing functions
     //call_function(ParkingType.UNKNOWN, currentLocation);
     //get_parkings(currentLocation);
@@ -217,7 +226,6 @@ class _MapWidgetState extends State<MapWidget> {
         userAccelerometerEvents.listen((UserAccelerometerEvent event) {
       uAccelerometerList.add({'x': event.x, 'y': event.y, 'z': event.z});
       userAccelerometer?.pause();
-
     });
     // [UserAccelerometerEvent (x: 0.0, y: 0.0, z: 0.0)]
 
