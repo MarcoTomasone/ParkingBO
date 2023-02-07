@@ -11,13 +11,14 @@ import 'package:flutter_activity_recognition/flutter_activity_recognition.dart';
 //Per fare localhost su real mobile ci va l'ip del computer su cui fate girare il server
 //Per fare localhost sull'emulatore dovrebbe andare il seguente ip = 10.0.2.2
 const url = 'http://192.168.146.34:8000';
+const baseURL = "192.168.50.149:8000";
 
 /**
  * This function is used to send a transition to the server
  */
 Future<String?> sendTransition(String? id, ParkingType type, LatLng position) async {
   final request = {'id_user': id, 'type': type.name, 'position': position.toJson()};
-  final response = await http.post(Uri.parse('${url}/sendTransition'),
+  final response = await http.post(Uri.parse('http://${baseURL}/sendTransition'),
       body: json.encode(request),
       headers: {
         "Content-Type": "application/json",
@@ -50,7 +51,7 @@ Future<int?> getParkings(LatLng position) async {
   queryParameters.forEach((key, value) => stringQueryParameters[key] = value.toString());
   dev.log(stringQueryParameters.toString());
 
-  final uri = Uri.http("192.168.146.34:8000", '/getParkingsFromPosition', stringQueryParameters);
+  final uri = Uri.http(baseURL, '/getParkingsFromPosition', stringQueryParameters);
   final response = await http.get(uri, headers: {
     HttpHeaders.contentTypeHeader: 'application/json',
   });
@@ -74,7 +75,7 @@ Future<int?> getParkings(LatLng position) async {
 }
 
 Future<Map<String, dynamic>> getChargingStations() async {
-    final uri = Uri.http("192.168.50.149:8000", '/e-chargers');
+    final uri = Uri.http(baseURL, '/e-chargers');
     final response = await http.get(uri);
     if (response.statusCode == 200) {
       // If the server did return a 200 CREATED response,
@@ -86,5 +87,7 @@ Future<Map<String, dynamic>> getChargingStations() async {
       throw Exception('Failed to get charging stations');
     }
   }
+
+
 
 

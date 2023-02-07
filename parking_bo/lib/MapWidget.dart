@@ -326,6 +326,7 @@ class _MapWidgetState extends State<MapWidget> {
                                 ? MaterialStateProperty.all(Colors.green)
                                 : MaterialStateProperty.all(Colors.blue)),
                     onPressed: () {
+                      sendTransition(null, ParkingType.ENTERING, currentLocation);
                       setState(() {
                         userActivitySel = userActivity.WALKING;
                       });

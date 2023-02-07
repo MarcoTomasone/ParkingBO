@@ -14,6 +14,7 @@ module.exports = {
                 //if user is not in the database, insert it
                 if(id_user == null) {
                     const result = await databasepg.insert_activity(parking_type, position);
+                    console.log(result)
                     if(result instanceof Error) {
                         //if the user is not in a parking zone, return an error
                         if(result.message == "Zone not found")
@@ -22,8 +23,9 @@ module.exports = {
                             await res.status(400).send("Bad request");
                         return;
                     }
-                    else
+                    else {
                         id_user = result; 
+                    }
                 }
                 //else update it
                 else {
