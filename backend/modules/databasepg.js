@@ -87,7 +87,12 @@ module.exports = {
             //insert the event in history table
             await insert_event_history(parking_type, zone, position);
             await update_parkings(parking_type, zone);
-            return id_user; //return the id to attach to the app
+            if(parking_type == "ENTERING")
+                var charge_station = await module.exports.checkNearEChargers(position);
+                console.log(charge_station[0].id);
+                if(charge_station[0].id != null)
+                    return {id_user, charge_station}; //return the id to attach to the app
+            return id_user;
         } catch (e) {
             console.error(e);
             return e;
@@ -123,6 +128,10 @@ module.exports = {
                 result = await module.exports.insert_activity(parking_type, position); 
                 //TO DO: verificare di mandare l'id al cellulare (lo mandiamo a prescindere)
             const id_user = result.rows[0].id_user;
+            if(parking_type == "ENTERING")
+                var charge_station = await module.exports.checkNearEChargers(position);
+                if(charge_station.rows[0].id_station != null)
+                    return {id_user, charge_station}; //return the id to attach to the app
             return id_user;
         } catch (e) {
             console.error(e);
@@ -402,6 +411,7 @@ module.exports = {
 
     /**
      * Function that returns the e-chargers near the user if exists, null else 
+     * parameter 3857 in query is the projection of the map to obtain results in meters
      * @param {[lat, long]} position is the position of the user
      * @returns the e-chargers near the user if exists, null else
      */
@@ -410,7 +420,15 @@ module.exports = {
         await client.connect();
         try {
             const geom = `${position[0]} ${position[1]}`;
-            const result = await client.query(`SELECT id_station as id, n_charging_points_available, ST_X(point) as x, ST_Y(point) as y FROM charge_stations WHERE ST_DWithin(point, ST_GeomFromText('POINT(${geom})', 4326), 5, true)`);
+            const result = await client.query(
+                `SELECT  id_station as id, n_charging_points_available, ST_X(point) as x, ST_Y(point) as y, 
+                    ST_Distance(
+                    ST_TRANSFORM(point, 3857),
+                    ST_TRANSFORM(ST_GeomFromText('POINT(${geom})', 4326), 3857)) * cosd(42.3521) as distance
+                FROM charge_stations 
+                WHERE ST_DWithin(point, ST_GeomFromText('POINT(${geom})', 4326), 150, true)
+                ORDER BY distance ASC
+                LIMIT 1`);
             const echargers = result.rows;
             return echargers;
         } catch (e) {
@@ -627,7 +645,7 @@ module.exports = {
             for (var i = 0; i < features.length; i++) {
                 var properties = features[i].properties;
                 const geom = `${features[i].geometry.coordinates[0]} ${features[i].geometry.coordinates[1]}`;
-                await client.query(`INSERT INTO charge_stations (operator, location, district, year, n_charging_points, n_charging_points_available, state, owner, point) VALUES ('${properties.operatore}', '${properties.indirizzo}', '${properties.quartiere}', ${properties.anno}, ${properties.numstalli}, ${properties.numstalli}, '${properties.stato}', '${properties.proprieta}', ST_GeomFromText('POINT(${geom})', 4326))`);
+                await client.query(`INSERT INTO charge_stations (operator, location, district, year, n_charging_points, n_charging_points_available, state, owner, point) VALUES ('${properties.operatore}', '${properties.ubicazione}', '${properties.quartiere}', ${properties.anno}, ${properties.numstalli}, ${properties.numstalli}, '${properties.stato}', '${properties.proprieta}', ST_GeomFromText('POINT(${geom})', 4326))`);
             }
             console.log("Table charge_stations initialized");
         }
@@ -693,7 +711,7 @@ const update_parkings = async (parking_type, zone) => {
     try {
         if(parking_type == 'ENTERING') {
             //if the user is entering in a parking, update the parking number in the zone table
-            await client.query(`UPDATE zones SET available_parking = available_parking - 1 WHERE id_zone = $1`, [zone]);
+            await client.query(`UPDATE zones SET available_parking = available_parking - 1 WHERE id_zone = $1`, [zone]); 
         }
         else {
             //if the user is exiting from a parking, update the parking number in the zone table
@@ -712,17 +730,17 @@ const update_parkings = async (parking_type, zone) => {
  * @param {string} parking_type is the type of parking (ENTERING, EXITING)
  * @param {int} zone is the zone in which the user is
  */
-const update_charging_station = async (parking_type, zone) => {
+const update_charging_station = async (parking_type, id_station) => {
     const client = new Client(configuration);
     await client.connect();
     try {
         if(parking_type == 'ENTERING') {
             //if the user is entering in a parking, update the parking number in the zone table
-            await client.query(`UPDATE charge_stations SET n_charging_points_available = n_charging_points_available - 1 WHERE id_station = $1`, [zone]);
+            await client.query(`UPDATE charge_stations SET n_charging_points_available = n_charging_points_available - 1 WHERE id_station = $1`, [id_station]);
         }
         else {
             //if the user is exiting from a parking, update the parking number in the zone table
-            await client.query(`UPDATE charge_stations SET n_charging_points_available = n_charging_points_available + 1 WHERE id_station = $1`, [zone]);
+            await client.query(`UPDATE charge_stations SET n_charging_points_available = n_charging_points_available + 1 WHERE id_station = $1`, [id_station]);
         }
     } catch (e) {
         console.error(e);
