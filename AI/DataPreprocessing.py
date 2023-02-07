@@ -1,22 +1,27 @@
 import pandas as pd
+from sklearn.preprocessing import MinMaxScaler
 
-def preprocessing():
-    df = pd.read_csv('./supports/har_dataset.csv', sep=';', encoding='utf-8')
-    df = df[(df['target'] == 'Car') | (df['target'] == 'Walking')]
-    #0 = Car & 1 = Walinkg
-    for index, row in df.iterrows():
-        row['target'] = 0 if(row['target'] == 'Car') else 1
-        df.at[index, 'target'] = row['target']
+dataset = pd.read_csv('./supports/har_dataset.csv', sep=';', encoding='utf-8', index_col=False) # Read the dataset using ; as separator and utf-8 encoding
+dataset = dataset[(dataset['target'] == 'Car') | (dataset['target'] == 'Walking')] # Filter the dataset to keep only Car and Walking
+dataset['target'] = dataset['target'].map({'Car': 0, 'Walking': 1}) # Map the target values to 0 and 1
 
-    X = df.drop(['target'], axis=1)
-    y = df['target']
-    y=y.astype('int')
+print(dataset.shape)
+# Drop all the rows with NaN values
+dataset.dropna(thresh=2, subset=["android.sensor.gyroscope#mean", "android.sensor.gyroscope#min", "android.sensor.gyroscope#max","android.sensor.gyroscope#std"], inplace=True) 
+dataset.dropna(thresh=2, subset=["android.sensor.gyroscope_uncalibrated#mean", "android.sensor.gyroscope_uncalibrated#min", "android.sensor.gyroscope_uncalibrated#max","android.sensor.gyroscope_uncalibrated#std"], inplace=True)
+print(dataset.shape) #Losing 5500 rows
 
-    for column in X:
-        mean_value = X[column].mean()
-        X[column].fillna(value=mean_value, inplace=True)
+# https://stackoverflow.com/questions/18689823/pandas-dataframe-replace-nan-values-with-average-of-columns
+for i in dataset.columns[dataset.isnull().any(axis=0)]:     #---Applying Only on variables with NaN values
+    dataset[i].fillna(dataset[i].mean(),inplace=True)
 
-    X = X.dropna()
-    y = y.dropna()
 
-    return X,y
+dataset.to_csv('./supports/har_dataset_preprocessedUnscaled.csv', sep=',', encoding='utf-8', index=False) # Save the filtered dataset
+dataset.to_excel('./supports/har_dataset_preprocessedUnscaled.xlsx') # Save the filtered dataset
+
+scaler = MinMaxScaler() # Create a MinMaxScaler object
+
+df_scaled = scaler.fit_transform(dataset.to_numpy())
+df = pd.DataFrame(df_scaled, columns=dataset.columns)
+df.to_csv('./supports/har_dataset_preprocessedScaled.csv', sep=',', encoding='utf-8', index=False) # Save the filtered dataset
+df.to_excel('./supports/har_dataset_preprocessedScaled.xlsx') # Save the filtered dataset
