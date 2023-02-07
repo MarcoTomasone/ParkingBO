@@ -15,7 +15,7 @@ abstract class SaveFile {
   }
 
   static Future<String> get _localPath async {
-    final directory = await getApplicationDocumentsDirectory();
+    final directory = await getApplicationDocumentsDirectory(); //getExternalStorageDirectory();
     print(directory.path);
     return directory.path;
   }
