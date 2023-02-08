@@ -1,9 +1,11 @@
+import 'dart:convert';
 import 'dart:ffi';
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_sensors/flutter_sensors.dart';
 import 'dart:async';
 import 'dart:developer' as dev; //Just for debug
+import 'utils/SaveFile.dart';
 
 class SensorRecognition {
 
@@ -19,6 +21,7 @@ class SensorRecognition {
   List<double> _accelerometerMagnitude = [];
   List<double> _gyroscopeMagnitude = [];
   List<double> _gyroscopeUncalibratedMagnitude = [];
+  List<Map<String, dynamic>> dataset = [];
  
   SensorRecognition()  {
       dev.log("SensorRecognition constructor");
@@ -126,6 +129,8 @@ class SensorRecognition {
     _stopAccelerometer();
     _stopGyroscope();
     _stopGyroscopeUncalibrated();
+    SaveFile.writeToFile(jsonEncode(dataset));
+    
   }
 
   //Function to compute Magnitude of a 3D vector
@@ -143,8 +148,7 @@ class SensorRecognition {
     return sqrt(sum / values.length);
   }
 
-
-  void toJson(String userTarget, String libTarget) {
+  void getRow(String userTarget, String libTarget) {
     
     Map<String, dynamic> row = 
     { 'accelometer#mean': _accelerometerMagnitude.reduce((a, b) => a + b) / _accelerometerMagnitude.length,
@@ -166,9 +170,6 @@ class SensorRecognition {
     _accelerometerMagnitude.clear();
     _gyroscopeMagnitude.clear();
     _gyroscopeUncalibratedMagnitude.clear();
-
+    dataset.add(row);
   }
-
-
-
 }
