@@ -150,26 +150,28 @@ class SensorRecognition {
 
   void getRow(String userTarget, String libTarget) {
     
-    Map<String, dynamic> row = 
-    { 'accelometer#mean': _accelerometerMagnitude.reduce((a, b) => a + b) / _accelerometerMagnitude.length,
-      'accelometer#max': _accelerometerMagnitude.reduce(max),
-      'accelometer#min': _gyroscopeMagnitude.reduce(min),
-      'accelometer#std': standardDeviation(_accelerometerMagnitude),
-      'gyroscope#mean': _gyroscopeMagnitude.reduce((a, b) => a + b) / _gyroscopeMagnitude.length,
-      'gyroscope#max': _gyroscopeMagnitude.reduce(max),
-      'gyroscope#min': _gyroscopeMagnitude.reduce(min),
-      'gyroscope#std': standardDeviation(_gyroscopeUncalibratedMagnitude),
-      'gyroscopeUncalibrated#mean': _gyroscopeUncalibratedMagnitude.reduce((a, b) => a + b) / _gyroscopeUncalibratedMagnitude.length,
-      'gyroscopeUncalibrated#max': _gyroscopeUncalibratedMagnitude.reduce(max),
-      'gyroscopeUncalibrated#min': _gyroscopeUncalibratedMagnitude.reduce(min),
-      'gyroscopeUncalibrated#std':  standardDeviation(_gyroscopeUncalibratedMagnitude),
-      'userTarget': userTarget,
-      'libTarget' : libTarget,
-    };
+    if(_accelerometerMagnitude.length > 0 && _gyroscopeMagnitude.length > 0 && _gyroscopeUncalibratedMagnitude.length > 0){
+      Map<String, dynamic> row = 
+      { 'accelometer#mean': _accelerometerMagnitude.reduce((a, b) => a + b) / _accelerometerMagnitude.length,
+        'accelometer#max': _accelerometerMagnitude.reduce(max),
+        'accelometer#min': _gyroscopeMagnitude.reduce(min),
+        'accelometer#std': standardDeviation(_accelerometerMagnitude),
+        'gyroscope#mean': _gyroscopeMagnitude.reduce((a, b) => a + b) / _gyroscopeMagnitude.length,
+        'gyroscope#max': _gyroscopeMagnitude.reduce(max),
+        'gyroscope#min': _gyroscopeMagnitude.reduce(min),
+        'gyroscope#std': standardDeviation(_gyroscopeUncalibratedMagnitude),
+        'gyroscopeUncalibrated#mean': _gyroscopeUncalibratedMagnitude.reduce((a, b) => a + b) / _gyroscopeUncalibratedMagnitude.length,
+        'gyroscopeUncalibrated#max': _gyroscopeUncalibratedMagnitude.reduce(max),
+        'gyroscopeUncalibrated#min': _gyroscopeUncalibratedMagnitude.reduce(min),
+        'gyroscopeUncalibrated#std':  standardDeviation(_gyroscopeUncalibratedMagnitude),
+        'userTarget': userTarget,
+        'libTarget' : libTarget,
+      };
 
-    _accelerometerMagnitude.clear();
-    _gyroscopeMagnitude.clear();
-    _gyroscopeUncalibratedMagnitude.clear();
-    dataset.add(row);
+      _accelerometerMagnitude.clear();
+      _gyroscopeMagnitude.clear();
+      _gyroscopeUncalibratedMagnitude.clear();
+      dataset.add(row);
+    }
   }
 }
