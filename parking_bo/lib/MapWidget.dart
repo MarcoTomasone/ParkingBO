@@ -24,6 +24,7 @@ import 'package:flutter_activity_recognition/flutter_activity_recognition.dart'
 import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:async';
 import 'dart:convert';
+import 'SensorRecognition.dart';
 import 'utils/SaveFile.dart';
 import './utils/SensorsClass.dart';
 import 'utils/CollectionAxis.dart';
@@ -51,10 +52,10 @@ class _MapWidgetState extends State<MapWidget> {
   int? freeParking = 0;
   var id_user = null;
   ar.ActivityType currentActivity = ar.ActivityType.UNKNOWN;
-  LatLng currentLocation =
-      LatLng(44.493754, 11.343095); //Coordinates of Bologna
+  LatLng currentLocation = LatLng(44.493754, 11.343095); //Coordinates of Bologna
   late CenterOnLocationUpdate _centerOnLocationUpdate;
   late ActivityRecognition activityRecognition;
+  late SensorRecognition sensorRecognition;
   Timer? timer;
   StreamSubscription? accel;
   StreamSubscription? gyro;
@@ -84,7 +85,7 @@ class _MapWidgetState extends State<MapWidget> {
     SensorClass list = SensorClass( maxList,minList,stdList,meanList,target);
 
     general.add(list);
-    print(general);
+    //print(general);
     if (currentActivity == ar.ActivityType.IN_VEHICLE &&
         activityType == ar.ActivityType.WALKING) {
       Fluttertoast.showToast(
@@ -119,6 +120,8 @@ class _MapWidgetState extends State<MapWidget> {
     setState(() {
       currentActivity = activityType;
     });
+
+    sensorRecognition.toJson(userActivitySel.toString(), activityType.toString());
   }
 
   Future<void> drawPolygonsOnMap() async {
@@ -190,8 +193,10 @@ class _MapWidgetState extends State<MapWidget> {
     _centerOnLocationUpdate = CenterOnLocationUpdate.always;
     _getPermissionLocation();
     activityRecognition = new ActivityRecognition(updateCurrentActivity);
+    sensorRecognition = new SensorRecognition();
     drawPolygonsOnMap();
     createLocationListener();
+
     //drawMarkersOnMap();
     //testing functions
     //call_function(ParkingType.UNKNOWN, currentLocation);
@@ -202,6 +207,7 @@ class _MapWidgetState extends State<MapWidget> {
   dispose() {
     super.dispose();
     activityRecognition.dispose();
+    sensorRecognition.dispose();
   }
 
   IconData getMarkerType() {
@@ -214,6 +220,7 @@ class _MapWidgetState extends State<MapWidget> {
       return Icons.my_location; //CASE: Still, Unknown
   }
 
+  /*
   Future<void> listen_sensor() async {
     print("=====================Start Listen Sensor=====================");
 
@@ -267,7 +274,7 @@ class _MapWidgetState extends State<MapWidget> {
     magnetometer?.cancel();
 
     SaveFile.writeToFile(jsonEncode(general));
-  }
+  } */
 
   @override
   Widget build(BuildContext context) {
@@ -326,7 +333,7 @@ class _MapWidgetState extends State<MapWidget> {
                       setState(() {
                         start_listen = !start_listen;
                       });
-                      start_listen ? listen_sensor() : stop_sensor();
+                      //start_listen ? listen_sensor() : stop_sensor();
                     },
                     child: start_listen
                         ? const Text('Stop Listen')
