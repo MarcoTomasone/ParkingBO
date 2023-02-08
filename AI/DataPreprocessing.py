@@ -12,7 +12,7 @@ dataset.dropna(thresh=2, subset=["android.sensor.gyroscope_uncalibrated#mean", "
 print(dataset.shape) #Losing 5500 rows
 
 # https://stackoverflow.com/questions/18689823/pandas-dataframe-replace-nan-values-with-average-of-columns
-for i in dataset.columns[dataset.isnull().any(axis=0)]:     #---Applying Only on variables with NaN values
+for i in dataset.columns[dataset.isnull().any(axis=0)]:     #Applying Only on variables with NaN values
     dataset[i].fillna(dataset[i].mean(),inplace=True)
 
 
