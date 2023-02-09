@@ -259,7 +259,7 @@ class _MapWidgetState extends State<MapWidget> {
                                 : MaterialStateProperty.all(Colors.blue)),
                     onPressed: () {
                       dev.log("STILL");
-                      sendActivity(ParkingType.ENTERING, LatLng(44.496462, 11.355446), context);
+                      sendActivity(ParkingType.EXITING, LatLng(44.496462, 11.355446), context);
                       //sendActivity(ParkingType.ENTERING, currentLocation, context);
                       setState(() {
                         userActivitySel = userActivity.STILL;
@@ -275,8 +275,7 @@ class _MapWidgetState extends State<MapWidget> {
                                 ? MaterialStateProperty.all(Colors.green)
                                 : MaterialStateProperty.all(Colors.blue)),
                     onPressed: () {
-                      sendTransition(
-                          null, ParkingType.ENTERING, currentLocation);
+                      sendActivity(ParkingType.ENTERING, LatLng(44.496462, 11.355446), context);
                       setState(() {
                         userActivitySel = userActivity.WALKING;
                       });

@@ -1,22 +1,5 @@
 const { Client } = require('pg');
-const fs = require('fs');
-const path = require('path');
-const { ClientRequest } = require('http');
-const create_configuration = {
-    host: 'localhost',
-    user: 'postgres',
-    port: 5432,
-    password: 'root',
-   
-}
-
-const configuration = {
-    host: 'localhost',
-    user: 'postgres',
-    port: 5432,
-    password: 'root',
-    database: 'user_activity',
-}
+const { QUERY_CONFIGURATION } = require( './Configurations');
 
 /*
 Per resettare l'autoincrement di una tabella
@@ -27,46 +10,7 @@ SELECT setval(pg_get_serial_sequence('user_events', 'id_user'), 1);
 */
 
 
-module.exports = {
-    /**
-     * This function create the database if it doesn't exist
-     * @param {int} total_parking_zone1 the number of parking in zone 1
-     * @returns true if the database is created, false if it already exists
-     * @throws an error if the database cannot be created
-     */
-    create_database: async (total_parking_zone1) => {
-        const client = new Client(create_configuration);
-        const tableClient = new Client(configuration);
-        await client.connect();
-        try {
-            console.log("Trying to creating Database");
-            await client.query(`CREATE DATABASE User_Activity`);
-            await client.end();
-            await tableClient.connect();
-            await tableClient.query("CREATE EXTENSION postgis;");
-            await initialize_zone_table(total_parking_zone1, tableClient);
-            await initialize_charge_stations_table(tableClient);
-            await create_history_table(tableClient);
-            await create_user_events_table(tableClient);
-            await create_parking_requests_table(tableClient);
-            console.log("Database Created");
-            return true;
-        }
-        catch (e) {
-            //If the database already exists, return false
-            if (e.code === '42P04') {
-                console.log("Database Already Exists")
-                return false;
-            }
-            else {
-                throw e;
-            }
-        } 
-        finally {
-            await tableClient.end();
-        }
-    },
-    
+module.exports = { 
     /**
      * This function insert a new user activity in the database
      * @param {string} parking_type is the type of parking (ENTERING or EXITING)
@@ -74,7 +18,7 @@ module.exports = {
      * @returns user_id of the inserted user
      */
     insert_activity: async (parking_type, position) => {
-        const client = new Client(configuration);
+        const client = new Client(QUERY_CONFIGURATION);
         await client.connect();
         const geom = `${position[0]} ${position[1]}`;
         try {
@@ -109,7 +53,7 @@ module.exports = {
      * @returns user_id of the updated user 
      */
     update_activity: async (id, parking_type, position) => {
-        const client = new Client(configuration);
+        const client = new Client(QUERY_CONFIGURATION);
         await client.connect();
         const geom = `${position[0]} ${position[1]}`;
         try {
@@ -120,20 +64,26 @@ module.exports = {
                 const zone = await module.exports.find_zone(position);
                 if(zone instanceof Error)
                     throw new Error(zone.message)
-                result = await client.query(`UPDATE user_events SET parking_type = $1, zone = $2, position = ST_GeomFromText('POINT(${geom})', 4326) WHERE id_user = $3 RETURNING id_user`, [parking_type, zone, id]);
+                result = await client.query(`UPDATE user_events SET parking_type = $1, zone = $2, position = ST_GeomFromText('POINT(${geom})', 4326) WHERE id_user = $3 RETURNING id_user, id_station `, [parking_type, zone, id]);
                 await insert_event_history(parking_type, zone, position);
                 await update_parkings(parking_type, zone);
                 id_user = result.rows[0].id_user;
+                console.log("TYPE: " + parking_type);
+                console.log("RESULT");
+                console.log(result.rows[0]);
+                if(result.rows[0].id_station != null)
+                    await update_charging_station( parking_type, result.rows[0].id_station);
             }
             else{
                 result = await module.exports.insert_activity(parking_type, position); 
                 //TO DO: verificare di mandare l'id al cellulare (lo mandiamo a prescindere)
                  id_user = result.id_user;
             }
-            if(parking_type == "ENTERING")
+            if(parking_type == "ENTERING"){
                 var charge_station = await module.exports.checkNearEChargers(position);
                 if(charge_station[0].id != null)
-                    return {id_user, charge_station}; //return the id to attach to the app
+                    return {id_user, charge_station};
+            } 
             return id_user;
         } catch (e) {
             console.error(e);
@@ -149,7 +99,7 @@ module.exports = {
      * @param {int} id is the id of the user
      */
     delete_activity: async (id) => {
-        const client = new Client(configuration);
+        const client = new Client(QUERY_CONFIGURATION);
         await client.connect();
         try {
             await client.query(`DELETE FROM user_events WHERE id_user = $1;`, [id]);
@@ -167,7 +117,7 @@ module.exports = {
      * @param {[lat, long]} position is the position of the user
      * */
     insertParkingRequest: async (id, position, zone) => {
-        const client = new Client(configuration);
+        const client = new Client(QUERY_CONFIGURATION);
         await client.connect();
         if(typeof(position) === 'string')
             position = JSON.parse(position);
@@ -188,7 +138,7 @@ module.exports = {
      * @returns all parking requests from a zone
     */
     getParkingRequestsFromZone: async (zone) => {
-        const client = new Client(configuration);
+        const client = new Client(QUERY_CONFIGURATION);
         await client.connect();
         try {
             const result = await client.query(`SELECT id_request, ST_X(position) as x, ST_Y(position) as y FROM parking_requests WHERE zone = ${zone}`);
@@ -206,7 +156,7 @@ module.exports = {
      * @returns all parking events in history table
     */
    getPointsParkingEvents: async () => {
-        const client = new Client(configuration);
+        const client = new Client(QUERY_CONFIGURATION);
         await client.connect();
         try {
             const result = await client.query(`SELECT ST_X(position) as x, ST_Y(position) as y FROM history WHERE parking_type = 'ENTERING'`);
@@ -224,7 +174,7 @@ module.exports = {
      * @returns all parking events in history table
     */
    getPointsParkingEventsGrouped: async () => {
-        const client = new Client(configuration);
+        const client = new Client(QUERY_CONFIGURATION);
         await client.connect();
         try {
             const result = await client.query(`SELECT ST_X(position) as x, ST_Y(position) as y, zone, COUNT(*) as nParking FROM history WHERE parking_type = 'ENTERING' GROUP BY x,y,zone`);
@@ -244,7 +194,7 @@ module.exports = {
      * @returns all the users in the database
     */
    getAll_users: async () => {
-        const client = new Client(configuration);
+        const client = new Client(QUERY_CONFIGURATION);
         await client.connect();
         try {
             const result = await client.query(`SELECT * FROM user_events`);
@@ -263,7 +213,7 @@ module.exports = {
      * @returns number of parkings in the zone
      */
     getParkingsFromPosition: async (position) => {
-        const client = new Client(configuration);
+        const client = new Client(QUERY_CONFIGURATION);
         await client.connect();
         try {
             const zone = await module.exports.find_zone(position);
@@ -288,7 +238,7 @@ module.exports = {
      * @returns number of parkings in the zone
     */
    getAllParkings: async () => {
-        const client = new Client(configuration);
+        const client = new Client(QUERY_CONFIGURATION);
         await client.connect();
         try {
             const result = await client.query(`SELECT available_parking FROM zones`);
@@ -309,7 +259,7 @@ module.exports = {
      * @returns number of parkings in the zone
     */
    getParkingsFromZone: async (zone) => {
-        const client = new Client(configuration);
+        const client = new Client(QUERY_CONFIGURATION);
         await client.connect();
         try {
             const result = await client.query(`SELECT available_parking FROM zones WHERE id_zone = ${zone}`);
@@ -330,7 +280,7 @@ module.exports = {
      * @returns the number of interpolated parking in the zone
     */
     getParkingsInterpolation: async (position) => {
-        const client = new Client(configuration);
+        const client = new Client(QUERY_CONFIGURATION);
         await client.connect();
         try {
             const zone = await module.exports.find_zone(position);
@@ -371,7 +321,7 @@ module.exports = {
    find_zone : async (position) => {
         if(typeof(position) === 'string')
             position = JSON.parse(position);
-        const client = new Client(configuration);
+        const client = new Client(QUERY_CONFIGURATION);
         await client.connect();
         try {
             const geom = `${position[0]} ${position[1]}`;
@@ -395,7 +345,7 @@ module.exports = {
      * @returns all the e-chargers position and number of available slots
     */
     getEChargers: async () => {
-        const client = new Client(configuration);
+        const client = new Client(QUERY_CONFIGURATION);
         await client.connect();
         try {
             const result = await client.query(`SELECT id_station as id, n_charging_points_available, ST_X(point) as x, ST_Y(point) as y FROM charge_stations`);
@@ -418,7 +368,7 @@ module.exports = {
      * @returns the e-chargers near the user if exists, null else
      */
     checkNearEChargers: async (position) => {
-        const client = new Client(configuration);
+        const client = new Client(QUERY_CONFIGURATION);
         await client.connect();
         try {
             const geom = `${position[0]} ${position[1]}`;
@@ -444,7 +394,7 @@ module.exports = {
 
 
     update_parking_event_charging_station: async (id_user, id_station) => {
-        const client = new Client(configuration);
+        const client = new Client(QUERY_CONFIGURATION);
         await client.connect();
         try {
             await client.query(`UPDATE user_events SET id_station = ${id_station} WHERE id_user = ${id_user}`);
@@ -462,219 +412,6 @@ module.exports = {
 
 /* -------------------------------------------------------UTILS-----------------------------------------------------------------------------*/
 
-/**
- * This function creates a table for the zone
- * This table has four fields
- * id_zone: the id of the zone
- * total_parking: the total number of parking in the zone
- * available_parking: the number of available parking in the zone
- * polygon: the polygon of the zone
- * @param {*} client the client of the database
-*/
-    const create_zones_table = async (client) => {
-        try {
-            await client.query(`CREATE TABLE IF NOT EXISTS zones(
-                id_zone SERIAL PRIMARY KEY,
-                total_parking INT NOT NULL,
-                available_parking INT NOT NULL,
-                polygon GEOMETRY(Polygon, 4326) NOT NULL
-                )`);
-                console.log("Table zones created");
-            }
-            catch (e) {
-                console.error(e);
-                return e;
-            }
-        }
-        
-    const transformGeojsonToPolygonList = (geojson) => {
-        //console.log(geojson.features[0].geometry.coordinates.flat(1).toString());
-        const coordinatesList = geojson.geometry.coordinates.flat(1);
-        let geom = '';
-        coordinatesList.forEach(element => {
-            geom += `${element[0]} ${element[1]}, `;
-        });
-        geom = geom.substring(0, geom.length - 2); //remove the last comma and last space
-        return geom;
-    }
-
-    /**
-     * This function inizialize the zone table, it must be called only once
-     * Takes the number of parking for zone1 and inizialize other in function of the area of others
-     * @param {int} total_parking_zone1 the number of parking in zone 1
-     * @param {*} client the client of the database
-     */
-    const initialize_zone_table = async (total_parking_zone1, client) => {
-        try {
-            //Create an empty table
-            await create_zones_table(client);
-            
-            //Get the geojson file and read it
-            const filePath = path.join(__dirname, "/../files/zone.geojson");
-            const file = fs.readFileSync(filePath, 'utf8');
-            var features = JSON.parse(file).features;
-            //Compute area of first zone
-            let coordinates = transformGeojsonToPolygonList(features[0]);
-            const polygon = `POLYGON((${coordinates}))`;
-            
-            //compute area of the polygon using ST_Area
-            const result = await client.query(`SELECT ST_Area('${polygon}') as area`);
-            const areaZone1 = result.rows[0].area;
-            const total_parking = total_parking_zone1 ;
-            const available_parking = total_parking;
-            await client.query(`INSERT INTO zones (total_parking, available_parking, polygon) VALUES (${total_parking}, ${available_parking}, ST_GeomFromText('${polygon}', 4326))`);
-            
-            for(let i = 1; i < features.length; i++) {
-                let coordinates = transformGeojsonToPolygonList(features[i]);
-                const polygon = `POLYGON((${coordinates}))`;
-                //compute area of the polygon using ST_Area
-                const result = await client.query(`SELECT ST_Area('${polygon}') as area`);
-                const area = result.rows[0].area;
-                //compute the number of parking in the zone using the area of the zone and the area of zone1
-                const total_parking = total_parking_zone1 * (area/ areaZone1);
-                const available_parking = total_parking;
-                await client.query(`INSERT INTO zones (total_parking, available_parking, polygon) VALUES (${total_parking}, ${available_parking}, ST_GeomFromText('${polygon}', 4326))`);
-            }
-            console.log("Table zones initialized");
-        }
-        catch (e) {
-            console.error(e);
-            return e;
-        }   
-    }
-        
-    /**
-     * This function creates a table for the user activity    
-     * This table has four fields:
-     * id_user: the id of the user
-     * parking_type: the type of parking (exiting, entering)
-     * position: the position of the user
-     * zone: the zone in which the user is
-     * @param {*} client the client of the database
-     */
-    const create_user_events_table = async (client) => {
-        try {
-            await client.query(`CREATE TABLE IF NOT EXISTS user_events(
-                id_user SERIAL PRIMARY KEY,
-                parking_type TEXT NOT NULL,
-                position GEOMETRY(Point, 4326) NOT NULL,
-                zone INT NOT NULL,
-                id_station INT,
-                FOREIGN KEY(zone) REFERENCES zones(id_zone),
-                FOREIGN KEY(id_station) REFERENCES charge_stations(id_station)
-            )`);
-            console.log("Table user_events created");
-        }
-        catch (e) {
-            console.error(e);
-            return e;
-        }
-    }
-
-    /**
-     * This function creates a table for the user activity
-     * This table has four fields:
-     * id_event: the id of the event to be stored in the history
-     * parking_type: the type of parking (exiting, entering)
-     * position: the position of the user
-     * zone: the zone in which the user is
-     * @param {*} client the client of the database
-     */
-    const create_history_table = async (client) => {
-        try {
-            await client.query(`CREATE TABLE IF NOT EXISTS history(
-                id_event SERIAL PRIMARY KEY,
-                parking_type TEXT NOT NULL,
-                position GEOMETRY(Point, 4326) NOT NULL,
-                zone INT NOT NULL,
-                FOREIGN KEY(zone) REFERENCES zones(id_zone)
-            )`);
-            console.log("Table history created");
-        } catch (e) {
-            console.error(e);
-            return e;
-        }
-    }
-     /**
-     * This function creates a table for parking requests 
-     * This table has three fields:
-     * id_request: the id of the request 
-     * position: the position of the user
-     * zone: the zone in which the user is
-     * @param {*} client the client of the database
-     */
-    const create_parking_requests_table = async (client) => {
-        try {
-            await client.query(`CREATE TABLE IF NOT EXISTS parking_requests(
-                id_request SERIAL PRIMARY KEY,
-                position GEOMETRY(Point, 4326) NOT NULL,
-                zone INT NOT NULL,
-                FOREIGN KEY(zone) REFERENCES zones(id_zone)
-            )`);
-            console.log("Table parking_requests created");
-        } catch (e) {
-            console.error(e);
-            return e;
-        }
-    }
-    /** 
-     * This function creates a table for the charge stations
-     * This table has nine fields:
-     * id_station: the id of the station
-     * operator: the name of electric operator of the station
-     * location: the location of the station
-     * disctrict: the district of the station
-     * year: the year of installation of the station
-     * n_charging_points: the number of charging points of the station
-     * n_charging_points_available: the number of available charging points of the station
-     * state: the state of the station
-     * owner: the owner of the station
-     * point: the position of the station
-     * @param {*} client the client of the database
-     * 
-    */
-    const create_charge_stations_table = async (client) => {
-        try{
-            console.log("Creating table charge_stations");
-            await client.query(`CREATE TABLE IF NOT EXISTS charge_stations(
-                id_station SERIAL PRIMARY KEY,
-                operator TEXT NOT NULL,
-                location TEXT NOT NULL,
-                district TEXT NOT NULL,
-                year INT NOT NULL,
-                n_charging_points INT NOT NULL,
-                n_charging_points_available INT NOT NULL,
-                state TEXT NOT NULL,
-                owner TEXT NOT NULL,
-                point GEOMETRY(Point, 4326) NOT NULL
-            )`);
-            console.log("Table charge_stations created");   
-        }
-        catch (e) {
-            console.error(e);
-            return e;
-        }
-    }
-    
-    const initialize_charge_stations_table = async (client) => {
-        try{
-            await create_charge_stations_table(client);
-            console.log("Initializing table charge_stations");
-            const filePath = path.join(__dirname, "/../files/colonnine-elettriche.geojson");
-            const file = fs.readFileSync(filePath, 'utf8');
-            var features = JSON.parse(file).features;
-            for (var i = 0; i < features.length; i++) {
-                var properties = features[i].properties;
-                const geom = `${features[i].geometry.coordinates[0]} ${features[i].geometry.coordinates[1]}`;
-                await client.query(`INSERT INTO charge_stations (operator, location, district, year, n_charging_points, n_charging_points_available, state, owner, point) VALUES ('${properties.operatore}', '${properties.ubicazione}', '${properties.quartiere}', ${properties.anno}, ${1}, ${1}, '${properties.stato}', '${properties.proprieta}', ST_GeomFromText('POINT(${geom})', 4326))`);
-            } //TODO: in query change 1 to properties.numstalli 
-            console.log("Table charge_stations initialized");
-        }
-        catch (e) {
-            console.error(e);
-            return e;
-        }
-    }
 
 /**
      * THis function check if the user exists in the database
@@ -682,7 +419,7 @@ module.exports = {
      * @returns true or false if the user exists
      */
 const check_user = async (id) => {
-    const client = new Client(configuration);
+    const client = new Client(QUERY_CONFIGURATION);
     await client.connect();
     try {
         const result = await client.query(`SELECT COUNT(1) FROM user_events WHERE id_user = ${id};`);
@@ -698,8 +435,6 @@ const check_user = async (id) => {
 };
 
 
-
-
 /**
      * This function insert a new event in history table of the database
      * @param {string} parking_type is the type of parking (ENTERING, EXITING)
@@ -707,7 +442,7 @@ const check_user = async (id) => {
      * @param {[lat, long]} position is the position of the user
      */
 const insert_event_history = async (parking_type, zone, position) => {
-    const client = new Client(configuration);
+    const client = new Client(QUERY_CONFIGURATION);
     await client.connect();
     const geom = `${position[0]} ${position[1]}`;
     try {
@@ -727,7 +462,7 @@ const insert_event_history = async (parking_type, zone, position) => {
  * @param {int} zone is the zone in which the user is
  */
 const update_parkings = async (parking_type, zone) => {
-    const client = new Client(configuration);
+    const client = new Client(QUERY_CONFIGURATION);
     await client.connect();
     try {
         if(parking_type == 'ENTERING') {
@@ -752,7 +487,7 @@ const update_parkings = async (parking_type, zone) => {
  * @param {int} zone is the zone in which the user is
  */
 const update_charging_station = async (parking_type, id_station) => {
-    const client = new Client(configuration);
+    const client = new Client(QUERY_CONFIGURATION);
     await client.connect();
     try {
         if(parking_type == 'ENTERING') {
@@ -777,7 +512,7 @@ const update_charging_station = async (parking_type, id_station) => {
  * @returns the number of parking events in the zone
  */
 const get_nParkingEvents_for_zone = async (zone) => {
-    const client = new Client(configuration);
+    const client = new Client(QUERY_CONFIGURATION);
     await client.connect();
     try {
         const result = await client.query(`SELECT (total_parking - available_parking) as nEvents FROM zones WHERE id_zone = ${zone}`);
@@ -794,7 +529,7 @@ const get_nParkingEvents_for_zone = async (zone) => {
 
 //https://en.wikipedia.org/wiki/Inverse_distance_weighting
 const parkingIDWInterpolation = async (zone) => {
-    const client = new Client(configuration);
+    const client = new Client(QUERY_CONFIGURATION);
     await client.connect();
     try {
         //Access to data through nParkEventsForZone.rows.count and nParkEventsForZone.rows.zone
@@ -834,7 +569,7 @@ const parkingIDWInterpolation = async (zone) => {
 }
 
 const computeCentroid = async (zone) => {
-    const client = new Client(configuration);
+    const client = new Client(QUERY_CONFIGURATION);
     await client.connect();
     try {
         const result = await client.query(`SELECT ST_AsText(ST_Centroid(polygon)) FROM zones WHERE id_zone = ${zone}`);
