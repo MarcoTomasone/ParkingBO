@@ -1,4 +1,4 @@
-const databasepg = require("./databasepg");
+const databasepg = require("./databaseQueries");
 
 module.exports = {
     createRoutes: (app) => {
@@ -42,7 +42,7 @@ module.exports = {
                     }
                     else{
                         id_user = result.id_user;
-                        if(result.charge_station[0].id != null)
+                        if(result.charge_station != undefined && result.charge_station[0].id != null)
                             charge_station = result.charge_station[0].id;
                     }
                 }

@@ -8,7 +8,7 @@ import 'dart:developer' as dev; //Just for debug
 import 'utils/SaveFile.dart';
 
 class SensorRecognition {
-  Duration TIME_STEP = Duration(seconds: 5);
+  Duration TIME_STEP = Duration(milliseconds: 1000);
   int GYROSCOPE_UNCALIBRATED = 16;
 
   StreamSubscription? _accelerometerSubscription = null;
@@ -146,24 +146,24 @@ class SensorRecognition {
         _gyroscopeMagnitude.length > 0 &&
         _gyroscopeUncalibratedMagnitude.length > 0) {
       Map<String, dynamic> row = {
-        'accelometer#mean': _accelerometerMagnitude.reduce((a, b) => a + b) /
+        'android.sensor.accelerometer#mean': _accelerometerMagnitude.reduce((a, b) => a + b) /
             _accelerometerMagnitude.length,
-        'accelometer#max': _accelerometerMagnitude.reduce(max),
-        'accelometer#min': _gyroscopeMagnitude.reduce(min),
-        'accelometer#std': standardDeviation(_accelerometerMagnitude),
-        'gyroscope#mean': _gyroscopeMagnitude.reduce((a, b) => a + b) /
+        'android.sensor.accelerometer#max': _accelerometerMagnitude.reduce(max),
+        'android.sensor.accelerometer#min': _gyroscopeMagnitude.reduce(min),
+        'android.sensor.accelerometer#std': standardDeviation(_accelerometerMagnitude),
+        'android.sensor.gyroscope#mean': _gyroscopeMagnitude.reduce((a, b) => a + b) /
             _gyroscopeMagnitude.length,
-        'gyroscope#max': _gyroscopeMagnitude.reduce(max),
-        'gyroscope#min': _gyroscopeMagnitude.reduce(min),
-        'gyroscope#std': standardDeviation(_gyroscopeUncalibratedMagnitude),
-        'gyroscopeUncalibrated#mean':
+        'android.sensor.gyroscope#max': _gyroscopeMagnitude.reduce(max),
+        'android.sensor.gyroscope#min': _gyroscopeMagnitude.reduce(min),
+        'android.sensor.gyroscope#std': standardDeviation(_gyroscopeUncalibratedMagnitude),
+        'android.sensor.gyroscope_uncalibrated#mean':
             _gyroscopeUncalibratedMagnitude.reduce((a, b) => a + b) /
                 _gyroscopeUncalibratedMagnitude.length,
-        'gyroscopeUncalibrated#max':
+        'android.sensor.gyroscope_uncalibrated#max':
             _gyroscopeUncalibratedMagnitude.reduce(max),
-        'gyroscopeUncalibrated#min':
+        'android.sensor.gyroscope_uncalibrated#min':
             _gyroscopeUncalibratedMagnitude.reduce(min),
-        'gyroscopeUncalibrated#std':
+        'android.sensor.gyroscope_uncalibrated#std':
             standardDeviation(_gyroscopeUncalibratedMagnitude),
         'userTarget': userTarget,
         'libTarget': libTarget,
