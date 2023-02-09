@@ -238,7 +238,7 @@ class Clustering extends React.Component<Props, State> {
             <AttributionControl position="bottomright" prefix={false} />
             {this.state.clusters}
         </MapContainer>
-        <Card sx={{backgroundColor: "rgba(28,28,28, 0.98)", borderRadius: '25px', position: 'absolute', width: 600, height: 500, top: 300, right: 50, zIndex: 2}}>
+        <Card sx={{backgroundColor: "rgba(28,28,28, 0.98)", borderRadius: '25px', position: 'absolute', width: 600, height: 250, top: 300, right: 50, zIndex: 2}}>
             <CardContent>
                 <Grid container spacing={2} sx={{marginTop: 5}}>
                     <Grid item xs={6}>
