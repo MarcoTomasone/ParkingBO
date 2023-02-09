@@ -87,11 +87,11 @@ module.exports = {
             //insert the event in history table
             await insert_event_history(parking_type, zone, position);
             await update_parkings(parking_type, zone);
-            if(parking_type == "ENTERING")
+            /*if(parking_type == "ENTERING")
                 var charge_station = await module.exports.checkNearEChargers(position);
                 console.log(charge_station[0].id);
                 if(charge_station[0].id != null)
-                    return {id_user, charge_station}; //return the id to attach to the app
+                    return {id_user, charge_station}; //return the id to attach to the app*/
             return id_user;
         } catch (e) {
             console.error(e);
@@ -128,10 +128,10 @@ module.exports = {
                 result = await module.exports.insert_activity(parking_type, position); 
                 //TO DO: verificare di mandare l'id al cellulare (lo mandiamo a prescindere)
             const id_user = result.rows[0].id_user;
-            if(parking_type == "ENTERING")
+            /*if(parking_type == "ENTERING")
                 var charge_station = await module.exports.checkNearEChargers(position);
                 if(charge_station.rows[0].id_station != null)
-                    return {id_user, charge_station}; //return the id to attach to the app
+                    return {id_user, charge_station}; //return the id to attach to the app*/
             return id_user;
         } catch (e) {
             console.error(e);
@@ -429,7 +429,7 @@ module.exports = {
                 WHERE ST_DWithin(point, ST_GeomFromText('POINT(${geom})', 4326), 150, true)
                 ORDER BY distance ASC
                 LIMIT 1`);
-            const echargers = result.rows;
+            const echargers = result.rows; //TODO: check if the result is empty
             return echargers;
         } catch (e) {
             console.error(e);
@@ -439,6 +439,32 @@ module.exports = {
             await client.end();
         }
     },
+
+    /**
+     * This function get the centroid of a multipoint
+     * @param {*} coordinates is an array of coordinates
+     * @returns the centroid of the multipoint
+     */
+    computeMultipointCentroid: async (coordinates) => {
+        const client = new Client(configuration);
+        await client.connect();
+        try {
+            let multipoint = '';
+            coordinates.forEach(element => {
+                multipoint += `${element[0]} ${element[1]}, `;
+            });
+            multipoint = multipoint.substring(0, multipoint.length - 2); //remove the last comma and last space
+            const result = await client.query(`SELECT ST_X(centroid), ST_Y(centroid) FROM ST_Centroid('MULTIPOINT ( ${multipoint} )') as centroid;`);
+            const centroid = [result.rows[0].st_x, result.rows[0].st_y];
+            return centroid;
+        } catch (e) {
+            console.error(e);
+            return e;
+        } finally {
+            client.end();
+            
+        }
+    }
 }
 
 /* -------------------------------------------------------UTILS-----------------------------------------------------------------------------*/

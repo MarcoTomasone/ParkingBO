@@ -20,7 +20,7 @@ type State = {
 };
 
 
-const pages: string[] = ['K_Means', 'Heatmap'];
+const pages: string[] = ['Clustering', 'Heatmap'];
  
 class NavBar extends React.Component<Props, State> {
     constructor(props: Props) {
