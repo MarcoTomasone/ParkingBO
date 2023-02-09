@@ -441,6 +441,23 @@ module.exports = {
             await client.end();
         }
     },
+
+
+    update_parking_event_charging_station: async (id_user, id_station) => {
+        const client = new Client(configuration);
+        await client.connect();
+        try {
+            await client.query(`UPDATE user_events SET id_station = ${id_station} WHERE id_user = ${id_user}`);
+            await update_charging_station("ENTERING", id_station);
+            return true;
+        } catch (e) {
+            console.error(e);
+            return e;
+        }
+        finally {
+            await client.end();
+        }
+    },
 }
 
 /* -------------------------------------------------------UTILS-----------------------------------------------------------------------------*/
@@ -649,8 +666,8 @@ module.exports = {
             for (var i = 0; i < features.length; i++) {
                 var properties = features[i].properties;
                 const geom = `${features[i].geometry.coordinates[0]} ${features[i].geometry.coordinates[1]}`;
-                await client.query(`INSERT INTO charge_stations (operator, location, district, year, n_charging_points, n_charging_points_available, state, owner, point) VALUES ('${properties.operatore}', '${properties.ubicazione}', '${properties.quartiere}', ${properties.anno}, ${properties.numstalli}, ${properties.numstalli}, '${properties.stato}', '${properties.proprieta}', ST_GeomFromText('POINT(${geom})', 4326))`);
-            }
+                await client.query(`INSERT INTO charge_stations (operator, location, district, year, n_charging_points, n_charging_points_available, state, owner, point) VALUES ('${properties.operatore}', '${properties.ubicazione}', '${properties.quartiere}', ${properties.anno}, ${1}, ${1}, '${properties.stato}', '${properties.proprieta}', ST_GeomFromText('POINT(${geom})', 4326))`);
+            } //TODO: in query change 1 to properties.numstalli 
             console.log("Table charge_stations initialized");
         }
         catch (e) {

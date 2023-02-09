@@ -95,6 +95,24 @@ Future<Map<String, dynamic>> getChargingStations() async {
     }
   }
 
+void useChargingStation(String id_user, int id_station) async {
+  final request = {'id_user': id_user, 'id_station': id_station};
+  final response = await http.post(Uri.parse('http://${baseURL}/updateParkingForChargingStation'),
+      body: json.encode(request),
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      });
+  if (response.statusCode == 200) {
+    // If the server did return a 200 CREATED response,
+    
+    dev.log("The user's transition was sent successfully");
+    return null;
+  } else {
+    throw Exception('Failed to send transition');
+  }
+}
+
 
 
 

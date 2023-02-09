@@ -76,7 +76,23 @@ module.exports = {
                 }
             }
         });
+
+        app.post('/updateParkingForChargingStation', async (req, res) => {
+            if(req.body.id_user == null || req.body.id_station == null) {
+                await res.status(400).send("Bad request");
+                return;
+            }
+            else {
+                const id_user = req.body.id_user;
+                const id_station = req.body.id_station;
+                const result = await databasepg.update_parking_event_charging_station(id_user, id_station);
+                
+            }
+        });
+
+
     },
+
 
 }
 
