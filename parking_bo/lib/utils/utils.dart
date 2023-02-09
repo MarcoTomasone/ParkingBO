@@ -24,13 +24,12 @@ enum ParkingType {
  * @param id_user is the id of the user
  * @param type is the type of the transition
  * */
-void call_function (ParkingType type, LatLng position) async {
+void sendActivity (ParkingType type, LatLng position, BuildContext context) async {
   final id_user = await getId();
   final response = await sendTransition(id_user, type, position);
   //If the user is in a parking zone, the id is saved in the shared preferences
-  if(response != null && response != id_user)
-      setId(response);
-  else {
+  dev.log("RESPONSE: " + response.toString());
+  if(response == null ){
     Fluttertoast.showToast(
     msg: "User is not in a parking zone",
     toastLength: Toast.LENGTH_SHORT,
@@ -39,6 +38,15 @@ void call_function (ParkingType type, LatLng position) async {
     backgroundColor: Colors.black,
     textColor: Colors.white,
     fontSize: 16.0);
+  }
+  else if (response[0] != id_user) {
+      dev.log("Received ID: " + response[0]);
+      dev.log("my ID: " + id_user.toString());
+      setId(response[0]);
+  }
+
+  if(response!=null && response[1] != -1) {
+    showElectricChargerAlertDialog(context);
   }
 }
 
@@ -58,7 +66,7 @@ void get_parkings (LatLng position) async {
   }
   else {
     Fluttertoast.showToast(
-    msg: "Numeber of parking in this zone: $response",
+    msg: "Number of parking in this zone: $response",
     toastLength: Toast.LENGTH_SHORT,
     gravity: ToastGravity.CENTER,
     timeInSecForIosWeb: 3,
@@ -112,4 +120,32 @@ Future<String?> getId() async {
   }
   else
     return id_user;
+}
+
+showElectricChargerAlertDialog(BuildContext context) {
+  // set up the buttons
+  Widget cancelButton = ElevatedButton(
+    child: Text("No"),
+    onPressed:  () {Navigator.pop(context);},
+  );
+  Widget continueButton = ElevatedButton(
+    child: Text("Yes"),
+    onPressed:  () {}, //TODO: call update position using id
+  );
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text("Detected electric charging station"),
+    content: Text("Are you using this electric charging station?"),
+    actions: [
+      cancelButton,
+      continueButton,
+    ],
+  );
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }

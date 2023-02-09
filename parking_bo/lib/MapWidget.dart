@@ -65,7 +65,7 @@ class _MapWidgetState extends State<MapWidget> {
           backgroundColor: Colors.red,
           textColor: Colors.white,
           fontSize: 16.0);
-      //call_function(ParkingType.EXITING, currentLocation);
+      //sendActivity(ParkingType.EXITING, currentLocation);
     } else if (currentActivity == ar.ActivityType.WALKING &&
         activityType == ar.ActivityType.IN_VEHICLE) {
       Fluttertoast.showToast(
@@ -76,7 +76,7 @@ class _MapWidgetState extends State<MapWidget> {
           backgroundColor: Colors.red,
           textColor: Colors.white,
           fontSize: 16.0);
-      //call_function(ParkingType.ENTERING, currentLocation);
+      //sendActivity(ParkingType.ENTERING, currentLocation);
     }
     Fluttertoast.showToast(
         msg: "New Activity Detected: " + activityType.toString(),
@@ -165,10 +165,6 @@ class _MapWidgetState extends State<MapWidget> {
     drawPolygonsOnMap();
     createLocationListener();
     drawMarkersOnMap();
-
-    //testing functions
-    //call_function(ParkingType.UNKNOWN, currentLocation);
-    //get_parkings(currentLocation);
   }
 
   @override
@@ -254,7 +250,8 @@ class _MapWidgetState extends State<MapWidget> {
                                 ? MaterialStateProperty.all(Colors.green)
                                 : MaterialStateProperty.all(Colors.blue)),
                     onPressed: () {
-                      sendTransition(null, ParkingType.ENTERING, currentLocation);
+                      sendActivity(ParkingType.ENTERING, LatLng(44.496462, 11.355446), context);
+                      //sendActivity(ParkingType.ENTERING, currentLocation, context);
                       setState(() {
                         userActivitySel = userActivity.STILL;
                       });
@@ -291,3 +288,5 @@ class _MapWidgetState extends State<MapWidget> {
     );
   }
 }
+
+

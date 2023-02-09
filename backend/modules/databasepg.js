@@ -45,10 +45,10 @@ module.exports = {
             await tableClient.connect();
             await tableClient.query("CREATE EXTENSION postgis;");
             await initialize_zone_table(total_parking_zone1, tableClient);
+            await initialize_charge_stations_table(tableClient);
             await create_history_table(tableClient);
             await create_user_events_table(tableClient);
             await create_parking_requests_table(tableClient);
-            await initialize_charge_stations_table(tableClient);
             console.log("Database Created");
             return true;
         }
@@ -82,17 +82,16 @@ module.exports = {
             const zone = await module.exports.find_zone(position);
             if(zone instanceof Error)
             throw new Error(zone.message)
-            const result = await client.query(`INSERT INTO user_events(parking_type, zone, position) VALUES($1, $2, ST_GeomFromText('POINT(${geom})', 4326)) RETURNING id_user`, [parking_type, zone]);
+            var result = await client.query(`INSERT INTO user_events(parking_type, zone, position, id_station) VALUES($1, $2, ST_GeomFromText('POINT(${geom})', 4326), null) RETURNING id_user`, [parking_type, zone]);
             const id_user = result.rows[0].id_user;
             //insert the event in history table
             await insert_event_history(parking_type, zone, position);
             await update_parkings(parking_type, zone);
             if(parking_type == "ENTERING")
                 var charge_station = await module.exports.checkNearEChargers(position);
-                console.log(charge_station[0].id);
-                if(charge_station[0].id != null)
+            if(charge_station[0].id != null)
                     return {id_user, charge_station}; //return the id to attach to the app
-            return id_user;
+            return  {id_user: id_user};
         } catch (e) {
             console.error(e);
             return e;
@@ -116,6 +115,7 @@ module.exports = {
         try {
             const exist = await check_user(id);
             let result;
+            let id_user;
             if(exist > 0) {
                 const zone = await module.exports.find_zone(position);
                 if(zone instanceof Error)
@@ -123,14 +123,16 @@ module.exports = {
                 result = await client.query(`UPDATE user_events SET parking_type = $1, zone = $2, position = ST_GeomFromText('POINT(${geom})', 4326) WHERE id_user = $3 RETURNING id_user`, [parking_type, zone, id]);
                 await insert_event_history(parking_type, zone, position);
                 await update_parkings(parking_type, zone);
+                id_user = result.rows[0].id_user;
             }
-            else
+            else{
                 result = await module.exports.insert_activity(parking_type, position); 
                 //TO DO: verificare di mandare l'id al cellulare (lo mandiamo a prescindere)
-            const id_user = result.rows[0].id_user;
+                 id_user = result.id_user;
+            }
             if(parking_type == "ENTERING")
                 var charge_station = await module.exports.checkNearEChargers(position);
-                if(charge_station.rows[0].id_station != null)
+                if(charge_station[0].id != null)
                     return {id_user, charge_station}; //return the id to attach to the app
             return id_user;
         } catch (e) {
@@ -540,7 +542,9 @@ module.exports = {
                 parking_type TEXT NOT NULL,
                 position GEOMETRY(Point, 4326) NOT NULL,
                 zone INT NOT NULL,
-                FOREIGN KEY(zone) REFERENCES zones(id_zone)
+                id_station INT,
+                FOREIGN KEY(zone) REFERENCES zones(id_zone),
+                FOREIGN KEY(id_station) REFERENCES charge_stations(id_station)
             )`);
             console.log("Table user_events created");
         }
