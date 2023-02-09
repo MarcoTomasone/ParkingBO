@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.6) (preloaded format=pdflatex 2021.9.5)  6 FEB 2023 19:07
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.6) (preloaded format=pdflatex 2021.9.5)  9 FEB 2023 16:25
 entering extended mode
 **"c:/Users/dino9/Desktop/UNI/MAGISTRALE/SISTEMI CONTEX-AWARE/Progetto/ParkingBO/report/Report.tex"
 (c:/Users/dino9/Desktop/UNI/MAGISTRALE/SISTEMI CONTEX-AWARE/Progetto/ParkingBO/report/Report.tex
@@ -340,30 +340,50 @@ l.5     \chapter
 Capitolo 1.
 [2
 
-]) (chapters/Data Mining/DataMining.tex [3]
+]) (chapters/Analisi algoritmi/Analisi_algoritmi.tex [3]
 Capitolo 2.
+
+Underfull \hbox (badness 10000) in paragraph at lines 6--8
+
+ []
+
+
+Overfull \hbox (63.5181pt too wide) in paragraph at lines 14--43
+ [][] 
+ []
+
 [4
 
-]) (chapters/Data Mining/DataMining.tex [5]
-Capitolo 3.
-[6
+]
+Underfull \hbox (badness 10000) in paragraph at lines 45--48
 
-]) [7] (Report.aux)
+ []
+
+[5]
+Underfull \hbox (badness 10000) in paragraph at lines 85--86
+
+ []
+
+[6]) (chapters/Data Mining/DataMining.tex [7] [8]
+Capitolo 3.
+[9
+
+]) [10] (Report.aux)
 Package rerunfilecheck Info: File `Report.out' has not changed.
-(rerunfilecheck)             Checksum: 9112B3F90416EA2974735124D82BF419;483.
+(rerunfilecheck)             Checksum: A408DDAC9146E5076E3307EA36072F66;1537.
  ) 
 Here is how much of TeX's memory you used:
- 10757 strings out of 478864
- 168859 string characters out of 2848661
- 492918 words of memory out of 3000000
- 28505 multiletter control sequences out of 15000+600000
- 410217 words of font info for 53 fonts, out of 8000000 for 9000
+ 10788 strings out of 478864
+ 169550 string characters out of 2848661
+ 496924 words of memory out of 3000000
+ 28518 multiletter control sequences out of 15000+600000
+ 410524 words of font info for 54 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 69i,6n,79p,747b,486s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 69i,11n,79p,747b,487s stack positions out of 5000i,500n,10000p,200000b,80000s
  <C:\Users\dino9\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk><C:/Users/dino9/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/dino9/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/dino9/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/dino9/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/dino9/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on Report.pdf (8 pages, 83820 bytes).
+Output written on Report.pdf (11 pages, 102064 bytes).
 PDF statistics:
- 100 PDF objects out of 1000 (max. 8388607)
- 14 named destinations out of 1000 (max. 500000)
- 41 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 145 PDF objects out of 1000 (max. 8388607)
+ 28 named destinations out of 1000 (max. 500000)
+ 81 words of extra memory for PDF output out of 10000 (max. 10000000)
 

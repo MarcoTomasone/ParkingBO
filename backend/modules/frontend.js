@@ -8,7 +8,6 @@ module.exports = {
     createRoutes: (app) => {
         //This function get the data from the local file system
         app.get('/getData', async (req, res) => {
-            console.log(req.query);
             const data = req.query.data;
             if(data) {
                 //check if file is present
