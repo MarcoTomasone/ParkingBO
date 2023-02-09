@@ -45,8 +45,8 @@ void sendActivity (ParkingType type, LatLng position, BuildContext context) asyn
       setId(response[0]);
   }
 
-  if(response!=null && response[1] != -1) {
-    showElectricChargerAlertDialog(context, response[1]);
+  if(response?[1] != null) {
+    showElectricChargerAlertDialog(context, response?[1]);
   }
 }
 
