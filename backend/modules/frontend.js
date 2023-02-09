@@ -2,12 +2,13 @@ const fs = require('fs');
 const path = require('path');
 const databasepg = require('./databasepg');
 const kmeans = require('node-kmeans');
-var clustering = require('density-clustering');
+//var clustering = require('density-clustering');
 
 module.exports = {
     createRoutes: (app) => {
         //This function get the data from the local file system
         app.get('/getData', async (req, res) => {
+            console.log(req.query);
             const data = req.query.data;
             if(data) {
                 //check if file is present
@@ -117,7 +118,6 @@ module.exports = {
         });
 
         app.get('/e-chargers', async (req, res) => {  
-            
             const result = await databasepg.getEChargers();
             if(result instanceof Error) {
                 await res.status(400).send("Bad request");

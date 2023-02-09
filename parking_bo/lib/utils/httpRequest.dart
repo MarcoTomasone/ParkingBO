@@ -10,13 +10,14 @@ import 'package:flutter_activity_recognition/flutter_activity_recognition.dart';
 
 //Per fare localhost su real mobile ci va l'ip del computer su cui fate girare il server
 //Per fare localhost sull'emulatore dovrebbe andare il seguente ip = 10.0.2.2
-const url = 'http://192.168.146.34:8000';
-const baseURL = "192.168.50.149:8000";
+//Per fare tunelling usando ngrock ngrok http --scheme=http 8000 --host-header=localhost:8000
 
+const url = 'http://192.168.146.34:8000';
+const baseURL = "172.20.10.11:8000";
 /**
  * This function is used to send a transition to the server
  */
-Future<String?> sendTransition(String? id, ParkingType type, LatLng position) async {
+Future<List?> sendTransition(String? id, ParkingType type, LatLng position) async {
   final request = {'id_user': id, 'type': type.name, 'position': position.toJson()};
   final response = await http.post(Uri.parse('http://${baseURL}/sendTransition'),
       body: json.encode(request),
@@ -29,12 +30,18 @@ Future<String?> sendTransition(String? id, ParkingType type, LatLng position) as
     dev.log("The user's transition was sent successfully");
     Map<String, dynamic> map = json.decode(response.body);
     final id_user = map['id_user'].toString();
-    return id_user;
+    int charge_station_id;
+    if(map['charge_station'] != null)
+      charge_station_id = map['charge_station'];
+    else
+      charge_station_id = -1;  
+    return [id_user, charge_station_id];
   } else if (response.statusCode == 404) {
       dev.log("User is not in a parking zone");
       return null;
   }
   else {
+    dev.log(response.request.toString());
     dev.log(response.body);
       throw Exception('Failed to send transition');
   }
