@@ -2,12 +2,17 @@ const fs = require('fs');
 const path = require('path');
 const databasepg = require('./databasepg');
 const kmeans = require('node-kmeans');
+<<<<<<< HEAD
 const clustering = require('density-clustering');
+=======
+//var clustering = require('density-clustering');
+>>>>>>> ddaa3c724b076dc6f8c7385fb25a708f8b227a15
 
 module.exports = {
     createRoutes: (app) => {
         //This function get the data from the local file system
         app.get('/getData', async (req, res) => {
+            console.log(req.query);
             const data = req.query.data;
             if(data) {
                 //check if file is present

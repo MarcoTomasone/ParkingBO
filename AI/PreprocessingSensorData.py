@@ -1,42 +1,52 @@
 import json
 import pandas as pd
-
 from itertools import repeat
 from operator import itemgetter
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn import metrics
+from sklite import LazyExport
+from sklearn.preprocessing import MinMaxScaler
 
-f = open('./supports/SensorData1.json')
-data = json.load(f)
+f = open('./supports/har_dataset_preprocessedScaled.csv')
+#data = json.load(f)
+
+
+data = pd.read_csv(f)
 f.close()
 
+#data = pd.json_normalize(data)
+#data.drop(['libTarget'],axis=1,inplace=True);
+#data['userTarget'] = data['userTarget'].map({'userActivity.STILL': 2, 'userActivity.WALKING': 1, 'userActivity.DRIVING': 0})
+
+#data.to_csv('./supports/S2.csv', index=False)
+y = data['target'] 
+x = data.drop(['target'],axis=1);
+
+#print(x)
+#print(y)
+
+X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.1, random_state=50)
+rf = RandomForestClassifier(n_estimators=1800,min_samples_split= 2, min_samples_leaf=4, max_depth=50, bootstrap=False )
+rf.fit(X_train, y_train)
+y_pred = rf.predict(X_test)
+print('Accuracy:', metrics.accuracy_score(y_test, y_pred))
+
+f = open('./supports/S1.csv')
+dataSensor = pd.read_csv(f)
+f.close()
+
+scaler = MinMaxScaler() # Create a MinMaxScaler object
+
+df_scaled = scaler.fit_transform(dataSensor.to_numpy())
+df = pd.DataFrame(df_scaled, columns=dataSensor.columns)
+
+y_s = df['target']
+X_s = df.drop(['target'],axis=1);
 
 
-accelerometerList = pd.json_normalize(data,record_path=['accelerometerList']);
-uAccList = pd.json_normalize(data,record_path=['uAccelerometerList']);
-gyroscopeList = pd.json_normalize(data,record_path=['gyroscopeList']);
-magnetometerList = pd.json_normalize(data,record_path=['magnetometerList']);
-accelerometerList.rename(columns={'x':'accelerometer_x','y':'accelerometer_y','z':'accelerometer_z'},inplace=True)
-uAccList.rename(columns={'x':'uAccelerometer_x','y':'uAccelerometer_y','z':'uAccelerometer_z'},inplace=True)
-gyroscopeList.rename(columns={'x':'gyroscope_x','y':'gyroscope_y','z':'gyroscope_z'},inplace=True)
-magnetometerList.rename(columns={'x':'magnetometer_x','y':'magnetometer_y','z':'magnetometer_z'},inplace=True)
-#target =data.get('target');
+y_pred_s = rf.predict(X_s)
+print('Accuracy:', metrics.accuracy_score(y_s, y_pred_s))
+print('Accuracy:', metrics.confusion_matrix(y_s, y_pred_s).ravel())
 
-target = pd.json_normalize(data,record_path=['target']);
-
-
-#print(accelerometerList.join(target.iloc(1),how='left')
-df = pd.DataFrame(data = {'expected': [],'detected':[]})
-for i in range(0,len(data)):
-    targetElem = target['expected'][i]
-    #print(targetElem)
-    exp = tuple(repeat(targetElem, len(data[i].get('accelerometerList'))))
-    dec = tuple(repeat(target['detected'][i], len(data[i].get('accelerometerList'))))
-    df = df.append(pd.DataFrame(data = {'expected': exp,'detected':dec}),ignore_index=True)
-    
-
-    
-df.reset_index(drop=True, inplace=True)
-data = pd.concat([accelerometerList,uAccList,gyroscopeList,magnetometerList,df],axis=1)
-
-#data.to_excel('./SensorData.xlsx',index=False)
-print(data)
 

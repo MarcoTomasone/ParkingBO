@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const userActivity = require('./modules/userActivity');
 const frontend = require('./modules/frontend');
 const databasepg = require('./modules/databasepg');
-const { inizialize_zone_table } = require('./modules/databasepg');
+const cors = require('cors');
 
 const app = express();
 const port = 8000;
@@ -15,6 +15,7 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(bodyParser.json());
+app.use(cors());
 
 frontend.createRoutes(app);
 userActivity.createRoutes(app);
@@ -35,6 +36,7 @@ databasepg.create_database(100);
 //cinque = [11.354406834747014, 44.495193428653465]
 //sei = [11.346645867644199, 44.48810035688256]
 //sette = [11.33273458625832, 44.50581479439516]
+//otto = [11.355446, 44.496462] //COLONNINA SAN GIACOMO DI RICARICA ZONA 5
 
 const server = http.createServer(app);
 server.listen(port, () => {

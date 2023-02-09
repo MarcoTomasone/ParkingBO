@@ -1,5 +1,3 @@
-import 'package:ParkingBO/utils/CollectionSensor.dart';
-import 'package:ParkingBO/utils/SensorsClass.dart';
 import 'package:ParkingBO/utils/httpRequest.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,16 +22,16 @@ import 'package:flutter_activity_recognition/flutter_activity_recognition.dart'
 import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:async';
 import 'dart:convert';
+import 'SensorRecognition.dart';
 import 'utils/SaveFile.dart';
-import './utils/SensorsClass.dart';
-import 'utils/CollectionAxis.dart';
+import 'Model.dart';
 
 final LocationSettings locationSettings = LocationSettings(
   accuracy: LocationAccuracy.high,
-  distanceFilter: 1,
+  distanceFilter: 15
 );
 
-enum userActivity { DRIVING, WALKING }
+enum userActivity { DRIVING, WALKING, STILL }
 
 class MapWidget extends StatefulWidget {
   //Initialize Activity Recognition class
@@ -55,36 +53,9 @@ class _MapWidgetState extends State<MapWidget> {
       LatLng(44.493754, 11.343095); //Coordinates of Bologna
   late CenterOnLocationUpdate _centerOnLocationUpdate;
   late ActivityRecognition activityRecognition;
-  Timer? timer;
-  StreamSubscription? accel;
-  StreamSubscription? gyro;
-  StreamSubscription? magnetometer;
-  StreamSubscription? userAccelerometer;
-
-  List<Map<String, double>> accelerometerList = [];
-  List<Map<String, double>> gyroscopeList = [];
-  List<Map<String, double>> magnetometerList = [];
-  List<Map<String, double>> uAccelerometerList = [];
-  List<SensorClass> general = [];
-
-  CollectionSensor meanList = CollectionSensor();
-  CollectionSensor stdList = CollectionSensor();
-  CollectionSensor maxList = CollectionSensor();
-  CollectionSensor minList = CollectionSensor();
-
+  late SensorRecognition sensorRecognition;
+  Model model = Model();
   void updateCurrentActivity(ar.ActivityType activityType) {
-    List<Map<String, String>> target = [
-      {
-        "expected": userActivitySel.toString(),
-        "detected": activityType.toString()
-      }
-    ];
-
-    
-    SensorClass list = SensorClass( maxList,minList,stdList,meanList,target);
-
-    general.add(list);
-    print(general);
     if (currentActivity == ar.ActivityType.IN_VEHICLE &&
         activityType == ar.ActivityType.WALKING) {
       Fluttertoast.showToast(
@@ -95,7 +66,7 @@ class _MapWidgetState extends State<MapWidget> {
           backgroundColor: Colors.red,
           textColor: Colors.white,
           fontSize: 16.0);
-      //call_function(ParkingType.EXITING, currentLocation);
+      //sendActivity(ParkingType.EXITING, currentLocation);
     } else if (currentActivity == ar.ActivityType.WALKING &&
         activityType == ar.ActivityType.IN_VEHICLE) {
       Fluttertoast.showToast(
@@ -106,7 +77,7 @@ class _MapWidgetState extends State<MapWidget> {
           backgroundColor: Colors.red,
           textColor: Colors.white,
           fontSize: 16.0);
-      //call_function(ParkingType.ENTERING, currentLocation);
+      //sendActivity(ParkingType.ENTERING, currentLocation);
     }
     Fluttertoast.showToast(
         msg: "New Activity Detected: " + activityType.toString(),
@@ -119,6 +90,9 @@ class _MapWidgetState extends State<MapWidget> {
     setState(() {
       currentActivity = activityType;
     });
+
+    sensorRecognition.getRow(
+        userActivitySel.toString(), activityType.toString());
   }
 
   Future<void> drawPolygonsOnMap() async {
@@ -144,6 +118,9 @@ class _MapWidgetState extends State<MapWidget> {
 
   //Get markers from database and show them on map
   Future<void> drawMarkersOnMap() async {
+    setState(() {
+      markers.clear();
+    });
     Map<String, dynamic> chargers = await getChargingStations();
     for (var element in chargers["chargers"]) {
       setState(() {
@@ -152,7 +129,7 @@ class _MapWidgetState extends State<MapWidget> {
               point: LatLng(element["y"], element["x"]),
               builder: (ctx) => Icon(
                     Icons.location_pin,
-                    color: element["n_charging_points_available"] > 2
+                    color: element["n_charging_points_available"] > 0
                         ? Colors.green
                         : Colors
                             .red, //TODO: change control to > 0 when the database will be updated
@@ -190,9 +167,11 @@ class _MapWidgetState extends State<MapWidget> {
     _centerOnLocationUpdate = CenterOnLocationUpdate.always;
     _getPermissionLocation();
     activityRecognition = new ActivityRecognition(updateCurrentActivity);
+    sensorRecognition = new SensorRecognition();
     drawPolygonsOnMap();
     createLocationListener();
-    //drawMarkersOnMap();
+    drawMarkersOnMap();
+    model.loadModel();
     //testing functions
     //call_function(ParkingType.UNKNOWN, currentLocation);
     //get_parkings(currentLocation);
@@ -202,6 +181,7 @@ class _MapWidgetState extends State<MapWidget> {
   dispose() {
     super.dispose();
     activityRecognition.dispose();
+    sensorRecognition.dispose();
   }
 
   IconData getMarkerType() {
@@ -212,61 +192,6 @@ class _MapWidgetState extends State<MapWidget> {
       return Icons.circle; // CASE: Walking
     else
       return Icons.my_location; //CASE: Still, Unknown
-  }
-
-  Future<void> listen_sensor() async {
-    print("=====================Start Listen Sensor=====================");
-
-    CollectionSensor collection = new CollectionSensor();
-    accel = accelerometerEvents.listen((AccelerometerEvent event) {
-      collection.addAccelerometerList(event.x, event.y, event.z);
-      //accelerometerList.add({'x': event.x, 'y': event.y, 'z': event.z});
-      //accel?.pause();
-    });
-    // [AccelerometerEvent (x: 0.0, y: 9.8, z: 0.0)]
-
-    userAccelerometer =
-        userAccelerometerEvents.listen((UserAccelerometerEvent event) {
-      collection.addUAccelerometerList(event.x, event.y, event.z);
-      //uAccelerometerList.add({'x': event.x, 'y': event.y, 'z': event.z});
-      //userAccelerometer?.pause();
-    });
-    // [UserAccelerometerEvent (x: 0.0, y: 0.0, z: 0.0)]
-
-    gyro = gyroscopeEvents.listen((GyroscopeEvent event) {
-      collection.addGyroscopeList(event.x, event.y, event.z);
-
-      //gyroscopeList.add({'x': event.x, 'y': event.y, 'z': event.z});
-      ///gyro?.pause();
-    });
-    // [GyroscopeEvent (x: 0.0, y: 0.0, z: 0.0)]
-
-    magnetometer = magnetometerEvents.listen((MagnetometerEvent event) {
-      collection.addMagnetometerList(event.x, event.y, event.z);
-      //magnetometerList.add({'x': event.x, 'y': event.y, 'z': event.z});
-      //magnetometer?.pause();
-    });
-
-    if (timer == null) {
-      timer = Timer.periodic(Duration(seconds: 1), (timer) {
-        /*gyro?.resume();
-        magnetometer?.resume();
-        userAccelerometer?.resume();
-        accel?.resume();*/
-
-        collection.step(maxList, minList, meanList, stdList);
-      });
-    }
-  }
-
-  void stop_sensor() {
-    print("=======================Stop Listen Sensor====================");
-    accel?.cancel();
-    userAccelerometer?.cancel();
-    gyro?.cancel();
-    magnetometer?.cancel();
-
-    SaveFile.writeToFile(jsonEncode(general));
   }
 
   @override
@@ -319,18 +244,30 @@ class _MapWidgetState extends State<MapWidget> {
         Container(
             alignment: Alignment.bottomCenter,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
                     onPressed: () {
-                      setState(() {
-                        start_listen = !start_listen;
-                      });
-                      start_listen ? listen_sensor() : stop_sensor();
+                      sensorRecognition.dispose();
                     },
-                    child: start_listen
-                        ? const Text('Stop Listen')
-                        : const Text('Listen Sensor')),
+                    child: const Text('Stop Listen')),
+                ElevatedButton(
+                    style: ButtonStyle(
+                        backgroundColor:
+                            (userActivitySel! == userActivity.STILL)
+                                ? MaterialStateProperty.all(Colors.green)
+                                : MaterialStateProperty.all(Colors.blue)),
+                    onPressed: () {
+                      dev.log("STILL");
+                      sendActivity(ParkingType.ENTERING, LatLng(44.496462, 11.355446), context);
+                      //sendActivity(ParkingType.ENTERING, currentLocation, context);
+                      setState(() {
+                        userActivitySel = userActivity.STILL;
+                      });
+                    },
+                    child: const Text('STILL')),
+                ElevatedButton(
+                    onPressed: () => {dev.log(model.predict(sensorRecognition.getFeatures()).toString())}, child: const Text('Predict')),
                 ElevatedButton(
                     style: ButtonStyle(
                         backgroundColor:
@@ -338,7 +275,8 @@ class _MapWidgetState extends State<MapWidget> {
                                 ? MaterialStateProperty.all(Colors.green)
                                 : MaterialStateProperty.all(Colors.blue)),
                     onPressed: () {
-                      sendTransition(null, ParkingType.ENTERING, currentLocation);
+                      sendTransition(
+                          null, ParkingType.ENTERING, currentLocation);
                       setState(() {
                         userActivitySel = userActivity.WALKING;
                       });
@@ -356,9 +294,19 @@ class _MapWidgetState extends State<MapWidget> {
                       });
                     },
                     child: const Text('DRIVING')),
+                    ElevatedButton(
+                    style: ButtonStyle(
+                        backgroundColor:
+                            (userActivitySel! == userActivity.DRIVING)
+                                ? MaterialStateProperty.all(Colors.green)
+                                : MaterialStateProperty.all(Colors.blue)),
+                    onPressed: () {  drawMarkersOnMap(); },
+                    child: const Text('UpdateMarkers'))
               ],
-            ))
+            )),
       ], //Children
     );
   }
 }
+
+

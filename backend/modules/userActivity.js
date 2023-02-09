@@ -11,10 +11,10 @@ module.exports = {
                 let id_user = req.body.id_user;
                 const parking_type = req.body.type;
                 const position = req.body.position.coordinates;
+                var charge_station = null;
                 //if user is not in the database, insert it
                 if(id_user == null) {
                     const result = await databasepg.insert_activity(parking_type, position);
-                    console.log(result)
                     if(result instanceof Error) {
                         //if the user is not in a parking zone, return an error
                         if(result.message == "Zone not found")
@@ -24,7 +24,9 @@ module.exports = {
                         return;
                     }
                     else {
-                        id_user = result; 
+                        id_user = result.id_user;
+                        if(result.charge_station[0].id != null)
+                            charge_station = result.charge_station[0].id;
                     }
                 }
                 //else update it
@@ -38,10 +40,13 @@ module.exports = {
                             await res.status(400).send("Bad request");
                         return;
                     }
-                    else
-                        id_user = result;
+                    else{
+                        id_user = result.id_user;
+                        if(result.charge_station[0].id != null)
+                            charge_station = result.charge_station[0].id;
+                    }
                 }
-                const encoded = JSON.stringify({id_user: id_user});
+                const encoded = JSON.stringify({id_user: id_user, charge_station: charge_station});
                 res.status(200).send(encoded);
             } 
         });
@@ -71,7 +76,23 @@ module.exports = {
                 }
             }
         });
+
+        app.post('/updateParkingForChargingStation', async (req, res) => {
+            if(req.body.id_user == null || req.body.id_station == null) {
+                await res.status(400).send("Bad request");
+                return;
+            }
+            else {
+                const id_user = req.body.id_user;
+                const id_station = req.body.id_station;
+                const result = await databasepg.update_parking_event_charging_station(id_user, id_station);
+                
+            }
+        });
+
+
     },
+
 
 }
 
