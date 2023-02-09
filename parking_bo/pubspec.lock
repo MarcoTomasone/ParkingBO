@@ -471,6 +471,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.1"
+  sklite:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "5b433c12b22660e5ab942ddbfb6c3a2a1b000abc"
+      url: "https://github.com/axegon/SkLite-dart.git"
+    source: git
+    version: "1.0.0"
   sky_engine:
     dependency: transitive
     description: flutter

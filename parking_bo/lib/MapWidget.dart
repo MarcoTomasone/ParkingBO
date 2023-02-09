@@ -17,17 +17,18 @@ import 'package:geojson/geojson.dart';
 import 'dart:developer' as dev;
 import 'package:flutter/services.dart' show rootBundle;
 import 'ActivityRecognitionClass.dart';
-import 'package:flutter_activity_recognition/flutter_activity_recognition.dart' as ar;
+import 'package:flutter_activity_recognition/flutter_activity_recognition.dart'
+    as ar;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'SensorRecognition.dart';
 import 'utils/SaveFile.dart';
-
+import 'Model.dart';
 
 final LocationSettings locationSettings = LocationSettings(
   accuracy: LocationAccuracy.high,
-  distanceFilter: 1,
+  distanceFilter: 15
 );
 
 enum userActivity { DRIVING, WALKING, STILL }
@@ -48,13 +49,13 @@ class _MapWidgetState extends State<MapWidget> {
   int? freeParking = 0;
   var id_user = null;
   ar.ActivityType currentActivity = ar.ActivityType.UNKNOWN;
-  LatLng currentLocation = LatLng(44.493754, 11.343095); //Coordinates of Bologna
+  LatLng currentLocation =
+      LatLng(44.493754, 11.343095); //Coordinates of Bologna
   late CenterOnLocationUpdate _centerOnLocationUpdate;
   late ActivityRecognition activityRecognition;
   late SensorRecognition sensorRecognition;
-  
+  Model model = Model();
   void updateCurrentActivity(ar.ActivityType activityType) {
-    
     if (currentActivity == ar.ActivityType.IN_VEHICLE &&
         activityType == ar.ActivityType.WALKING) {
       Fluttertoast.showToast(
@@ -90,7 +91,8 @@ class _MapWidgetState extends State<MapWidget> {
       currentActivity = activityType;
     });
 
-    sensorRecognition.getRow(userActivitySel.toString(), activityType.toString());
+    sensorRecognition.getRow(
+        userActivitySel.toString(), activityType.toString());
   }
 
   Future<void> drawPolygonsOnMap() async {
@@ -126,7 +128,8 @@ class _MapWidgetState extends State<MapWidget> {
                     Icons.location_pin,
                     color: element["n_charging_points_available"] > 2
                         ? Colors.green
-                        : Colors.red, //TODO: change control to > 0 when the database will be updated
+                        : Colors
+                            .red, //TODO: change control to > 0 when the database will be updated
                   )),
         );
       });
@@ -165,7 +168,7 @@ class _MapWidgetState extends State<MapWidget> {
     drawPolygonsOnMap();
     createLocationListener();
     drawMarkersOnMap();
-
+    model.loadModel();
     //testing functions
     //call_function(ParkingType.UNKNOWN, currentLocation);
     //get_parkings(currentLocation);
@@ -188,7 +191,6 @@ class _MapWidgetState extends State<MapWidget> {
       return Icons.my_location; //CASE: Still, Unknown
   }
 
-  
   @override
   Widget build(BuildContext context) {
     return FlutterMap(
@@ -239,14 +241,13 @@ class _MapWidgetState extends State<MapWidget> {
         Container(
             alignment: Alignment.bottomCenter,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
                     onPressed: () {
-                     sensorRecognition.dispose(); 
+                      sensorRecognition.dispose();
                     },
-                    child: 
-                        const Text('Stop Listen')),
+                    child: const Text('Stop Listen')),
                 ElevatedButton(
                     style: ButtonStyle(
                         backgroundColor:
@@ -254,12 +255,15 @@ class _MapWidgetState extends State<MapWidget> {
                                 ? MaterialStateProperty.all(Colors.green)
                                 : MaterialStateProperty.all(Colors.blue)),
                     onPressed: () {
-                      sendTransition(null, ParkingType.ENTERING, currentLocation);
+                      sendTransition(
+                          null, ParkingType.ENTERING, currentLocation);
                       setState(() {
                         userActivitySel = userActivity.STILL;
                       });
                     },
                     child: const Text('STILL')),
+                ElevatedButton(
+                    onPressed: () => {dev.log(model.predict(sensorRecognition.getFeatures()).toString())}, child: const Text('Predict')),
                 ElevatedButton(
                     style: ButtonStyle(
                         backgroundColor:
@@ -267,7 +271,8 @@ class _MapWidgetState extends State<MapWidget> {
                                 ? MaterialStateProperty.all(Colors.green)
                                 : MaterialStateProperty.all(Colors.blue)),
                     onPressed: () {
-                      sendTransition(null, ParkingType.ENTERING, currentLocation);
+                      sendTransition(
+                          null, ParkingType.ENTERING, currentLocation);
                       setState(() {
                         userActivitySel = userActivity.WALKING;
                       });
@@ -286,7 +291,7 @@ class _MapWidgetState extends State<MapWidget> {
                     },
                     child: const Text('DRIVING')),
               ],
-            ))
+            )),
       ], //Children
     );
   }

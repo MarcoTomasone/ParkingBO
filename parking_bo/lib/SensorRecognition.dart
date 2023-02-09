@@ -8,8 +8,7 @@ import 'dart:developer' as dev; //Just for debug
 import 'utils/SaveFile.dart';
 
 class SensorRecognition {
-
-  Duration TIME_STEP = Duration(seconds: 5); 
+  Duration TIME_STEP = Duration(seconds: 5);
   int GYROSCOPE_UNCALIBRATED = 16;
 
   StreamSubscription? _accelerometerSubscription = null;
@@ -22,32 +21,29 @@ class SensorRecognition {
   List<double> _gyroscopeMagnitude = [];
   List<double> _gyroscopeUncalibratedMagnitude = [];
   List<Map<String, dynamic>> dataset = [];
- 
-  SensorRecognition()  {
-      dev.log("SensorRecognition constructor");
-      _checkAccelerometerStatus();
-      _checkGyroscopeStatus();
-      _checkGyroscopeUncalibratedStatus();
+
+  SensorRecognition() {
+    dev.log("SensorRecognition constructor");
+    _checkAccelerometerStatus();
+    _checkGyroscopeStatus();
+    _checkGyroscopeUncalibratedStatus();
   }
 
   void _checkAccelerometerStatus() async {
     await SensorManager()
         .isSensorAvailable(Sensors.ACCELEROMETER)
         .then((result) {
-          _accelerometerAvailable = result;
-          if(_accelerometerAvailable)
-            _startAccelerometer();
-          dev.log("Accelerometer available: $_accelerometerAvailable");
-        });
+      _accelerometerAvailable = result;
+      if (_accelerometerAvailable) _startAccelerometer();
+      dev.log("Accelerometer available: $_accelerometerAvailable");
+    });
   }
 
   void _checkGyroscopeStatus() async {
     await SensorManager().isSensorAvailable(Sensors.GYROSCOPE).then((result) {
       _gyroscopeAvailable = result;
-      if(_gyroscopeAvailable)
-        _startGyroscope();
+      if (_gyroscopeAvailable) _startGyroscope();
       dev.log("Gyroscope available: $_gyroscopeAvailable");
-      
     });
   }
 
@@ -56,14 +52,13 @@ class SensorRecognition {
         .isSensorAvailable(GYROSCOPE_UNCALIBRATED)
         .then((result) {
       _gyroscopeUncalibratedAvailable = result;
-      if(_gyroscopeUncalibratedAvailable)
-        _startGyroscopeUncalibrated();
-      dev.log("Gyroscope Uncalibrated available: $_gyroscopeUncalibratedAvailable");
+      if (_gyroscopeUncalibratedAvailable) _startGyroscopeUncalibrated();
+      dev.log(
+          "Gyroscope Uncalibrated available: $_gyroscopeUncalibratedAvailable");
     });
   }
 
   Future<void> _startAccelerometer() async {
-
     if (_accelerometerSubscription != null) return;
     if (_accelerometerAvailable) {
       dev.log("Starting accelerometer");
@@ -72,8 +67,7 @@ class SensorRecognition {
         interval: TIME_STEP,
       );
       _accelerometerSubscription = stream.listen((sensorEvent) {
-          _accelerometerMagnitude.add(_computeMagnitude(sensorEvent.data));
-         
+        _accelerometerMagnitude.add(_computeMagnitude(sensorEvent.data));
       });
     }
   }
@@ -87,7 +81,7 @@ class SensorRecognition {
         interval: TIME_STEP,
       );
       _gyroscopeSubscription = stream.listen((sensorEvent) {
-          _gyroscopeMagnitude.add(_computeMagnitude(sensorEvent.data));
+        _gyroscopeMagnitude.add(_computeMagnitude(sensorEvent.data));
       });
     }
   }
@@ -100,11 +94,11 @@ class SensorRecognition {
         interval: TIME_STEP,
       );
       _gyroscopeUncalibratedSubscription = stream.listen((sensorEvent) {
-          _gyroscopeUncalibratedMagnitude.add(_computeMagnitude(sensorEvent.data));
+        _gyroscopeUncalibratedMagnitude
+            .add(_computeMagnitude(sensorEvent.data));
       });
     }
   }
-
 
   void _stopAccelerometer() {
     if (_accelerometerSubscription == null) return;
@@ -130,14 +124,13 @@ class SensorRecognition {
     _stopGyroscope();
     _stopGyroscopeUncalibrated();
     SaveFile.writeToFile(jsonEncode(dataset));
-    
   }
 
   //Function to compute Magnitude of a 3D vector
   double _computeMagnitude(List<double> vector) {
     return sqrt(pow(vector[0], 2) + pow(vector[1], 2) + pow(vector[2], 2));
   }
-   
+
   //Function to compute standard deviation of a list of values
   double standardDeviation(List<double> values) {
     double mean = values.reduce((a, b) => a + b) / values.length;
@@ -149,23 +142,31 @@ class SensorRecognition {
   }
 
   void getRow(String userTarget, String libTarget) {
-    
-    if(_accelerometerMagnitude.length > 0 && _gyroscopeMagnitude.length > 0 && _gyroscopeUncalibratedMagnitude.length > 0){
-      Map<String, dynamic> row = 
-      { 'accelometer#mean': _accelerometerMagnitude.reduce((a, b) => a + b) / _accelerometerMagnitude.length,
+    if (_accelerometerMagnitude.length > 0 &&
+        _gyroscopeMagnitude.length > 0 &&
+        _gyroscopeUncalibratedMagnitude.length > 0) {
+      Map<String, dynamic> row = {
+        'accelometer#mean': _accelerometerMagnitude.reduce((a, b) => a + b) /
+            _accelerometerMagnitude.length,
         'accelometer#max': _accelerometerMagnitude.reduce(max),
         'accelometer#min': _gyroscopeMagnitude.reduce(min),
         'accelometer#std': standardDeviation(_accelerometerMagnitude),
-        'gyroscope#mean': _gyroscopeMagnitude.reduce((a, b) => a + b) / _gyroscopeMagnitude.length,
+        'gyroscope#mean': _gyroscopeMagnitude.reduce((a, b) => a + b) /
+            _gyroscopeMagnitude.length,
         'gyroscope#max': _gyroscopeMagnitude.reduce(max),
         'gyroscope#min': _gyroscopeMagnitude.reduce(min),
         'gyroscope#std': standardDeviation(_gyroscopeUncalibratedMagnitude),
-        'gyroscopeUncalibrated#mean': _gyroscopeUncalibratedMagnitude.reduce((a, b) => a + b) / _gyroscopeUncalibratedMagnitude.length,
-        'gyroscopeUncalibrated#max': _gyroscopeUncalibratedMagnitude.reduce(max),
-        'gyroscopeUncalibrated#min': _gyroscopeUncalibratedMagnitude.reduce(min),
-        'gyroscopeUncalibrated#std':  standardDeviation(_gyroscopeUncalibratedMagnitude),
+        'gyroscopeUncalibrated#mean':
+            _gyroscopeUncalibratedMagnitude.reduce((a, b) => a + b) /
+                _gyroscopeUncalibratedMagnitude.length,
+        'gyroscopeUncalibrated#max':
+            _gyroscopeUncalibratedMagnitude.reduce(max),
+        'gyroscopeUncalibrated#min':
+            _gyroscopeUncalibratedMagnitude.reduce(min),
+        'gyroscopeUncalibrated#std':
+            standardDeviation(_gyroscopeUncalibratedMagnitude),
         'userTarget': userTarget,
-        'libTarget' : libTarget,
+        'libTarget': libTarget,
       };
 
       _accelerometerMagnitude.clear();
@@ -174,4 +175,34 @@ class SensorRecognition {
       dataset.add(row);
     }
   }
+
+  getFeatures() {
+    if (_accelerometerMagnitude.length == 0 ||
+        _gyroscopeMagnitude.length == 0 ||
+        _gyroscopeUncalibratedMagnitude.length == 0) return [];
+    List features = _getList();
+    _accelerometerMagnitude.clear();
+    _gyroscopeMagnitude.clear();
+    _gyroscopeUncalibratedMagnitude.clear();
+
+    return features;
+  }
+
+  List<double> _getList() => [
+        _accelerometerMagnitude.reduce((a, b) => a + b) /
+            _accelerometerMagnitude.length,
+        _accelerometerMagnitude.reduce(max),
+        _gyroscopeMagnitude.reduce(min),
+        standardDeviation(_accelerometerMagnitude),
+        _gyroscopeMagnitude.reduce((a, b) => a + b) /
+            _gyroscopeMagnitude.length,
+        _gyroscopeMagnitude.reduce(max),
+        _gyroscopeMagnitude.reduce(min),
+        standardDeviation(_gyroscopeUncalibratedMagnitude),
+        _gyroscopeUncalibratedMagnitude.reduce((a, b) => a + b) /
+            _gyroscopeUncalibratedMagnitude.length,
+        _gyroscopeUncalibratedMagnitude.reduce(max),
+        _gyroscopeUncalibratedMagnitude.reduce(min),
+        standardDeviation(_gyroscopeUncalibratedMagnitude),
+      ];
 }
