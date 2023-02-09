@@ -87,18 +87,11 @@ module.exports = {
             //insert the event in history table
             await insert_event_history(parking_type, zone, position);
             await update_parkings(parking_type, zone);
-            /*if(parking_type == "ENTERING")
+            if(parking_type == "ENTERING")
                 var charge_station = await module.exports.checkNearEChargers(position);
-<<<<<<< HEAD
-                console.log(charge_station[0].id);
-                if(charge_station[0].id != null)
-                    return {id_user, charge_station}; //return the id to attach to the app*/
-            return id_user;
-=======
             if(charge_station[0].id != null)
                     return {id_user, charge_station}; //return the id to attach to the app
             return  {id_user: id_user};
->>>>>>> ddaa3c724b076dc6f8c7385fb25a708f8b227a15
         } catch (e) {
             console.error(e);
             return e;
@@ -135,20 +128,12 @@ module.exports = {
             else{
                 result = await module.exports.insert_activity(parking_type, position); 
                 //TO DO: verificare di mandare l'id al cellulare (lo mandiamo a prescindere)
-<<<<<<< HEAD
-            const id_user = result.rows[0].id_user;
-            /*if(parking_type == "ENTERING")
-                var charge_station = await module.exports.checkNearEChargers(position);
-                if(charge_station.rows[0].id_station != null)
-                    return {id_user, charge_station}; //return the id to attach to the app*/
-=======
                  id_user = result.id_user;
             }
             if(parking_type == "ENTERING")
                 var charge_station = await module.exports.checkNearEChargers(position);
                 if(charge_station[0].id != null)
                     return {id_user, charge_station}; //return the id to attach to the app
->>>>>>> ddaa3c724b076dc6f8c7385fb25a708f8b227a15
             return id_user;
         } catch (e) {
             console.error(e);
@@ -481,7 +466,7 @@ module.exports = {
             client.end();
             
         }
-    }
+    },
 
     update_parking_event_charging_station: async (id_user, id_station) => {
         const client = new Client(configuration);
