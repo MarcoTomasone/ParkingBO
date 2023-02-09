@@ -116,6 +116,9 @@ class _MapWidgetState extends State<MapWidget> {
 
   //Get markers from database and show them on map
   Future<void> drawMarkersOnMap() async {
+    setState(() {
+      markers.clear();
+    });
     Map<String, dynamic> chargers = await getChargingStations();
     for (var element in chargers["chargers"]) {
       setState(() {
@@ -124,7 +127,7 @@ class _MapWidgetState extends State<MapWidget> {
               point: LatLng(element["y"], element["x"]),
               builder: (ctx) => Icon(
                     Icons.location_pin,
-                    color: element["n_charging_points_available"] > 2
+                    color: element["n_charging_points_available"] > 0
                         ? Colors.green
                         : Colors
                             .red, //TODO: change control to > 0 when the database will be updated
@@ -259,6 +262,7 @@ class _MapWidgetState extends State<MapWidget> {
                                 ? MaterialStateProperty.all(Colors.green)
                                 : MaterialStateProperty.all(Colors.blue)),
                     onPressed: () {
+                      dev.log("STILL");
                       sendActivity(ParkingType.ENTERING, LatLng(44.496462, 11.355446), context);
                       //sendActivity(ParkingType.ENTERING, currentLocation, context);
                       setState(() {
@@ -294,6 +298,14 @@ class _MapWidgetState extends State<MapWidget> {
                       });
                     },
                     child: const Text('DRIVING')),
+                    ElevatedButton(
+                    style: ButtonStyle(
+                        backgroundColor:
+                            (userActivitySel! == userActivity.DRIVING)
+                                ? MaterialStateProperty.all(Colors.green)
+                                : MaterialStateProperty.all(Colors.blue)),
+                    onPressed: () {  drawMarkersOnMap(); },
+                    child: const Text('UpdateMarkers'))
               ],
             )),
       ], //Children

@@ -46,7 +46,7 @@ void sendActivity (ParkingType type, LatLng position, BuildContext context) asyn
   }
 
   if(response!=null && response[1] != -1) {
-    showElectricChargerAlertDialog(context);
+    showElectricChargerAlertDialog(context, response[1]);
   }
 }
 
@@ -122,7 +122,7 @@ Future<String?> getId() async {
     return id_user;
 }
 
-showElectricChargerAlertDialog(BuildContext context) {
+showElectricChargerAlertDialog(BuildContext context, int id_station) {
   // set up the buttons
   Widget cancelButton = ElevatedButton(
     child: Text("No"),
@@ -130,7 +130,9 @@ showElectricChargerAlertDialog(BuildContext context) {
   );
   Widget continueButton = ElevatedButton(
     child: Text("Yes"),
-    onPressed:  () {}, //TODO: call update position using id
+    onPressed:  ()  {
+      getId().then((value) => useChargingStation(value.toString(), id_station)); 
+      Navigator.pop(context); }, 
   );
   // set up the AlertDialog
   AlertDialog alert = AlertDialog(
