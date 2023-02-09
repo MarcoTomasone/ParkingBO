@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.6) (preloaded format=pdflatex 2021.9.5)  6 FEB 2023 19:49
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.6) (preloaded format=pdflatex 2021.9.5)  9 FEB 2023 16:31
 entering extended mode
 **"c:/Users/dino9/Desktop/UNI/MAGISTRALE/SISTEMI CONTEX-AWARE/Progetto/ParkingBO/report/chapters/Analisi algoritmi/Analisi_algoritmi.tex"
 (c:/Users/dino9/Desktop/UNI/MAGISTRALE/SISTEMI CONTEX-AWARE/Progetto/ParkingBO/report/chapters/Analisi algoritmi/Analisi_algoritmi.tex
@@ -338,31 +338,31 @@ Overfull \hbox (63.5181pt too wide) in paragraph at lines 14--43
 
 
 {C:/Users/dino9/AppData/Local/MiKTeX/pdftex/config/pdftex.map}]
-Underfull \hbox (badness 10000) in paragraph at lines 45--48
+Underfull \hbox (badness 10000) in paragraph at lines 46--49
 
  []
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 85--86
+Underfull \hbox (badness 10000) in paragraph at lines 86--87
 
  []
 
 [3] [4] [5] (c:\Users\dino9\Desktop\UNI\MAGISTRALE\SISTEMI CONTEX-AWARE\Progetto\ParkingBO\report\chapters\Analisi algoritmi\Analisi_algoritmi.aux)
 Package rerunfilecheck Info: File `Analisi_algoritmi.out' has not changed.
-(rerunfilecheck)             Checksum: C688A3E2479F1A2602BC3A93764B9B97;1243.
+(rerunfilecheck)             Checksum: BA6BED714EE6A6BE7C1A3D9C35CABAB6;1362.
  ) 
 Here is how much of TeX's memory you used:
- 10753 strings out of 478864
- 169551 string characters out of 2848661
- 497154 words of memory out of 3000000
- 28507 multiletter control sequences out of 15000+600000
+ 10755 strings out of 478864
+ 169585 string characters out of 2848661
+ 498157 words of memory out of 3000000
+ 28508 multiletter control sequences out of 15000+600000
  409292 words of font info for 48 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  89i,11n,96p,586b,400s stack positions out of 5000i,500n,10000p,200000b,80000s
  <C:\Users\dino9\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk><C:/Users/dino9/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/dino9/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/dino9/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on "c:\Users\dino9\Desktop\UNI\MAGISTRALE\SISTEMI CONTEX-AWARE\Progetto\ParkingBO\report\chapters\Analisi algoritmi\Analisi_algoritmi.pdf" (5 pages, 65453 bytes).
+Output written on "c:\Users\dino9\Desktop\UNI\MAGISTRALE\SISTEMI CONTEX-AWARE\Progetto\ParkingBO\report\chapters\Analisi algoritmi\Analisi_algoritmi.pdf" (5 pages, 66792 bytes).
 PDF statistics:
- 86 PDF objects out of 1000 (max. 8388607)
- 19 named destinations out of 1000 (max. 500000)
- 57 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 90 PDF objects out of 1000 (max. 8388607)
+ 20 named destinations out of 1000 (max. 500000)
+ 65 words of extra memory for PDF output out of 10000 (max. 10000000)
 

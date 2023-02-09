@@ -42,9 +42,10 @@ Il dataset utilizzato per l'analisi ci è stato fornito dal professor Marco Di F
     \end{tabular}
 \end{table}
 
-Per il data mining è stato utilizzato il linguaggio di programmazione \emph{Python} e per il training e prediction dei modelli la libreria \emph{Scikit-learn}.\\
-Non è stato fatto un grande preprocessing dei dati, in quanto il dataset è stato fornito abbbastanza pulito. I dati sono stati lavorati al fine di eliminare i valori nan e di normalizzare i dati. Inoltre sono state eliminate tutte le tuple che non riguardavano le attività di interesse (WALKING e DRIVING).\\
-Per tutti e tre gli algoritmi il dataset è stato suddiviso in training e testing set. Per il training è stato utilizzato l'80\% dei dati e per il testing il 20\%.\\
+\subsection{Data mining}
+    Per il data mining è stato utilizzato il linguaggio di programmazione \emph{Python} e per il training e prediction dei modelli la libreria \emph{Scikit-learn}.\\
+    Non è stato fatto un grande preprocessing dei dati, in quanto il dataset è stato fornito abbbastanza pulito. I dati sono stati lavorati al fine di eliminare i valori nan e di normalizzare i dati, scalandoli utilizzando la funzione \emph{MinMaxScaling}. Inoltre sono state eliminate tutte le tuple che non riguardavano le attività di interesse (WALKING e DRIVING).\\
+    Per tutti e tre gli algoritmi il dataset è stato suddiviso in training e testing set. Per il training è stato utilizzato l'80\% dei dati e per il testing il 20\%.\\
 
 \section{Gli algoritmi}
 Come già detto precedentemente, in questa fase di valutazione degli algoritmi di classificazione, sono stati considerati tre differenti approcci: il \textbf{KNN}, il \textbf{Random Forest} e il \textbf{Gaussian Naive Bayes}.\\
@@ -54,10 +55,10 @@ In questa sezione, verranno descritti in dettaglio ciascuno di questi algoritmi 
 Per quanto riguarda il KNN è stato deciso di effettuare un tuning degli iperparametri per il KNN, con lo scopo di ottenere una prestazione ottimale del modello.\\
 I parametri che sono stati modificati sono stati:
 \begin{itemize}
-    \item \textbf{n\_neighbors}: che rappresenta il numero di vicini considerati nella classificazione
-    \item \textbf{weights}: che determina il peso dei vicini nella classificazione
-    \item \textbf{leaf-size}: che rappresenta la dimensione massima di una foglia dell'albero di ricerca
-    \item \textbf{p}: che determina la potenza della metrica utilizzata nella calcoli della distanza tra i vicini
+    \item \textbf{n\_neighbors}: rappresenta il numero di vicini considerati nella classificazione
+    \item \textbf{weights}: determina il peso dei vicini nella classificazione
+    \item \textbf{leaf-size}: rappresenta la dimensione massima di una foglia dell'albero di ricerca
+    \item \textbf{p}: determina la potenza della metrica utilizzata nella calcoli della distanza tra i vicini
 \end{itemize}
 Il tuning degli iperparametri è stato effettuato utilizzando la funzione \emph{GridSearchCV} di \emph{Scikit-learn}. Questa funzione permette di eseguire una ricerca su una griglia di valori per gli iperparametri, testando tutte le possibili combinazioni e selezionando quella che produce la migliore prestazione in termini di accuratezza.\\
 L'obiettivo di questa ottimizzazione era quello di migliorare la precisione del modello KNN e di fornire una soluzione ottimale per la classificazione dei dati. Il risultato ottenuto ha dimostrato che l'ottimizzazione degli iperparametri è stata efficace e ha contribuito a migliorare la performance del modello.
@@ -71,18 +72,18 @@ I risultati del tuning degli iperparametri utilizzando il dataset precedentement
         \hline
          & \textbf{Best value} \\
         \hline
-        \textbf{n\_neighbors} & 5 \\
+        \textbf{n\_neighbors} & 8 \\
         \hline
-        \textbf{weights} & uniform \\
+        \textbf{weights} & distance \\
         \hline
-        \textbf{leaf\_size} & 30 \\
+        \textbf{leaf\_size} & 1 \\
         \hline
         \textbf{p} & 2 \\
         \hline
     \end{tabular}
 \end{table}
 
-Con questi parametri siamo riusciti ad ottenere un'accuratezza finale del 90.5\%.\\
+Con questi parametri siamo riusciti ad ottenere un'accuratezza finale del 89.87\%.\\
 
 \subsection{Random Forest}
 Come per il KNN, anche per il Random Forest è stato effettuato un tuning degli iperparametri, sempre con \emph{GridSearchCV}, per ottenere una prestazione ottimale del modello.\
