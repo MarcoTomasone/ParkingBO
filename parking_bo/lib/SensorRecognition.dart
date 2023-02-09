@@ -8,7 +8,7 @@ import 'dart:developer' as dev; //Just for debug
 import 'utils/SaveFile.dart';
 
 class SensorRecognition {
-  Duration TIME_STEP = Duration(milliseconds: 1000);
+  Duration TIME_STEP = Duration(seconds: 1);
   int GYROSCOPE_UNCALIBRATED = 16;
 
   StreamSubscription? _accelerometerSubscription = null;
@@ -189,18 +189,15 @@ class SensorRecognition {
   }
 
   List<double> _getList() => [
-        _accelerometerMagnitude.reduce((a, b) => a + b) /
-            _accelerometerMagnitude.length,
+        _accelerometerMagnitude.reduce((a, b) => a + b) /_accelerometerMagnitude.length,
         _accelerometerMagnitude.reduce(max),
         _gyroscopeMagnitude.reduce(min),
         standardDeviation(_accelerometerMagnitude),
-        _gyroscopeMagnitude.reduce((a, b) => a + b) /
-            _gyroscopeMagnitude.length,
+        _gyroscopeMagnitude.reduce((a, b) => a + b) /_gyroscopeMagnitude.length,
         _gyroscopeMagnitude.reduce(max),
         _gyroscopeMagnitude.reduce(min),
         standardDeviation(_gyroscopeUncalibratedMagnitude),
-        _gyroscopeUncalibratedMagnitude.reduce((a, b) => a + b) /
-            _gyroscopeUncalibratedMagnitude.length,
+        _gyroscopeUncalibratedMagnitude.reduce((a, b) => a + b) /_gyroscopeUncalibratedMagnitude.length,
         _gyroscopeUncalibratedMagnitude.reduce(max),
         _gyroscopeUncalibratedMagnitude.reduce(min),
         standardDeviation(_gyroscopeUncalibratedMagnitude),

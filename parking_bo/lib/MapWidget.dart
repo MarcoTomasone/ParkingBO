@@ -269,7 +269,7 @@ class _MapWidgetState extends State<MapWidget> {
                         userActivitySel = userActivity.STILL;
                       });
                     },
-                    child: const Text('STILL')),
+                    child: const Text('STILL/Exit')),
                 ElevatedButton(
                     onPressed: () => {dev.log(model.predict(sensorRecognition.getFeatures()).toString())}, child: const Text('Predict')),
                 ElevatedButton(
@@ -284,7 +284,7 @@ class _MapWidgetState extends State<MapWidget> {
                         userActivitySel = userActivity.WALKING;
                       });
                     },
-                    child: const Text('WALKING')),
+                    child: const Text('WALKING/Enter')),
                 ElevatedButton(
                     style: ButtonStyle(
                         backgroundColor:

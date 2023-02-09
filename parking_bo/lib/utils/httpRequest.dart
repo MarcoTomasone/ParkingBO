@@ -30,11 +30,7 @@ Future<List?> sendTransition(String? id, ParkingType type, LatLng position) asyn
     dev.log("The user's transition was sent successfully");
     Map<String, dynamic> map = json.decode(response.body);
     final id_user = map['id_user'].toString();
-    int charge_station_id;
-    if(map['charge_station'] != null)
-      charge_station_id = map['charge_station'];
-    else
-      charge_station_id = -1;  
+    int? charge_station_id = map['charge_station'];
     return [id_user, charge_station_id];
   } else if (response.statusCode == 404) {
       dev.log("User is not in a parking zone");
