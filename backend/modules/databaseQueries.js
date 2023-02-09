@@ -381,7 +381,7 @@ module.exports = {
                 WHERE ST_DWithin(point, ST_GeomFromText('POINT(${geom})', 4326), 150, true)
                 ORDER BY distance ASC
                 LIMIT 1`);
-            const echargers = result.rows;
+            const echargers = result.rows; //TODO: check if the result is empty
             return echargers;
         } catch (e) {
             console.error(e);
@@ -392,6 +392,31 @@ module.exports = {
         }
     },
 
+    /**
+     * This function get the centroid of a multipoint
+     * @param {*} coordinates is an array of coordinates
+     * @returns the centroid of the multipoint
+     */
+    computeMultipointCentroid: async (coordinates) => {
+        const client = new Client(configuration);
+        await client.connect();
+        try {
+            let multipoint = '';
+            coordinates.forEach(element => {
+                multipoint += `${element[0]} ${element[1]}, `;
+            });
+            multipoint = multipoint.substring(0, multipoint.length - 2); //remove the last comma and last space
+            const result = await client.query(`SELECT ST_X(centroid), ST_Y(centroid) FROM ST_Centroid('MULTIPOINT ( ${multipoint} )') as centroid;`);
+            const centroid = [result.rows[0].st_x, result.rows[0].st_y];
+            return centroid;
+        } catch (e) {
+            console.error(e);
+            return e;
+        } finally {
+            client.end();
+            
+        }
+    },
 
     update_parking_event_charging_station: async (id_user, id_station) => {
         const client = new Client(QUERY_CONFIGURATION);

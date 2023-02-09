@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const databasepg = require('./databaseQueries');
 const kmeans = require('node-kmeans');
-//var clustering = require('density-clustering');
+var clustering = require('density-clustering');
 
 module.exports = {
     createRoutes: (app) => {
@@ -76,27 +76,60 @@ module.exports = {
 
         });
 
+        /**
+         * This function get the clusters data from dbscan algorithm
+         */
+        app.get('/dbscan', async (req, res) => {
+            const epsilon = req.query.epsilon;
+            const minPoints = req.query.minPoints;
+            const dbscan = new clustering.DBSCAN();
+            const data = await databasepg.getPointsParkingEvents();  
+            if(epsilon && minPoints) {
+                let vectors = new Array();
+                for (let i = 0 ; i < data.length ; i++) {
+                    vectors[i] = [data[i].x , data[i].y];
+                }
+                const clusters = dbscan.run(vectors, epsilon, minPoints);
+                clusters_dict = {};
+                for (let i = 0 ; i < clusters.length ; i++) {
+                    let cluster = [];
+                    for(let j = 0 ; j < clusters[i].length ; j++) {
+                        cluster.push(vectors[clusters[i][j]]);
+                    }
+                    const centroid = await databasepg.computeMultipointCentroid(cluster);
+                    clusters_dict[i] = {'cluster' : cluster, centroid : centroid};
+                }
+                const encoded = JSON.stringify(Object.values(clusters_dict));
+                res.header("Access-Control-Allow-Origin", "*");
+                return res.status(200).send(encoded);
+            }
+            else {
+                res.header("Access-Control-Allow-Origin", "*");
+                return res.status(400).send({'status' : 'Bad Request'});
+            }
+        });
+
         //This function get the clusters data from kmeans algorithm
         app.get('/kmeans', async (req, res) => {
-            var size = req.query.size;
-            var data = await databasepg.getPointsParkingEvents();
+            const size = req.query.size;
+            const data = await databasepg.getPointsParkingEvents();
+            res.header("Access-Control-Allow-Origin", "*");
             if(size) {
                 let vectors = new Array();
                 for (let i = 0 ; i < data.length ; i++) {
                     vectors[i] = [ data[i].x , data[i].y ];
-                }
+                }             
                 kmeans.clusterize(vectors, {k: size}, (err,result) => {
-                    if (err)
-                        return res.status(400).send({'status' : 'Error'});
+                    if (err) {
+                        return res.status(200).send(JSON.stringify([]));
+                    }
                     else {
                         const encoded = JSON.stringify(result);
-                        res.header("Access-Control-Allow-Origin", "*");
                         return res.status(200).send(encoded);
                     }
                 });
             }
             else {
-                res.header("Access-Control-Allow-Origin", "*");
                 return res.status(400).send({'status' : 'Bad Request'});
             }
         });
@@ -131,4 +164,3 @@ module.exports = {
         });
     }
 }
-

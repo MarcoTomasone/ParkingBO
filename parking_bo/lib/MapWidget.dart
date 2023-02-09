@@ -91,9 +91,7 @@ class _MapWidgetState extends State<MapWidget> {
       currentActivity = activityType;
     });
 
-    sensorRecognition.getRow(
-        userActivitySel.toString(), activityType.toString());
-  }
+    }
 
   Future<void> drawPolygonsOnMap() async {
     final geo = GeoJson();
@@ -172,6 +170,12 @@ class _MapWidgetState extends State<MapWidget> {
     createLocationListener();
     drawMarkersOnMap();
     model.loadModel();
+
+    Timer.periodic(Duration(seconds: 5), (timer) {
+       sensorRecognition.getRow(
+        userActivitySel.toString(), currentActivity.toString());
+    });
+
     //testing functions
     //call_function(ParkingType.UNKNOWN, currentLocation);
     //get_parkings(currentLocation);

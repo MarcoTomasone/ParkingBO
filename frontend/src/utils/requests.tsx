@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+const url = 'http://localhost:8000';
+
 /**
  * This function is used to get a generic data from the backend
  * @param data is the data we want from the backend
@@ -7,7 +9,7 @@ import axios from 'axios';
  */
 const getData = async (data: string) => {
     // 'await' the data
-    const response = await axios.get("http://localhost:8000/getData", { params: { data: data}});
+    const response = await axios.get(`${url}/getData`, {params: {data: data}});
     if(response.status === 200) {
         return response.data;
     } else {
@@ -22,7 +24,7 @@ const getData = async (data: string) => {
  */
 const getParkingRequestFromZone = async (zone: number) => {
     // 'await' the data
-    const response = await axios.get("http://localhost:8000/getParkingRequests", { params: {zone: zone}});
+    const response = await axios.get(`${url}/getParkingRequests`, { params: {zone: zone}});
     if(response.status === 200) {
         return response.data.requests;
     } else {
@@ -37,17 +39,7 @@ const getParkingRequestFromZone = async (zone: number) => {
  */
 const kmeans = async (size: number) => {
     // 'await' the data
-    const response = await axios.get("http://localhost:8000/kmeans", { params: {size: size}});
-    if(response.status === 200) {
-        return response.data;
-    }
-    else {
-        return null;
-    }
-}
-const heatmap = async () => {
-    // 'await' the data
-    const response = await axios.get("http://localhost:8000/heatmap");
+    const response = await axios.get(`${url}/kmeans`, { params: {size: size}});
     if(response.status === 200) {
         return response.data;
     }
@@ -56,9 +48,45 @@ const heatmap = async () => {
     }
 }
 
+/**
+ * This function is used to get the DBSCAN data from the backend
+ * @param epsilon is radius of the neighborhood to be considered
+ * @param minPts is the minimum number of points to form a cluster
+ * @returns the DBSCAN data (clusters)
+ */
+const dbscan = async (epsilon: number, minPoints: number) => {
+    // 'await' the data
+    const response = await axios.get(`${url}/dbscan`, { params: {epsilon: epsilon, minPoints: minPoints}});
+    if(response.status === 200) {
+        return response.data;
+    }
+    else {
+        return null;
+    }
+}
+
+/**
+ * 
+ * @returns 
+ */
+const heatmap = async () => {
+    // 'await' the data
+    const response = await axios.get(`${url}/heatmap`);
+    if(response.status === 200) {
+        return response.data;
+    }
+    else {
+        return null;
+    }
+}
+
+/**
+ * 
+ * @returns 
+ */
 const eChargers = async () => {
     // 'await' the data
-    const response = await axios.get("http://localhost:8000/e-chargers");
+    const response = await axios.get(`${url}/e-chargers`);
     if(response.status === 200) {
         return response.data;
     }
@@ -73,7 +101,7 @@ const eChargers = async () => {
  */
 const getAllParkings = async () => {
     // 'await' the data
-    const response = await axios.get("http://localhost:8000/getAllParkings");
+    const response = await axios.get(`${url}/getAllParkings`);
     if(response.status === 200) {
         return response.data.parkings;
     }
@@ -89,7 +117,7 @@ const getAllParkings = async () => {
  */
 const getParkings = async (zone: number) => {
     // 'await' the data
-    const response = await axios.get("http://localhost:8000/getParkingsFromZone", {params: {zone: zone}});
+    const response = await axios.get(`${url}/getParkingsFromZone`, {params: {zone: zone}});
     if(response.status === 200) {
         return response.data.parkings;
     }
@@ -99,4 +127,4 @@ const getParkings = async (zone: number) => {
 };
 
 
-export { getData, kmeans, heatmap, getParkingRequestFromZone, getAllParkings, getParkings, eChargers};
+export { getData, kmeans, dbscan, heatmap, getParkingRequestFromZone, getAllParkings, getParkings, eChargers};
