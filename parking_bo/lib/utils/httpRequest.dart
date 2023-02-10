@@ -13,7 +13,7 @@ import 'package:flutter_activity_recognition/flutter_activity_recognition.dart';
 //Per fare tunelling usando ngrock ngrok http --scheme=http 8000 --host-header=localhost:8000
 
 const url = 'http://192.168.146.34:8000';
-const baseURL = "172.20.10.11:8000";
+const baseURL = "192.168.1.228:8000";
 /**
  * This function is used to send a transition to the server
  */
