@@ -17,8 +17,7 @@ import 'package:geojson/geojson.dart';
 import 'dart:developer' as dev;
 import 'package:flutter/services.dart' show rootBundle;
 import 'ActivityRecognitionClass.dart';
-import 'package:flutter_activity_recognition/flutter_activity_recognition.dart'
-    as ar;
+import 'package:flutter_activity_recognition/flutter_activity_recognition.dart' as ar;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:async';
 import 'dart:convert';
@@ -49,12 +48,12 @@ class _MapWidgetState extends State<MapWidget> {
   int? freeParking = 0;
   var id_user = null;
   ar.ActivityType currentActivity = ar.ActivityType.UNKNOWN;
-  LatLng currentLocation =
-      LatLng(44.493754, 11.343095); //Coordinates of Bologna
+  LatLng currentLocation = LatLng(44.493754, 11.343095); //Coordinates of Bologna
   late CenterOnLocationUpdate _centerOnLocationUpdate;
   late ActivityRecognition activityRecognition;
   late SensorRecognition sensorRecognition;
   Model model = Model();
+
   void updateCurrentActivity(ar.ActivityType activityType) {
     if (currentActivity == ar.ActivityType.IN_VEHICLE &&
         activityType == ar.ActivityType.WALKING) {
@@ -126,7 +125,7 @@ class _MapWidgetState extends State<MapWidget> {
           Marker(
               point: LatLng(element["y"], element["x"]),
               builder: (ctx) => Icon(
-                    Icons.location_pin,
+                    Icons.ev_station_outlined,
                     color: element["n_charging_points_available"] > 0
                         ? Colors.green
                         : Colors
@@ -263,8 +262,8 @@ class _MapWidgetState extends State<MapWidget> {
                                 : MaterialStateProperty.all(Colors.blue)),
                     onPressed: () {
                       dev.log("STILL");
-                      sendActivity(ParkingType.EXITING, LatLng(44.496462, 11.355446), context);
-                      //sendActivity(ParkingType.ENTERING, currentLocation, context);
+                      //sendActivity(ParkingType.EXITING, LatLng(44.496462, 11.355446), context);
+                      sendActivity(ParkingType.EXITING, currentLocation, context);
                       setState(() {
                         userActivitySel = userActivity.STILL;
                       });
@@ -279,7 +278,8 @@ class _MapWidgetState extends State<MapWidget> {
                                 ? MaterialStateProperty.all(Colors.green)
                                 : MaterialStateProperty.all(Colors.blue)),
                     onPressed: () {
-                      sendActivity(ParkingType.ENTERING, LatLng(44.496462, 11.355446), context);
+                      //sendActivity(ParkingType.ENTERING, LatLng(44.496462, 11.355446), context);
+                      sendActivity(ParkingType.ENTERING, currentLocation, context);
                       setState(() {
                         userActivitySel = userActivity.WALKING;
                       });
