@@ -92,7 +92,7 @@ class Clustering extends React.Component<Props, State> {
                         }}
                         aria-labelledby="input-slider"
                         />
-            <Typography gutterBottom color='white'>MinPts</Typography>
+            <Typography gutterBottom color='white'>Min sample</Typography>
                 <Slider
                     sx={{width: '80%'}}
                     id="minPts"
@@ -240,7 +240,7 @@ class Clustering extends React.Component<Props, State> {
         </MapContainer>
         <Card sx={{backgroundColor: "rgba(28,28,28, 0.98)", borderRadius: '25px', position: 'absolute', width: 600, height: 250, top: 300, right: 50, zIndex: 2}}>
             <CardContent>
-                <Grid container spacing={2} sx={{marginTop: 5}}>
+                <Grid container spacing={2} sx={{marginTop: 1}}>
                     <Grid item xs={6}>
                         <FormControl sx={{marginLeft: 5, color: 'white', fontSize: '20pt'}}>
                             <RadioGroup

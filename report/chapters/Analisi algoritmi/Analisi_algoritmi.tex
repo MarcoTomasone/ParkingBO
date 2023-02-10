@@ -42,9 +42,10 @@ Il dataset utilizzato per l'analisi ci è stato fornito dal professor Marco Di F
     \end{tabular}
 \end{table}
 
-Per il data mining è stato utilizzato il linguaggio di programmazione \emph{Python} e per il training e prediction dei modelli la libreria \emph{Scikit-learn}.\\
-Non è stato fatto un grande preprocessing dei dati, in quanto il dataset è stato fornito abbbastanza pulito. I dati sono stati lavorati al fine di eliminare i valori nan e di normalizzare i dati. Inoltre sono state eliminate tutte le tuple che non riguardavano le attività di interesse (WALKING e DRIVING).\\
-Per tutti e tre gli algoritmi il dataset è stato suddiviso in training e testing set. Per il training è stato utilizzato l'80\% dei dati e per il testing il 20\%.\\
+\subsection{Data mining}
+    Per il data mining è stato utilizzato il linguaggio di programmazione \emph{Python} e per il training e prediction dei modelli la libreria \emph{Scikit-learn}.\\
+    Non è stato fatto un grande preprocessing dei dati, in quanto il dataset è stato fornito abbbastanza pulito. I dati sono stati lavorati al fine di eliminare i valori nan e di normalizzare i dati, scalandoli utilizzando la funzione \emph{MinMaxScaling}. Inoltre sono state eliminate tutte le tuple che non riguardavano le attività di interesse (WALKING e DRIVING).\\
+    Per tutti e tre gli algoritmi il dataset è stato suddiviso in training e testing set. Per il training è stato utilizzato l'80\% dei dati e per il testing il 20\%.\\
 
 \section{Gli algoritmi}
 Come già detto precedentemente, in questa fase di valutazione degli algoritmi di classificazione, sono stati considerati tre differenti approcci: il \textbf{KNN}, il \textbf{Random Forest} e il \textbf{Gaussian Naive Bayes}.\\
@@ -54,10 +55,10 @@ In questa sezione, verranno descritti in dettaglio ciascuno di questi algoritmi 
 Per quanto riguarda il KNN è stato deciso di effettuare un tuning degli iperparametri per il KNN, con lo scopo di ottenere una prestazione ottimale del modello.\\
 I parametri che sono stati modificati sono stati:
 \begin{itemize}
-    \item \textbf{n\_neighbors}: che rappresenta il numero di vicini considerati nella classificazione
-    \item \textbf{weights}: che determina il peso dei vicini nella classificazione
-    \item \textbf{leaf-size}: che rappresenta la dimensione massima di una foglia dell'albero di ricerca
-    \item \textbf{p}: che determina la potenza della metrica utilizzata nella calcoli della distanza tra i vicini
+    \item \textbf{n\_neighbors}: rappresenta il numero di vicini considerati nella classificazione
+    \item \textbf{weights}: determina il peso dei vicini nella classificazione
+    \item \textbf{leaf-size}: rappresenta la dimensione massima di una foglia dell'albero di ricerca
+    \item \textbf{p}: determina la potenza della metrica utilizzata nella calcoli della distanza tra i vicini
 \end{itemize}
 Il tuning degli iperparametri è stato effettuato utilizzando la funzione \emph{GridSearchCV} di \emph{Scikit-learn}. Questa funzione permette di eseguire una ricerca su una griglia di valori per gli iperparametri, testando tutte le possibili combinazioni e selezionando quella che produce la migliore prestazione in termini di accuratezza.\\
 L'obiettivo di questa ottimizzazione era quello di migliorare la precisione del modello KNN e di fornire una soluzione ottimale per la classificazione dei dati. Il risultato ottenuto ha dimostrato che l'ottimizzazione degli iperparametri è stata efficace e ha contribuito a migliorare la performance del modello.
@@ -71,18 +72,18 @@ I risultati del tuning degli iperparametri utilizzando il dataset precedentement
         \hline
          & \textbf{Best value} \\
         \hline
-        \textbf{n\_neighbors} & 5 \\
+        \textbf{n\_neighbors} & 8 \\
         \hline
-        \textbf{weights} & uniform \\
+        \textbf{weights} & distance \\
         \hline
-        \textbf{leaf\_size} & 30 \\
+        \textbf{leaf\_size} & 1 \\
         \hline
         \textbf{p} & 2 \\
         \hline
     \end{tabular}
 \end{table}
 
-Con questi parametri siamo riusciti ad ottenere un'accuratezza finale del 90.5\%.\\
+Con questi parametri siamo riusciti ad ottenere un'accuratezza finale del 89\%.\\
 
 \subsection{Random Forest}
 Come per il KNN, anche per il Random Forest è stato effettuato un tuning degli iperparametri, sempre con \emph{GridSearchCV}, per ottenere una prestazione ottimale del modello.\
@@ -126,12 +127,36 @@ In questo caso, non era necessario effettuare un tuning degli iperparametri, in 
 il modello Gaussian Naive Bayes ha fornito un'accuratezza del 81.82\%, che risulta essere un risultato inferiore rispetto ai modelli KNN e Random Forest.
 
 \section{Confronto dei risultati}
-Illustriamo di seguito le confusion matrix dei modelli KNN, Random Forest e Gaussian Naive Bayes, ottenute utilizzando il dataset precedentemente descritto.
+Illustriamo di seguito i risultati completi dei tre modelli precedenti, ottenute utilizzando il dataset precedentemente descritto.
 
-%confusion matrix KNN
-%confusion matrix Random Forest
-%confusion matrix Gaussian Naive Bayes
+\begin{table}[H]
+    \begin{center}
+        \begin{tabular}{ |P{2cm}|P{1cm}|P{1cm}|P{1cm}|P{1cm}|P{1cm}|P{1cm}|P{1cm}|P{1cm}|P{1cm}|P{1.8cm}| } 
+            \multicolumn{11}{c}{\textbf{Evaluating algorithms}} \\
+            \hline
+            & \multicolumn{3}{c|}{\textbf{KNN}} & \multicolumn{3}{c|}{\textbf{RF}} & \multicolumn{3}{c|}{\textbf{GNB}} & \\
+            \hline
+            \rowcolor{lightgray}
+            & \textbf{P} & \textbf{R} & \textbf{F1} & \textbf{P} & \textbf{R} & \textbf{F1} & \textbf{P} & \textbf{R} & \textbf{F1} & \textbf{Support} \\
+            \hline
+            \textbf{0} & 0.91 & 0.99 & 0.95 &  &  &  &  &  &  & 1949 \\
+            \hline
+            \rowcolor{lightgray}
+            \textbf{1} & 0.23 & 0.02 & 0.04 &  &  &  &  &  &  & 2043 \\
+            \hline
+            \textbf{Accuracy} & \multicolumn{3}{c|}{0.8927855711422845} &\multicolumn{3}{c|}{} &\multicolumn{3}{c|}{}& 3992 \\
+            \hline
+            \rowcolor{lightgray}
+            \textbf{Macro AVG} & 0.89 & 0.89 & 0.89 &  &  &  &  &  &  & 3992 \\
+            \hline
+            \textbf{Weighted AVG} & 0.89 & 0.89 & 0.89 &  &  &  &  &  &  & 3992 \\
+            \hline
 
-%ANALIZZA I RISULTATI E CONFRONTALI
+        \end{tabular}
+        \caption{P = Precision, R = Recall e F1 = F1-score}
+    \end{center}
+\end{table}
+
+
 
 \end{document}

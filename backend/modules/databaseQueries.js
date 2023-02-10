@@ -31,10 +31,11 @@ module.exports = {
             //insert the event in history table
             await insert_event_history(parking_type, zone, position);
             await update_parkings(parking_type, zone);
-            if(parking_type == "ENTERING")
+            if(parking_type == "ENTERING") {
                 var charge_station = await module.exports.checkNearEChargers(position);
-            if(charge_station[0].id != null)
-                    return {id_user, charge_station}; //return the id to attach to the app
+                if(charge_station[0].id != null)
+                    return {id_user, charge_station: charge_station[0].id}; //return the id to attach to the app
+            }
             return  {id_user: id_user};
         } catch (e) {
             console.error(e);
@@ -68,9 +69,6 @@ module.exports = {
                 await insert_event_history(parking_type, zone, position);
                 await update_parkings(parking_type, zone);
                 id_user = result.rows[0].id_user;
-                console.log("TYPE: " + parking_type);
-                console.log("RESULT");
-                console.log(result.rows[0]);
                 if(result.rows[0].id_station != null)
                     await update_charging_station( parking_type, result.rows[0].id_station);
             }
@@ -82,7 +80,7 @@ module.exports = {
             if(parking_type == "ENTERING"){
                 var charge_station = await module.exports.checkNearEChargers(position);
                 if(charge_station[0].id != null)
-                    return {id_user, charge_station};
+                    return {id_user, charge_station: charge_station[0].id};
             } 
             return id_user;
         } catch (e) {

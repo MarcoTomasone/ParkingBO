@@ -92,9 +92,6 @@ const FullScreenDialog =  React.forwardRef((props: Props, ref) => {
                     <Typography align="center" variant="h6" style={{flexGrow: 1, textAlign: 'center', fontSize: "20pt"}}>
                         Zone {zone}
                     </Typography>
-                    <Button autoFocus color="inherit" onClick={handleClose} sx={{ fontSize: "14pt" }}>
-                        save
-                    </Button>
                 </Toolbar>
             </AppBar>
         

@@ -13,8 +13,11 @@ module.exports = {
                 const position = req.body.position.coordinates;
                 var charge_station = null;
                 //if user is not in the database, insert it
+                
                 if(id_user == null) {
                     const result = await databasepg.insert_activity(parking_type, position);
+                    console.log("RESULTATO");
+                    console.log(result);
                     if(result instanceof Error) {
                         //if the user is not in a parking zone, return an error
                         if(result.message == "Zone not found")
@@ -25,8 +28,8 @@ module.exports = {
                     }
                     else {
                         id_user = result.id_user;
-                        if(result.charge_station[0].id != null)
-                            charge_station = result.charge_station[0].id;
+                        if(result.charge_station != undefined && result.charge_station != null)
+                            charge_station = result.charge_station;
                     }
                 }
                 //else update it
@@ -42,11 +45,12 @@ module.exports = {
                     }
                     else{
                         id_user = result.id_user;
-                        if(result.charge_station != undefined && result.charge_station[0].id != null)
-                            charge_station = result.charge_station[0].id;
+                        if(result.charge_station != undefined && result.charge_station != null)
+                            charge_station = result.charge_station;
                     }
                 }
                 const encoded = JSON.stringify({id_user: id_user, charge_station: charge_station});
+                console.log(encoded);
                 res.status(200).send(encoded);
             } 
         });
