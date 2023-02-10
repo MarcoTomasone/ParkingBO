@@ -24,7 +24,7 @@ class Map extends React.Component<Props, State> {
         };
     }
 
-    componentDidMount(): void {
+    public componentDidMount(): void {
         this.getParkings();
         this.getPolygons();
     }

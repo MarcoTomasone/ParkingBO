@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { MapContainer, Marker, Popup, TileLayer, GeoJSON } from 'react-leaflet';
-import { TextField, Card, CardContent, Typography, Switch, FormControl, Grid  } from '@mui/material';
+import { Card, CardContent, Typography, Switch, FormControl, Grid, FormControlLabel, Checkbox  } from '@mui/material';
 import {HeatmapLayer} from 'react-leaflet-heatmap-layer-v3';
 import {heatmap,  getData, eChargers} from '../../utils/requests';
-import { point, polygon } from 'leaflet';
 const L = require('leaflet');
 
 enum heatmapType {
@@ -16,6 +15,7 @@ type Props = {
 type State = {
     points: any;
     polygons: any;
+    showEChargers: boolean;
     heatmapType: heatmapType;
     heatmapLayer: any;
     eChargers: any;
@@ -23,17 +23,16 @@ type State = {
 };
 
 const redMarkerIcon = L.icon({
-    iconUrl: require('../../supports/marker_icon.png'),
-    iconSize: [32,32],
+    iconUrl: require('../../supports/red_marker.png'),
+    iconSize: [24,24],
 });
 
 const greenMarkerIcon = L.icon({
-    iconUrl: require('../../supports/car_icon.png'),
-    iconSize: [32,32],
+    iconUrl: require('../../supports/green_marker.png'),
+    iconSize: [24,24],
 });
 
 
-let n_zone : number = 0;
 class Heatmap extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props); 
@@ -41,19 +40,23 @@ class Heatmap extends React.Component<Props, State> {
             points: {},
             polygons: [],
             heatmapType: heatmapType.polygonsHeatmap,
+            showEChargers: false,
             heatmapLayer: [],
             eChargers: [],
         };
     }
 
-    async componentDidMount(): Promise<void> {
+    public async componentDidMount(): Promise<void> {
         const result : any  = await heatmap();
         await this.setState({points: result});
         await this.getPolygons();
         this.getHeatmapLayer();
-        this.getEChargers();
     }
 
+    /**
+     * This method is used to switch between the two types of heatmap
+     * @param event is the event that triggers the change
+     */
     private handleSwitchChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         const checked = event.target.checked;
         if(checked) this.setState({heatmapType: heatmapType.fullHeatmap});
@@ -61,8 +64,16 @@ class Heatmap extends React.Component<Props, State> {
         this.getHeatmapLayer();
    }
 
-  /**
-     * This method is used to get the polygons from the zone.geojson file
+    private handleCheckboxChange = (event: React.SyntheticEvent<Element, Event>, checked: boolean): void => {
+        this.setState({showEChargers: checked});
+        if(checked)
+            this.getEChargers()
+        else
+            this.setState({eChargers: []});
+    }
+
+    /**
+     * This method is used to get the polygons from the server
      */
     private async getPolygons(): Promise<void> {
         //get the polygons from the zone.geojson file stored in the server
@@ -72,15 +83,16 @@ class Heatmap extends React.Component<Props, State> {
         }
     }
 
-    //TODO: change green and red marker to set availability
+    /**
+     * This method is used to get the eChargers from the server
+     */
     private async getEChargers(): Promise<void> {
         const stations: any = await eChargers();
         //Create a list of marker to add to the map
-        console.log(stations);
         if (stations) {
             var markers = [];
             for (const station of stations.chargers) {
-               station.n_charging_points_available > 2 ?
+               station.n_charging_points_available > 0 ?
                 markers.push(<Marker
                     key={station.id}
                     position={[station.y, station.x,]} //reverse coords
@@ -98,7 +110,10 @@ class Heatmap extends React.Component<Props, State> {
     }
 
 
-    async getHeatmapLayer() {
+    /**
+     * This method is used to get the heatmap layer from the server
+     */
+    private async getHeatmapLayer() {
         const result : any  = await heatmap();
         await this.setState({points: result});
         let heatmapLayer: any[] = []; 
@@ -142,15 +157,15 @@ class Heatmap extends React.Component<Props, State> {
                 zoom={13}
                 maxZoom={20}
                 attributionControl={false}>
-                    {this.state.eChargers}
                     {this.state.heatmapLayer}
+                    {this.state.eChargers}
                 <TileLayer
                 url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' />
             </MapContainer>
             <Card sx={{backgroundColor: "rgba(28,28,28, 0.98)", borderRadius: '25px', position: 'absolute', width: 450, height: 250, top: 300, left: 50, zIndex: 2}}>
                 <CardContent>
-                    <Grid container spacing={2} sx={{marginTop: 5}}>
+                    <Grid container spacing={2} sx={{marginTop: 5, marginLeft: 2}}>
                         <Grid item xs={5}>
                             <Typography variant="h6" color={this.state.heatmapType == heatmapType.polygonsHeatmap ? 'white' : 'black'}>Heatmap per poligono</Typography>
                         </Grid>
@@ -162,6 +177,11 @@ class Heatmap extends React.Component<Props, State> {
                         <Grid item xs={5}>
                             <Typography variant='h6' color={this.state.heatmapType == heatmapType.fullHeatmap ? 'white' : 'black'}>Heatmap complessiva</Typography>
                         </Grid>
+                        <Grid item xs={6}>
+                        <FormControl sx={{color: 'white', fontSize: '20pt'}}>
+                            <FormControlLabel control={<Checkbox checked={this.state.showEChargers}/>} label="Show e-chargers" onChange={this.handleCheckboxChange} />
+                        </FormControl>
+                    </Grid>
                     </Grid>
                 </CardContent>
             </Card>
