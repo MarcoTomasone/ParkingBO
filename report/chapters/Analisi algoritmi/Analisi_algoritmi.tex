@@ -122,15 +122,15 @@ I risultati del tuning degli iperparametri utilizzando il dataset precedentement
         \hline
         & \textbf{Best value} \\
         \hline
-        \textbf{n\_estimators} & 1800 \\
+        \textbf{n\_estimators} & 800 \\
         \hline
-        \textbf{max\_depth} & 50 \\
+        \textbf{max\_depth} & 90 \\
         \hline
-        \textbf{min\_samples\_split} & 2 \\
+        \textbf{min\_samples\_split} & 5 \\
         \hline
-        \textbf{min\_samples\_leaf} & 4 \\
+        \textbf{min\_samples\_leaf} & 1 \\
         \hline
-        \textbf{max\_features} & auto \\
+        \textbf{max\_features} & sqrt \\
         \hline
         \textbf{bootstrap} & False \\
         \hline
@@ -138,6 +138,30 @@ I risultati del tuning degli iperparametri utilizzando il dataset precedentement
 \end{table}
 
 Con questi parametri siamo riusciti ad ottenere un'accuratezza finale del 93.5\% utilizzando il dataset su cui non è stato applicato il MinMaxScaling.
+
+Facendo tuning sul modello Random Forest utilizzando il modello con il MinMaxScaling, si è ottenuto un'accuratezza del 89,83\%.\\
+I parametri ottenuti dal tuning sono:
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|c|}
+        \hline
+        & \textbf{Best value} \\
+        \hline
+        \textbf{n\_estimators} & 1400 \\
+        \hline
+        \textbf{max\_depth} & 80 \\
+        \hline
+        \textbf{min\_samples\_split} & 10 \\
+        \hline
+        \textbf{min\_samples\_leaf} & 2 \\
+        \hline
+        \textbf{max\_features} & sqrt \\
+        \hline
+        \textbf{bootstrap} & True \\
+        \hline
+    \end{tabular}
+\end{table}
 
 \subsection{Gaussian Naive Bayes}
 Per quanto riguarda il Gaussian Naive Bayes, abbiamo deciso di utilizzare questo algoritmo per la classificazione dei dati in quanto si tratta di un metodo semplice e veloce per la classificazione basato sull'assunzione che le feature siano distribuite secondo una distribuzione normale.\\
@@ -159,22 +183,53 @@ Illustriamo di seguito i risultati completi dei tre modelli precedenti, ottenute
             \rowcolor{lightgray}
             & \textbf{P} & \textbf{R} & \textbf{F1} & \textbf{P} & \textbf{R} & \textbf{F1} & \textbf{P} & \textbf{R} & \textbf{F1} & \textbf{Support} \\
             \hline
-            \textbf{0} & 0.91 & 0.99 & 0.95 & 0.92 & 0.94 & 0.93 &  &  &  & 1220 \\
+            \textbf{0} & 0.91 & 0.99 & 0.95 & 0.95 & 0.95 & 0.95 &  &  &  & 1949 \\
             \hline
             \rowcolor{lightgray}
-            \textbf{1} & 0.23 & 0.02 & 0.04 & 0.95 & 0.93 & 0.94 &  &  &  & 1275 \\
+            \textbf{1} & 0.23 & 0.02 & 0.04 & 0.95 & 0.95 & 0.95 &  &  &  & 2043 \\
             \hline
-            \textbf{Accuracy} & \multicolumn{3}{c|}{0.8927855711422845} &\multicolumn{3}{c|}{0.9350701402805611} &\multicolumn{3}{c|}{}& 3992 \\
+            \textbf{Accuracy} & \multicolumn{3}{c|}{0.8927855711422845} &\multicolumn{3}{c|}{0.9524048096192385} &\multicolumn{3}{c|}{}& 3992 \\
             \hline
             \rowcolor{lightgray}
-            \textbf{Macro AVG} & 0.89 & 0.89 & 0.89 &0.94  & 0.94 & 0.94 &  &  &  & 2495 \\
+            \textbf{Macro AVG} & 0.89 & 0.89 & 0.89 &0.95  & 0.95 & 0.95 &  &  &  & 3992 \\
             \hline
-            \textbf{Weighted AVG} & 0.89 & 0.89 & 0.89 & 0.94 & 0.94 &0.94  &  &  &  & 2495 \\
+            \textbf{Weighted AVG} & 0.89 & 0.89 & 0.89 & 0.95 & 0.95 &0.95  &  &  &  & 3992 \\
             \hline
 
         \end{tabular}
         \caption{P = Precision, R = Recall e F1 = F1-score}
     \end{center}
 \end{table}
+
+Utilizzando il dataset su cui è stato applicato il MinMaxScaling i risultati sono:
+\begin{table}[H]
+    \begin{center}
+        \begin{tabular}{ |P{2cm}|P{1cm}|P{1cm}|P{1cm}|P{1cm}|P{1cm}|P{1cm}|P{1cm}|P{1cm}|P{1cm}|P{1.8cm}| } 
+            \multicolumn{11}{c}{\textbf{Evaluating algorithms}} \\
+            \hline
+            & \multicolumn{3}{c|}{\textbf{KNN}} & \multicolumn{3}{c|}{\textbf{RF}} & \multicolumn{3}{c|}{\textbf{GNB}} & \\
+            \hline
+            \rowcolor{lightgray}
+            & \textbf{P} & \textbf{R} & \textbf{F1} & \textbf{P} & \textbf{R} & \textbf{F1} & \textbf{P} & \textbf{R} & \textbf{F1} & \textbf{Support} \\
+            \hline
+            \textbf{0} & 0.91 & 0.99 & 0.95 & 0.87 & 0.93 & 0.90 &  &  &  & 1949 \\
+            \hline
+            \rowcolor{lightgray}
+            \textbf{1} & 0.23 & 0.02 & 0.04 & 0.93 & 0.97 & 0.90 &  &  &  & 2043 \\
+            \hline
+            \textbf{Accuracy} & \multicolumn{3}{c|}{0.8927855711422845} &\multicolumn{3}{c|}{0.0.8982965931863728} &\multicolumn{3}{c|}{}& 3992 \\
+            \hline
+            \rowcolor{lightgray}
+            \textbf{Macro AVG} & 0.89 & 0.89 & 0.89 &0.90  & 0.90 & 0.90 &  &  &  & 3992 \\
+            \hline
+            \textbf{Weighted AVG} & 0.89 & 0.89 & 0.89 & 0.90 & 0.90 &0.90  &  &  &  & 3992 \\
+            \hline
+
+        \end{tabular}
+        \caption{P = Precision, R = Recall e F1 = F1-score}
+    \end{center}
+\end{table}
+
+
 
 \end{document}
