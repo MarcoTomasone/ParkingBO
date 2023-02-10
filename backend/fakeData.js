@@ -1,4 +1,4 @@
-const databasepg = require('./modules/databasepg');
+const databasepg = require('./modules/databaseQueries');
 const path = require('path');
 const fs = require('fs');
 

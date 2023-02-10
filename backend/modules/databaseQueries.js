@@ -33,8 +33,9 @@ module.exports = {
             await update_parkings(parking_type, zone);
             if(parking_type == "ENTERING") {
                 var charge_station = await module.exports.checkNearEChargers(position);
-                if(charge_station[0].id != null)
-                    return {id_user, charge_station: charge_station[0].id}; //return the id to attach to the app
+                if(charge_station.length != 0 && charge_station[0].id != null )
+                    if(charge_station[0].n_charging_points_available > 0)    
+                        return {id_user, charge_station: charge_station[0].id}; //return the id to attach to the app
             }
             return  {id_user: id_user};
         } catch (e) {
@@ -80,7 +81,8 @@ module.exports = {
             if(parking_type == "ENTERING"){
                 var charge_station = await module.exports.checkNearEChargers(position);
                 if(charge_station[0].id != null)
-                    return {id_user, charge_station: charge_station[0].id};
+                    if(charge_station[0].n_charging_points_available > 0)
+                        return {id_user, charge_station: charge_station[0].id};
             } 
             return id_user;
         } catch (e) {

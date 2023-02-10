@@ -51,7 +51,8 @@ class _SplashScreenState extends State<SplashScreen>{
           children: const [
             Image(
               image: AssetImage('assets/logo.png'), 
-              width: 200, )
+              width: 200, ),
+              Text('Parking BO', style: TextStyle(fontSize: 30)),
           ],
         ),
       )

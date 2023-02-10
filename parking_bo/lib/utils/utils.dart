@@ -26,9 +26,10 @@ enum ParkingType {
  * */
 void sendActivity (ParkingType type, LatLng position, BuildContext context) async {
   final id_user = await getId();
+  dev.log("MYID " + id_user.toString());
   final response = await sendTransition(id_user, type, position);
+  dev.log("RESPONSE " + response.toString());
   //If the user is in a parking zone, the id is saved in the shared preferences
-  dev.log("RESPONSE: " + response.toString());
   if(response == null ){
     Fluttertoast.showToast(
     msg: "User is not in a parking zone",

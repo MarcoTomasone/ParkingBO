@@ -41,11 +41,24 @@ Il dataset utilizzato per l'analisi ci è stato fornito dal professor Marco Di F
         \hline
     \end{tabular}
 \end{table}
+Le etichette di questo dataset assumono 5 valori differenti:
+\begin{itemize}
+    \item \textbf{STILL}: l'utente non si muove.
+    \item \textbf{WALKING}: l'utente cammina.
+    \item \textbf{CAR}: l'utente è in auto.
+    \item \textbf{BUS}: l'utente è in bus.
+    \item \textbf{TRAIN}: l'utente è in treno. 
+\end{itemize}
 
 \subsection{Data mining}
-    Per il data mining è stato utilizzato il linguaggio di programmazione \emph{Python} e per il training e prediction dei modelli la libreria \emph{Scikit-learn}.\\
-    Non è stato fatto un grande preprocessing dei dati, in quanto il dataset è stato fornito abbbastanza pulito. I dati sono stati lavorati al fine di eliminare i valori nan e di normalizzare i dati, scalandoli utilizzando la funzione \emph{MinMaxScaling}. Inoltre sono state eliminate tutte le tuple che non riguardavano le attività di interesse (WALKING e DRIVING).\\
-    Per tutti e tre gli algoritmi il dataset è stato suddiviso in training e testing set. Per il training è stato utilizzato l'80\% dei dati e per il testing il 20\%.\\
+    Per il data mining è stato utilizzato il linguaggio di programmazione \emph{Python} e per il training e prediction dei modelli la libreria \emph{Scikit-learn}. Inoltre, durante la fase di preprocessing e per la gestione dei dati è stata utilizzata la libreria di Python \emph{Pandas}.\\
+    Non è stato fatto un grande preprocessing dei dati, in quanto il dataset è stato fornito abbbastanza pulito. I dati sono stati lavorati al fine di eliminare i valori NaN e di normalizzare i dati, scalandoli utilizzando la funzione \emph{MinMaxScaling}. Inoltre sono state eliminate tutte le tuple che non riguardavano le attività di interesse (WALKING e DRIVING).\\
+    Per tutti e tre gli algoritmi il dataset è stato suddiviso in tre parti:
+    \begin{itemize}
+        \item \textbf{Training}: è stato utilizzato per il training del modello.
+        \item \textbf{Testing}: è stato utilizzato per il testing del modello.
+    \end{itemize}
+    Per il training è stato utilizzato l'80\% dei dati e per il testing il 20\%.\\
 
 \section{Gli algoritmi}
 Come già detto precedentemente, in questa fase di valutazione degli algoritmi di classificazione, sono stati considerati tre differenti approcci: il \textbf{KNN}, il \textbf{Random Forest} e il \textbf{Gaussian Naive Bayes}.\\
@@ -90,14 +103,17 @@ Come per il KNN, anche per il Random Forest è stato effettuato un tuning degli 
 I parametri che sono stati modificati sono stati:
 \begin{itemize}
 \item \textbf{n\_estimators}: che rappresenta il numero di alberi decisionali nella foresta
+\item \textbf{max\_features}: che rappresenta il numero di features da considerare quando si cerca la migliore divisione
 \item \textbf{max\_depth}: che rappresenta la profondità massima degli alberi decisionali
 \item \textbf{min\_samples\_split}: che rappresenta il numero minimo di campioni richiesti per dividere un nodo interno
 \item \textbf{min\_samples\_leaf}: che rappresenta il numero minimo di campioni richiesti per costruire una foglia dell'albero
+\item \textbf{bootstrap}: che rappresenta la modalità di campionamento dei dati
 \end{itemize}
-Il tuning degli iperparametri è stato effettuato utilizzando la funzione \emph{GridSearchCV} di \emph{Scikit-learn}.\\
-L'obiettivo di questa ottimizzazione era quello di migliorare la precisione del modello Random Forest e di fornire una soluzione ottimale per la classificazione dei dati. Il risultato ottenuto ha dimostrato che l'ottimizzazione degli iperparametri è stata efficace e ha contribuito a migliorare la performance del modello.
+Il tuning degli iperparametri è stato effettuato utilizzando la funzione \emph{RandomizedSearchCV} di \emph{Scikit-learn}.\\
+L'obiettivo di questa ottimizzazione era quello di migliorare la precisione del modello Random Forest e di fornire una soluzione ottimale per la classificazione dei dati. Il risultato ottenuto ha dimostrato che l'ottimizzazione degli iperparametri è stata efficace e ha contribuito a migliorare la performance del modello. La RandomizedSearchCV è stata eseguita per un numero di 100 iterazioni, usando una 5-fold cross validation. Per un totale di 500 test. 
 
 \subsubsection{Risultati}
+
 I risultati del tuning degli iperparametri utilizzando il dataset precedentemente descritto sono riportati nella tabella seguente:
 
 \begin{table}[H]
@@ -106,25 +122,29 @@ I risultati del tuning degli iperparametri utilizzando il dataset precedentement
         \hline
         & \textbf{Best value} \\
         \hline
-        \textbf{n\_estimators} & 100 \\
+        \textbf{n\_estimators} & 1800 \\
         \hline
-        \textbf{max\_depth} & 5 \\
+        \textbf{max\_depth} & 50 \\
         \hline
         \textbf{min\_samples\_split} & 2 \\
         \hline
-        \textbf{min\_samples\_leaf} & 1 \\
+        \textbf{min\_samples\_leaf} & 4 \\
+        \hline
+        \textbf{max\_features} & auto \\
+        \hline
+        \textbf{bootstrap} & False \\
         \hline
     \end{tabular}
 \end{table}
 
-Con questi parametri siamo riusciti ad ottenere un'accuratezza finale del 91.2\%.
+Con questi parametri siamo riusciti ad ottenere un'accuratezza finale del 93.5\% utilizzando il dataset su cui non è stato applicato il MinMaxScaling.
 
 \subsection{Gaussian Naive Bayes}
 Per quanto riguarda il Gaussian Naive Bayes, abbiamo deciso di utilizzare questo algoritmo per la classificazione dei dati in quanto si tratta di un metodo semplice e veloce per la classificazione basato sull'assunzione che le feature siano distribuite secondo una distribuzione normale.\\
 In questo caso, non era necessario effettuare un tuning degli iperparametri, in quanto il Gaussian Naive Bayes non ha parametri che possono essere ottimizzati per migliorare le sue prestazioni.
 
 \subsubsection{Risultati}
-il modello Gaussian Naive Bayes ha fornito un'accuratezza del 81.82\%, che risulta essere un risultato inferiore rispetto ai modelli KNN e Random Forest.
+Il modello Gaussian Naive Bayes ha fornito un'accuratezza del 81.82\%, che risulta essere un risultato inferiore rispetto ai modelli KNN e Random Forest.
 
 \section{Confronto dei risultati}
 Illustriamo di seguito i risultati completi dei tre modelli precedenti, ottenute utilizzando il dataset precedentemente descritto.
@@ -139,24 +159,22 @@ Illustriamo di seguito i risultati completi dei tre modelli precedenti, ottenute
             \rowcolor{lightgray}
             & \textbf{P} & \textbf{R} & \textbf{F1} & \textbf{P} & \textbf{R} & \textbf{F1} & \textbf{P} & \textbf{R} & \textbf{F1} & \textbf{Support} \\
             \hline
-            \textbf{0} & 0.91 & 0.99 & 0.95 &  &  &  &  &  &  & 1949 \\
+            \textbf{0} & 0.91 & 0.99 & 0.95 & 0.92 & 0.94 & 0.93 &  &  &  & 1220 \\
             \hline
             \rowcolor{lightgray}
-            \textbf{1} & 0.23 & 0.02 & 0.04 &  &  &  &  &  &  & 2043 \\
+            \textbf{1} & 0.23 & 0.02 & 0.04 & 0.95 & 0.93 & 0.94 &  &  &  & 1275 \\
             \hline
-            \textbf{Accuracy} & \multicolumn{3}{c|}{0.8927855711422845} &\multicolumn{3}{c|}{} &\multicolumn{3}{c|}{}& 3992 \\
+            \textbf{Accuracy} & \multicolumn{3}{c|}{0.8927855711422845} &\multicolumn{3}{c|}{0.9350701402805611} &\multicolumn{3}{c|}{}& 3992 \\
             \hline
             \rowcolor{lightgray}
-            \textbf{Macro AVG} & 0.89 & 0.89 & 0.89 &  &  &  &  &  &  & 3992 \\
+            \textbf{Macro AVG} & 0.89 & 0.89 & 0.89 &0.94  & 0.94 & 0.94 &  &  &  & 2495 \\
             \hline
-            \textbf{Weighted AVG} & 0.89 & 0.89 & 0.89 &  &  &  &  &  &  & 3992 \\
+            \textbf{Weighted AVG} & 0.89 & 0.89 & 0.89 & 0.94 & 0.94 &0.94  &  &  &  & 2495 \\
             \hline
 
         \end{tabular}
         \caption{P = Precision, R = Recall e F1 = F1-score}
     \end{center}
 \end{table}
-
-
 
 \end{document}
