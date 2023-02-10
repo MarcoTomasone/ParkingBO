@@ -47,7 +47,7 @@ class Clustering extends React.Component<Props, State> {
         };
     }
     
-    componentDidMount(): void {
+    public componentDidMount(): void {
         this.getPolygons();
         const kmeans =  <TextField id="size" variant="filled" required label="K-Means'size" color={this.state.colorField} sx={{backgroundColor: "white", top: 20, left: 20, borderRadius: '5px'}} onChange={(event: React.ChangeEvent<HTMLInputElement>) => {this.handleTextFieldChange_kmeans(event.target.value)}} />
         this.setState({form: kmeans});
@@ -259,7 +259,7 @@ class Clustering extends React.Component<Props, State> {
                     </Grid>
                     <Grid item xs={6}>
                         <FormControl sx={{marginLeft: 5, color: 'white', fontSize: '20pt'}}>
-                            <FormControlLabel control={<Checkbox checked={this.state.splitting}/>} label="Spliting on zoom" onChange={this.handleCheckboxChange} />
+                            <FormControlLabel control={<Checkbox checked={this.state.splitting}/>} label="Splitting on zoom" onChange={this.handleCheckboxChange} />
                         </FormControl>
                     </Grid>
                 </Grid>
