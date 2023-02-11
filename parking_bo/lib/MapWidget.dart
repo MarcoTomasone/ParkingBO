@@ -17,7 +17,8 @@ import 'package:geojson/geojson.dart';
 import 'dart:developer' as dev;
 import 'package:flutter/services.dart' show rootBundle;
 import 'ActivityRecognitionClass.dart';
-import 'package:flutter_activity_recognition/flutter_activity_recognition.dart' as ar;
+import 'package:flutter_activity_recognition/flutter_activity_recognition.dart'
+    as ar;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:async';
 import 'dart:convert';
@@ -25,10 +26,8 @@ import 'SensorRecognition.dart';
 import 'utils/SaveFile.dart';
 import 'Model.dart';
 
-final LocationSettings locationSettings = LocationSettings(
-  accuracy: LocationAccuracy.high,
-  distanceFilter: 15
-);
+final LocationSettings locationSettings =
+    LocationSettings(accuracy: LocationAccuracy.high, distanceFilter: 15);
 
 enum userActivity { DRIVING, WALKING, STILL }
 
@@ -48,11 +47,13 @@ class _MapWidgetState extends State<MapWidget> {
   int? freeParking = 0;
   var id_user = null;
   ar.ActivityType currentActivity = ar.ActivityType.UNKNOWN;
-  LatLng currentLocation = LatLng(44.493754, 11.343095); //Coordinates of Bologna
+  LatLng currentLocation =
+      LatLng(44.493754, 11.343095); //Coordinates of Bologna
   late CenterOnLocationUpdate _centerOnLocationUpdate;
   late ActivityRecognition activityRecognition;
   late SensorRecognition sensorRecognition;
   Model model = Model();
+  int currentActivityModel = 0;
 
   void updateCurrentActivity(ar.ActivityType activityType) {
     if (currentActivity == ar.ActivityType.IN_VEHICLE &&
@@ -89,8 +90,7 @@ class _MapWidgetState extends State<MapWidget> {
     setState(() {
       currentActivity = activityType;
     });
-
-    }
+  }
 
   Future<void> drawPolygonsOnMap() async {
     final geo = GeoJson();
@@ -118,7 +118,7 @@ class _MapWidgetState extends State<MapWidget> {
     setState(() {
       markers.clear();
     });
-    Map<String, dynamic> chargers = await getChargingStations();
+    /*Map<String, dynamic> chargers = await getChargingStations();
     for (var element in chargers["chargers"]) {
       setState(() {
         markers.add(
@@ -131,9 +131,9 @@ class _MapWidgetState extends State<MapWidget> {
                         : Colors
                             .red, //TODO: change control to > 0 when the database will be updated
                   )),
-        );
+        );*
       });
-    }
+    }*/
   }
 
   Future<bool> _getPermissionLocation() async {
@@ -170,9 +170,22 @@ class _MapWidgetState extends State<MapWidget> {
     drawMarkersOnMap();
     model.loadModel();
 
-    Timer.periodic(Duration(seconds: 5), (timer) {
-       sensorRecognition.getRow(
-        userActivitySel.toString(), currentActivity.toString());
+    Timer.periodic(Duration(seconds: 10), (timer) {
+      /*sensorRecognition.getRow(
+        userActivitySel.toString(), currentActivity.toString());*/
+      int activityDetectedModel =
+          model.predict(sensorRecognition.getFeatures());
+      dev.log(activityDetectedModel.toString());
+      if (activityDetectedModel == currentActivityModel)
+        Fluttertoast.showToast(
+            msg: ((activityDetectedModel == 0) ? "DRIVING" : "WALKING") +
+                " detected",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 3,
+            backgroundColor: Colors.blue,
+            textColor: Colors.white,
+            fontSize: 16.0);
     });
 
     //testing functions
@@ -194,7 +207,7 @@ class _MapWidgetState extends State<MapWidget> {
       case ar.ActivityType.WALKING:
         return Icons.circle;
       default:
-        return Icons.my_location; //Case: STILL, UNKNOWN 
+        return Icons.my_location; //Case: STILL, UNKNOWN
     }
   }
 
@@ -264,14 +277,13 @@ class _MapWidgetState extends State<MapWidget> {
                     onPressed: () {
                       dev.log("STILL");
                       //sendActivity(ParkingType.EXITING, LatLng(44.496462, 11.355446), context);
-                      sendActivity(ParkingType.EXITING, currentLocation, context);
+                      sendActivity(
+                          ParkingType.EXITING, currentLocation, context);
                       setState(() {
                         userActivitySel = userActivity.STILL;
                       });
                     },
                     child: const Text('STILL/Exit')),
-                ElevatedButton(
-                    onPressed: () => {dev.log(model.predict(sensorRecognition.getFeatures()).toString())}, child: const Text('Predict')),
                 ElevatedButton(
                     style: ButtonStyle(
                         backgroundColor:
@@ -280,7 +292,8 @@ class _MapWidgetState extends State<MapWidget> {
                                 : MaterialStateProperty.all(Colors.blue)),
                     onPressed: () {
                       //sendActivity(ParkingType.ENTERING, LatLng(44.496462, 11.355446), context);
-                      sendActivity(ParkingType.ENTERING, currentLocation, context);
+                      sendActivity(
+                          ParkingType.ENTERING, currentLocation, context);
                       setState(() {
                         userActivitySel = userActivity.WALKING;
                       });
@@ -298,13 +311,15 @@ class _MapWidgetState extends State<MapWidget> {
                       });
                     },
                     child: const Text('DRIVING')),
-                    ElevatedButton(
+                ElevatedButton(
                     style: ButtonStyle(
                         backgroundColor:
                             (userActivitySel! == userActivity.DRIVING)
                                 ? MaterialStateProperty.all(Colors.green)
                                 : MaterialStateProperty.all(Colors.blue)),
-                    onPressed: () {  drawMarkersOnMap(); },
+                    onPressed: () {
+                      drawMarkersOnMap();
+                    },
                     child: const Text('UpdateMarkers'))
               ],
             )),
@@ -312,5 +327,3 @@ class _MapWidgetState extends State<MapWidget> {
     );
   }
 }
-
-
