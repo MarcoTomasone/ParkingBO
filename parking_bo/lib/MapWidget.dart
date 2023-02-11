@@ -85,7 +85,7 @@ class _MapWidgetState extends State<MapWidget> {
         fontSize: 16.0);
 
     setState(() {
-      if(activityType == ar.ActivityType.WALKING || activityType == ar.ActivityType.IN_VEHICLE)
+      if((activityType == ar.ActivityType.WALKING || activityType == ar.ActivityType.IN_VEHICLE) && (currentActivity != activityType)) 
           currentActivity = activityType;
     });
   }
@@ -168,9 +168,9 @@ class _MapWidgetState extends State<MapWidget> {
     model.loadModel();
 
     Timer.periodic(Duration(seconds: 10), (timer) {
-      sensorRecognition.getRow(userActivitySel.toString(), currentActivity.toString());
       int activityDetectedModel =
           model.predict(sensorRecognition.getFeatures());
+      sensorRecognition.getRow(userActivitySel.toString(), currentActivity.toString());
       dev.log(activityDetectedModel.toString());
         Fluttertoast.showToast(
             msg: ((activityDetectedModel == 0) ? "DRIVING" : "WALKING") +

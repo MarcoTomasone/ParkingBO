@@ -172,7 +172,7 @@ class SensorRecognition {
     if (_accelerometerMagnitude.length == 0 ||
         _gyroscopeMagnitude.length == 0 ||
         _gyroscopeUncalibratedMagnitude.length == 0) return [];
-    List features = _getList();
+    List<double> features = _getList();
     _accelerometerMagnitude.clear();
     _gyroscopeMagnitude.clear();
     _gyroscopeUncalibratedMagnitude.clear();
