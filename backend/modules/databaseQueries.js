@@ -62,7 +62,7 @@ module.exports = {
             const exist = await check_user(id);
             let result;
             let id_user;
-            if(exist > 0) {
+            if(exis > 0 ) { //if(exist.count > 0 && exist.parking_type != parking_type)
                 const zone = await module.exports.find_zone(position);
                 if(zone instanceof Error)
                     throw new Error(zone.message)
@@ -447,7 +447,7 @@ const check_user = async (id) => {
     const client = new Client(QUERY_CONFIGURATION);
     await client.connect();
     try {
-        const result = await client.query(`SELECT COUNT(1) FROM user_events WHERE id_user = ${id};`);
+        const result = await client.query(`SELECT COUNT(1), parking_type  FROM user_events WHERE id_user = ${id};`);
         const count = result.rows[0].count;
         return count;
     } catch (e) {
@@ -458,6 +458,11 @@ const check_user = async (id) => {
         await client.end();
     }       
 };
+
+/**
+ * const result = await client.query(`SELECT COUNT(1), parking_type  FROM user_events WHERE id_user = ${id} GROUP BY id_user, parking_type;`);
+    return result.rows[0];
+ */
 
 
 /**
