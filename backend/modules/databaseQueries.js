@@ -62,7 +62,7 @@ module.exports = {
             const exist = await check_user(id);
             let result;
             let id_user;
-            if(exis > 0 ) { //if(exist.count > 0 && exist.parking_type != parking_type)
+            if(exist > 0 ) { //if(exist.count > 0 && exist.parking_type != parking_type)
                 const zone = await module.exports.find_zone(position);
                 if(zone instanceof Error)
                     throw new Error(zone.message)

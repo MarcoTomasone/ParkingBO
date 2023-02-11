@@ -46,6 +46,7 @@ class _MapWidgetState extends State<MapWidget> {
   int? freeParking = 0;
   var id_user = null;
   ar.ActivityType currentActivity = ar.ActivityType.UNKNOWN;
+  ar.ActivityType markerActivity = ar.ActivityType.UNKNOWN;
   LatLng currentLocation = LatLng(44.493754, 11.343095); //Coordinates of Bologna
   late CenterOnLocationUpdate _centerOnLocationUpdate;
   late ActivityRecognition activityRecognition;
@@ -84,6 +85,7 @@ class _MapWidgetState extends State<MapWidget> {
         textColor: Colors.white,
         fontSize: 16.0);
 
+    markerActivity = activityType;
     setState(() {
       if((activityType == ar.ActivityType.WALKING || activityType == ar.ActivityType.IN_VEHICLE) && (currentActivity != activityType)) 
           currentActivity = activityType;
@@ -116,7 +118,7 @@ class _MapWidgetState extends State<MapWidget> {
     setState(() {
       markers.clear();
     });
-    /*Map<String, dynamic> chargers = await getChargingStations();
+    Map<String, dynamic> chargers = await getChargingStations();
     for (var element in chargers["chargers"]) {
       setState(() {
         markers.add(
@@ -130,7 +132,7 @@ class _MapWidgetState extends State<MapWidget> {
                   )),
         );
       });
-    }*/
+    }
   }
 
   Future<bool> _getPermissionLocation() async {
@@ -196,7 +198,7 @@ class _MapWidgetState extends State<MapWidget> {
   }
 
   IconData getMarkerType() {
-    switch (currentActivity) {
+    switch (markerActivity) {
       case ar.ActivityType.IN_VEHICLE:
         return Icons.navigation;
       case ar.ActivityType.WALKING:
