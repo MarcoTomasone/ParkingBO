@@ -665,7 +665,6 @@ INPUT .\chapters\Progettazione\Progettazione.tex
 INPUT chapters\Progettazione\Progettazione.tex
 INPUT .\chapters\Progettazione\Progettazione.tex
 INPUT chapters\Progettazione\Progettazione.tex
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmti12.tfm
 INPUT .\chapters\Analisi algoritmi\Analisi_algoritmi.tex
 INPUT chapters\Analisi algoritmi\Analisi_algoritmi.tex
 INPUT .\chapters\Analisi algoritmi\Analisi_algoritmi.tex
@@ -673,6 +672,7 @@ INPUT chapters\Analisi algoritmi\Analisi_algoritmi.tex
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmr17.tfm
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmbx12.tfm
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmbx12.tfm
+INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmti12.tfm
 INPUT .\Report.bbl
 INPUT Report.bbl
 INPUT .\Report.bbl

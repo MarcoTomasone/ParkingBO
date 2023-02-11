@@ -9,7 +9,7 @@
 \contentsline {subsection}{\numberline {3.2.1}KNN}{8}{subsection.3.2.1}%
 \contentsline {subsubsection}{Risultati}{8}{section*.3}%
 \contentsline {subsection}{\numberline {3.2.2}Random Forest}{9}{subsection.3.2.2}%
-\contentsline {subsubsection}{Risultati}{9}{section*.5}%
+\contentsline {subsubsection}{Risultati}{10}{section*.6}%
 \contentsline {subsection}{\numberline {3.2.3}Gaussian Naive Bayes}{10}{subsection.3.2.3}%
-\contentsline {subsubsection}{Risultati}{10}{section*.7}%
-\contentsline {section}{\numberline {3.3}Confronto dei risultati}{10}{section.3.3}%
+\contentsline {subsubsection}{Risultati}{11}{section*.9}%
+\contentsline {section}{\numberline {3.3}Confronto dei risultati}{11}{section.3.3}%

@@ -118,7 +118,7 @@ class _MapWidgetState extends State<MapWidget> {
     setState(() {
       markers.clear();
     });
-    Map<String, dynamic> chargers = await getChargingStations();
+    /*Map<String, dynamic> chargers = await getChargingStations();
     for (var element in chargers["chargers"]) {
       setState(() {
         markers.add(
@@ -133,7 +133,7 @@ class _MapWidgetState extends State<MapWidget> {
                   )),
         );
       });
-    }
+    }*/
   }
 
   Future<bool> _getPermissionLocation() async {
