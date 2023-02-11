@@ -142,37 +142,29 @@ class SensorRecognition {
   }
 
   void getRow(String userTarget, String libTarget) {
-    if (_accelerometerMagnitude.length > 0 &&
-        _gyroscopeMagnitude.length > 0 &&
-        _gyroscopeUncalibratedMagnitude.length > 0) {
+    if (_accelerometerMagnitude.length > 0 &&  _gyroscopeMagnitude.length > 0 && _gyroscopeUncalibratedMagnitude.length > 0) {
       Map<String, dynamic> row = {
-        'android.sensor.accelerometer#mean': _accelerometerMagnitude.reduce((a, b) => a + b) /
-            _accelerometerMagnitude.length,
+        'android.sensor.accelerometer#mean': _accelerometerMagnitude.reduce((a, b) => a + b) /_accelerometerMagnitude.length,
         'android.sensor.accelerometer#max': _accelerometerMagnitude.reduce(max),
         'android.sensor.accelerometer#min': _gyroscopeMagnitude.reduce(min),
         'android.sensor.accelerometer#std': standardDeviation(_accelerometerMagnitude),
-        'android.sensor.gyroscope#mean': _gyroscopeMagnitude.reduce((a, b) => a + b) /
-            _gyroscopeMagnitude.length,
+        'android.sensor.gyroscope#mean': _gyroscopeMagnitude.reduce((a, b) => a + b) / _gyroscopeMagnitude.length,
         'android.sensor.gyroscope#max': _gyroscopeMagnitude.reduce(max),
         'android.sensor.gyroscope#min': _gyroscopeMagnitude.reduce(min),
         'android.sensor.gyroscope#std': standardDeviation(_gyroscopeUncalibratedMagnitude),
-        'android.sensor.gyroscope_uncalibrated#mean':
-            _gyroscopeUncalibratedMagnitude.reduce((a, b) => a + b) /
-                _gyroscopeUncalibratedMagnitude.length,
-        'android.sensor.gyroscope_uncalibrated#max':
-            _gyroscopeUncalibratedMagnitude.reduce(max),
-        'android.sensor.gyroscope_uncalibrated#min':
-            _gyroscopeUncalibratedMagnitude.reduce(min),
-        'android.sensor.gyroscope_uncalibrated#std':
-            standardDeviation(_gyroscopeUncalibratedMagnitude),
+        'android.sensor.gyroscope_uncalibrated#mean': _gyroscopeUncalibratedMagnitude.reduce((a, b) => a + b) / _gyroscopeUncalibratedMagnitude.length,
+        'android.sensor.gyroscope_uncalibrated#max': _gyroscopeUncalibratedMagnitude.reduce(max),
+        'android.sensor.gyroscope_uncalibrated#min': _gyroscopeUncalibratedMagnitude.reduce(min),
+        'android.sensor.gyroscope_uncalibrated#std': standardDeviation(_gyroscopeUncalibratedMagnitude),
         'userTarget': userTarget,
         'libTarget': libTarget,
       };
+      
+      dataset.add(row);
 
       _accelerometerMagnitude.clear();
       _gyroscopeMagnitude.clear();
       _gyroscopeUncalibratedMagnitude.clear();
-      dataset.add(row);
     }
   }
 

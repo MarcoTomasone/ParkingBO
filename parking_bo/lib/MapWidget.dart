@@ -17,8 +17,7 @@ import 'package:geojson/geojson.dart';
 import 'dart:developer' as dev;
 import 'package:flutter/services.dart' show rootBundle;
 import 'ActivityRecognitionClass.dart';
-import 'package:flutter_activity_recognition/flutter_activity_recognition.dart'
-    as ar;
+import 'package:flutter_activity_recognition/flutter_activity_recognition.dart' as ar;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:async';
 import 'dart:convert';
@@ -47,8 +46,7 @@ class _MapWidgetState extends State<MapWidget> {
   int? freeParking = 0;
   var id_user = null;
   ar.ActivityType currentActivity = ar.ActivityType.UNKNOWN;
-  LatLng currentLocation =
-      LatLng(44.493754, 11.343095); //Coordinates of Bologna
+  LatLng currentLocation = LatLng(44.493754, 11.343095); //Coordinates of Bologna
   late CenterOnLocationUpdate _centerOnLocationUpdate;
   late ActivityRecognition activityRecognition;
   late SensorRecognition sensorRecognition;
@@ -56,8 +54,7 @@ class _MapWidgetState extends State<MapWidget> {
   int currentActivityModel = 0;
 
   void updateCurrentActivity(ar.ActivityType activityType) {
-    if (currentActivity == ar.ActivityType.IN_VEHICLE &&
-        activityType == ar.ActivityType.WALKING) {
+    if (currentActivity == ar.ActivityType.IN_VEHICLE && activityType == ar.ActivityType.WALKING) {
       Fluttertoast.showToast(
           msg: "Change from driving to walking",
           toastLength: Toast.LENGTH_SHORT,
@@ -66,9 +63,8 @@ class _MapWidgetState extends State<MapWidget> {
           backgroundColor: Colors.red,
           textColor: Colors.white,
           fontSize: 16.0);
-      //sendActivity(ParkingType.EXITING, currentLocation);  //TODO: Uncomment if server up
-    } else if (currentActivity == ar.ActivityType.WALKING &&
-        activityType == ar.ActivityType.IN_VEHICLE) {
+      sendActivity(ParkingType.EXITING, currentLocation, this.context);  //TODO: Uncomment if server up
+    } else if (currentActivity == ar.ActivityType.WALKING && activityType == ar.ActivityType.IN_VEHICLE) {
       Fluttertoast.showToast(
           msg: "Change from walking to driving",
           toastLength: Toast.LENGTH_SHORT,
@@ -77,7 +73,7 @@ class _MapWidgetState extends State<MapWidget> {
           backgroundColor: Colors.red,
           textColor: Colors.white,
           fontSize: 16.0);
-      //sendActivity(ParkingType.ENTERING, currentLocation);   //TODO: Uncomment if server up
+      sendActivity(ParkingType.ENTERING, currentLocation, this.context);   //TODO: Uncomment if server up
     }
     Fluttertoast.showToast(
         msg: "New Activity Detected: " + activityType.toString(),
@@ -87,8 +83,10 @@ class _MapWidgetState extends State<MapWidget> {
         backgroundColor: Colors.red,
         textColor: Colors.white,
         fontSize: 16.0);
+
     setState(() {
-      currentActivity = activityType;
+      if(activityType == ar.ActivityType.WALKING || activityType == ar.ActivityType.IN_VEHICLE)
+          currentActivity = activityType;
     });
   }
 
@@ -118,7 +116,7 @@ class _MapWidgetState extends State<MapWidget> {
     setState(() {
       markers.clear();
     });
-    /*Map<String, dynamic> chargers = await getChargingStations();
+    Map<String, dynamic> chargers = await getChargingStations();
     for (var element in chargers["chargers"]) {
       setState(() {
         markers.add(
@@ -128,12 +126,11 @@ class _MapWidgetState extends State<MapWidget> {
                     Icons.ev_station_outlined,
                     color: element["n_charging_points_available"] > 0
                         ? Colors.green
-                        : Colors
-                            .red, //TODO: change control to > 0 when the database will be updated
+                        : Colors.red, 
                   )),
-        );*
+        );
       });
-    }*/
+    }
   }
 
   Future<bool> _getPermissionLocation() async {
@@ -171,15 +168,13 @@ class _MapWidgetState extends State<MapWidget> {
     model.loadModel();
 
     Timer.periodic(Duration(seconds: 10), (timer) {
-      /*sensorRecognition.getRow(
-        userActivitySel.toString(), currentActivity.toString());*/
+      sensorRecognition.getRow(userActivitySel.toString(), currentActivity.toString());
       int activityDetectedModel =
           model.predict(sensorRecognition.getFeatures());
       dev.log(activityDetectedModel.toString());
-      if (activityDetectedModel == currentActivityModel)
         Fluttertoast.showToast(
             msg: ((activityDetectedModel == 0) ? "DRIVING" : "WALKING") +
-                " detected",
+                " detected OUR MODEL",
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.CENTER,
             timeInSecForIosWeb: 3,
