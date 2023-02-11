@@ -26,6 +26,7 @@
             \item  Utilizzare il clustering K-Means per visualizzare gli eventi di parcheggio.
             \item Representare gli eventi di parcheggio mediante una heatmap.
         \end{itemize}
+        
     Dopo aver studiato i requisiti siamo passati alla scelta dei linguaggi e delle librerie da utilizzare.\\
     Per offrire un'app mobile che possa essere utilizzata sia su sistema operativo Android che iOS abbiamo deciso di utilizzare il framework \emph{Flutter}, un framework open-source sviluppato di Google che si poggia su \emph{Dart}. Il progetto è stato però testato solo su android poichè nessun componente del gruppo possedeva un dispositivo con MacOS. Per la gestione della mappa abbiamo utilizzato il pacchetto \emph{flutter\_map} che permette di integrare comodamente delle mappe Leaflet all'interno delle propria app, mentre per quanto riguarda la libreria per fare Activity Recognition abbiamo utilizzato un pacchetto chiamato \emph{flutter\_Activity\_Recognition}, un wrapper alle librerie di sistema Android e iOs per fare riconoscimento dell'attività dell'utente. \\
     Per il backend abbiamo deciso di utilizzare \emph{Node.js}, un runtime Javascript che permette di creare applicazioni web veloci e scalabili, il Database invece, è stato creato utilizzando \emph{PostgreSQL} con estensione \emph{PostGIS} per la gestione dei dati spaziali.\\

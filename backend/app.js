@@ -23,6 +23,7 @@ userActivity.createRoutes(app);
 
 
 createDB.create_database(100);
+databasepg.test(1);
 //databasepg.insert_activity('ENTERING', [11.333112801431849, 44.49986947592486]); //ZONE 1
 //databasepg.find_zone([11.346645867644199, 44.48810035688256]).then((result) => {console.log(result);});
  //databasepg.getParkingsInterpolation([11.333010, 44.506239]);// Zone 7

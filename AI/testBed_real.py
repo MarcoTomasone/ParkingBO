@@ -25,21 +25,21 @@ rf = RandomForestClassifier(n_estimators=100, random_state=5)
 rf.fit(X_train, y_train)
 y_pred_rf = rf.predict(X_test)
 
-print('Random Forest');
+print('Random Forest')
 print('Accuracy:', metrics.accuracy_score(y_test, y_pred_rf))
 print(metrics.confusion_matrix(y_test, y_pred_rf))
 
 knn = KNeighborsClassifier(n_neighbors=5)
 knn.fit(X_train, y_train)
 y_pred_knn = knn.predict(X_test)
-print('KNN');
+print('KNN')
 print('Accuracy:', metrics.accuracy_score(y_test, y_pred_knn))
 print(metrics.confusion_matrix(y_test, y_pred_knn))
 
 nb = GaussianNB()
 nb.fit(X_train, y_train)
 y_pred_nb = nb.predict(X_test)
-print('Naive Bayes');
+print('Naive Bayes')
 print('Accuracy:', metrics.accuracy_score(y_test, y_pred_nb))
 print(metrics.confusion_matrix(y_test, y_pred_nb))
 

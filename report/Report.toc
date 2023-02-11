@@ -1,5 +1,5 @@
-\babel@toc {italian}{}\relax 
-\babel@toc {italian}{}\relax 
+\babel@toc {italian}{}
+\babel@toc {italian}{}
 \contentsline {chapter}{\numberline {1}Introduzione}{2}{chapter.1}%
 \contentsline {chapter}{\numberline {2}Progettazione}{4}{chapter.2}%
 \contentsline {chapter}{\numberline {3}Valutazione degli Algoritmi di Classificazione}{6}{chapter.3}%

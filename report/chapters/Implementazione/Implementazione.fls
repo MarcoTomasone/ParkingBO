@@ -1,7 +1,33 @@
 PWD c:\Users\dino9\Desktop\UNI\MAGISTRALE\SISTEMI CONTEX-AWARE\Progetto\ParkingBO\report
 INPUT C:\Users\dino9\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
+INPUT c:\Users\dino9\Desktop\UNI\MAGISTRALE\SISTEMI CONTEX-AWARE\Progetto\ParkingBO\report\chapters\Implementazione\Implementazione.tex
+OUTPUT c:\Users\dino9\Desktop\UNI\MAGISTRALE\SISTEMI CONTEX-AWARE\Progetto\ParkingBO\report\chapters\Implementazione\Implementazione.log
+INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\subfiles\subfiles.cls
+INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\subfiles\subfiles.cls
+INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\subfiles\subfiles.cls
+INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\subfiles\subfiles.cls
+INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\subfiles\subfiles.cls
+INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\subfiles\subfiles.cls
+INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\subfiles\subfiles.cls
+INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\subfiles\subfiles.cls
+INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\subfiles\subfiles.cls
+INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\subfiles\subfiles.cls
+INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\subfiles\subfiles.cls
+INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\import\import.sty
+INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\import\import.sty
+INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\import\import.sty
+INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\import\import.sty
+INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\import\import.sty
+INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\import\import.sty
+INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\import\import.sty
+INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\import\import.sty
+INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\import\import.sty
+INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\import\import.sty
+INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\import\import.sty
+INPUT c:\Users\dino9\Desktop\UNI\MAGISTRALE\SISTEMI CONTEX-AWARE\Progetto\ParkingBO\report\chapters\Implementazione\..\..\Report.tex
 INPUT c:\Users\dino9\Desktop\UNI\MAGISTRALE\SISTEMI CONTEX-AWARE\Progetto\ParkingBO\report\Report.tex
-OUTPUT Report.log
+INPUT c:\Users\dino9\Desktop\UNI\MAGISTRALE\SISTEMI CONTEX-AWARE\Progetto\ParkingBO\report\chapters\Implementazione\..\..\Report.tex
+INPUT c:\Users\dino9\Desktop\UNI\MAGISTRALE\SISTEMI CONTEX-AWARE\Progetto\ParkingBO\report\Report.tex
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\base\report.cls
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\base\report.cls
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\base\report.cls
@@ -403,16 +429,6 @@ INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\subfiles\subfiles.s
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\subfiles\subfiles.sty
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\subfiles\subfiles.sty
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\import\import.sty
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\import\import.sty
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\import\import.sty
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\import\import.sty
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\import\import.sty
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\import\import.sty
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\import\import.sty
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\import\import.sty
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\import\import.sty
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\import\import.sty
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\import\import.sty
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\graphics\graphicx.sty
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\graphics\graphicx.sty
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\graphics\graphicx.sty
@@ -543,6 +559,7 @@ INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\graphics\dvipsnam.d
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\graphics\dvipsnam.def
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\graphics\dvipsnam.def
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\graphics\dvipsnam.def
+INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\generic\babel\babel.sty
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\l3backend\l3backend-pdftex.def
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\l3backend\l3backend-pdftex.def
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\l3backend\l3backend-pdftex.def
@@ -554,10 +571,10 @@ INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\l3backend\l3backend
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\l3backend\l3backend-pdftex.def
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\l3backend\l3backend-pdftex.def
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\l3backend\l3backend-pdftex.def
-INPUT .\Report.aux
-INPUT Report.aux
-INPUT Report.aux
-OUTPUT Report.aux
+INPUT c:\Users\dino9\Desktop\UNI\MAGISTRALE\SISTEMI CONTEX-AWARE\Progetto\ParkingBO\report\chapters\Implementazione\Implementazione.aux
+INPUT c:\Users\dino9\Desktop\UNI\MAGISTRALE\SISTEMI CONTEX-AWARE\Progetto\ParkingBO\report\chapters\Implementazione\Implementazione.aux
+INPUT c:\Users\dino9\Desktop\UNI\MAGISTRALE\SISTEMI CONTEX-AWARE\Progetto\ParkingBO\report\chapters\Implementazione\Implementazione.aux
+OUTPUT c:\Users\dino9\Desktop\UNI\MAGISTRALE\SISTEMI CONTEX-AWARE\Progetto\ParkingBO\report\chapters\Implementazione\Implementazione.aux
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\hyperref\nameref.sty
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\hyperref\nameref.sty
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\hyperref\nameref.sty
@@ -595,18 +612,18 @@ INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\generic\gettitlestring\ge
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\generic\gettitlestring\gettitlestring.sty
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\kvoptions\kvoptions.sty
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\generic\ltxcmds\ltxcmds.sty
-INPUT .\Report.out
-INPUT Report.out
-INPUT .\Report.out
-INPUT Report.out
-INPUT .\Report.out
-INPUT Report.out
-INPUT .\Report.out
-INPUT Report.out
-OUTPUT Report.pdf
-INPUT .\Report.out
-INPUT .\Report.out
-OUTPUT Report.out
+INPUT c:\Users\dino9\Desktop\UNI\MAGISTRALE\SISTEMI CONTEX-AWARE\Progetto\ParkingBO\report\chapters\Implementazione\Implementazione.out
+INPUT c:\Users\dino9\Desktop\UNI\MAGISTRALE\SISTEMI CONTEX-AWARE\Progetto\ParkingBO\report\chapters\Implementazione\Implementazione.out
+INPUT c:\Users\dino9\Desktop\UNI\MAGISTRALE\SISTEMI CONTEX-AWARE\Progetto\ParkingBO\report\chapters\Implementazione\Implementazione.out
+INPUT c:\Users\dino9\Desktop\UNI\MAGISTRALE\SISTEMI CONTEX-AWARE\Progetto\ParkingBO\report\chapters\Implementazione\Implementazione.out
+INPUT c:\Users\dino9\Desktop\UNI\MAGISTRALE\SISTEMI CONTEX-AWARE\Progetto\ParkingBO\report\chapters\Implementazione\Implementazione.out
+INPUT c:\Users\dino9\Desktop\UNI\MAGISTRALE\SISTEMI CONTEX-AWARE\Progetto\ParkingBO\report\chapters\Implementazione\Implementazione.out
+INPUT c:\Users\dino9\Desktop\UNI\MAGISTRALE\SISTEMI CONTEX-AWARE\Progetto\ParkingBO\report\chapters\Implementazione\Implementazione.out
+INPUT c:\Users\dino9\Desktop\UNI\MAGISTRALE\SISTEMI CONTEX-AWARE\Progetto\ParkingBO\report\chapters\Implementazione\Implementazione.out
+OUTPUT c:\Users\dino9\Desktop\UNI\MAGISTRALE\SISTEMI CONTEX-AWARE\Progetto\ParkingBO\report\chapters\Implementazione\Implementazione.pdf
+INPUT c:\Users\dino9\Desktop\UNI\MAGISTRALE\SISTEMI CONTEX-AWARE\Progetto\ParkingBO\report\chapters\Implementazione\Implementazione.out
+INPUT c:\Users\dino9\Desktop\UNI\MAGISTRALE\SISTEMI CONTEX-AWARE\Progetto\ParkingBO\report\chapters\Implementazione\Implementazione.out
+OUTPUT c:\Users\dino9\Desktop\UNI\MAGISTRALE\SISTEMI CONTEX-AWARE\Progetto\ParkingBO\report\chapters\Implementazione\Implementazione.out
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\context\base\mkii\supp-pdf.mkii
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\context\base\mkii\supp-pdf.mkii
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\context\base\mkii\supp-pdf.mkii
@@ -627,75 +644,17 @@ INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\00miktex\epstopdf-s
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\00miktex\epstopdf-sys.cfg
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\00miktex\epstopdf-sys.cfg
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmr17.tfm
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmr12.tfm
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmmi12.tfm
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmsy10.tfm
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\base\ulasy.fd
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\base\ulasy.fd
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\base\ulasy.fd
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\base\ulasy.fd
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\latex-fonts\lasy10.tfm
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\latex-fonts\lasy10.tfm
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\latex-fonts\lasy7.tfm
-INPUT C:\Users\dino9\AppData\Local\MiKTeX\pdftex\config\pdftex.map
+INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmbx12.tfm
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmr17.tfm
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmbx12.tfm
-INPUT .\Report.toc
-INPUT Report.toc
-INPUT Report.toc
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmbx12.tfm
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmr8.tfm
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmr6.tfm
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmmi12.tfm
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmmi8.tfm
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmmi6.tfm
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmsy10.tfm
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmsy8.tfm
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmsy6.tfm
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\latex-fonts\lasy10.tfm
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\latex-fonts\lasy8.tfm
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\latex-fonts\lasy6.tfm
-OUTPUT Report.toc
-INPUT .\chapters\Introduzione\Introduzione.tex
-INPUT chapters\Introduzione\Introduzione.tex
-INPUT .\chapters\Introduzione\Introduzione.tex
-INPUT chapters\Introduzione\Introduzione.tex
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\jknappen\ec\tcrm1200.tfm
-INPUT .\chapters\Progettazione\Progettazione.tex
-INPUT chapters\Progettazione\Progettazione.tex
-INPUT .\chapters\Progettazione\Progettazione.tex
-INPUT chapters\Progettazione\Progettazione.tex
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmti12.tfm
-INPUT .\chapters\Analisi algoritmi\Analisi_algoritmi.tex
-INPUT chapters\Analisi algoritmi\Analisi_algoritmi.tex
-INPUT .\chapters\Analisi algoritmi\Analisi_algoritmi.tex
-INPUT chapters\Analisi algoritmi\Analisi_algoritmi.tex
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmr17.tfm
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmbx12.tfm
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmbx12.tfm
-INPUT .\Report.bbl
-INPUT Report.bbl
-INPUT .\Report.bbl
-INPUT Report.bbl
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmtt12.tfm
-INPUT Report.aux
-INPUT .\Report.out
-INPUT .\Report.out
-INPUT C:\Users\dino9\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\tcrm1200.pk
-INPUT C:\Users\dino9\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\tcrm1200.pk
+INPUT C:\Users\dino9\AppData\Local\MiKTeX\pdftex\config\pdftex.map
+INPUT c:\Users\dino9\Desktop\UNI\MAGISTRALE\SISTEMI CONTEX-AWARE\Progetto\ParkingBO\report\chapters\Implementazione\Implementazione.aux
+INPUT c:\Users\dino9\Desktop\UNI\MAGISTRALE\SISTEMI CONTEX-AWARE\Progetto\ParkingBO\report\chapters\Implementazione\Implementazione.out
+INPUT c:\Users\dino9\Desktop\UNI\MAGISTRALE\SISTEMI CONTEX-AWARE\Progetto\ParkingBO\report\chapters\Implementazione\Implementazione.out
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmbx12.pfb
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmbx12.pfb
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi12.pfb
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi12.pfb
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi8.pfb
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi8.pfb
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr12.pfb
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr12.pfb
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr17.pfb
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr17.pfb
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy10.pfb
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy10.pfb
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmti12.pfb
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmti12.pfb
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmtt12.pfb
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmtt12.pfb
