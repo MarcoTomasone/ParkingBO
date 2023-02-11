@@ -61,22 +61,22 @@ class _MapWidgetState extends State<MapWidget> {
           msg: "Change from driving to walking",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
+          timeInSecForIosWeb: 5,
           backgroundColor: Colors.red,
           textColor: Colors.white,
           fontSize: 16.0);
-      //sendActivity(ParkingType.EXITING, currentLocation);
+      //sendActivity(ParkingType.EXITING, currentLocation);  //TODO: Uncomment if server up
     } else if (currentActivity == ar.ActivityType.WALKING &&
         activityType == ar.ActivityType.IN_VEHICLE) {
       Fluttertoast.showToast(
           msg: "Change from walking to driving",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
+          timeInSecForIosWeb: 5,
           backgroundColor: Colors.red,
           textColor: Colors.white,
           fontSize: 16.0);
-      //sendActivity(ParkingType.ENTERING, currentLocation);
+      //sendActivity(ParkingType.ENTERING, currentLocation);   //TODO: Uncomment if server up
     }
     Fluttertoast.showToast(
         msg: "New Activity Detected: " + activityType.toString(),
@@ -188,13 +188,14 @@ class _MapWidgetState extends State<MapWidget> {
   }
 
   IconData getMarkerType() {
-    //TODO: switch instead of if
-    if (currentActivity == ar.ActivityType.IN_VEHICLE)
-      return Icons.navigation; // CASE: DRIVING
-    else if (currentActivity == ar.ActivityType.WALKING)
-      return Icons.circle; // CASE: Walking
-    else
-      return Icons.my_location; //CASE: Still, Unknown
+    switch (currentActivity) {
+      case ar.ActivityType.IN_VEHICLE:
+        return Icons.navigation;
+      case ar.ActivityType.WALKING:
+        return Icons.circle;
+      default:
+        return Icons.my_location; //Case: STILL, UNKNOWN 
+    }
   }
 
   @override

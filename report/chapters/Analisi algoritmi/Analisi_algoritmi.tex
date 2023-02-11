@@ -85,7 +85,7 @@ I risultati del tuning degli iperparametri utilizzando il dataset precedentement
         \hline
          & \textbf{Best value} \\
         \hline
-        \textbf{n\_neighbors} & 8 \\
+        \textbf{n\_neighbors} & 14 \\
         \hline
         \textbf{weights} & distance \\
         \hline
@@ -97,6 +97,24 @@ I risultati del tuning degli iperparametri utilizzando il dataset precedentement
 \end{table}
 
 Con questi parametri siamo riusciti ad ottenere un'accuratezza finale del 89\%.\\
+Facendo training di questo modello con il dataset su cui abbiamo applicato il MinMaxScaling, abbiamo ottenuto un'accuratezza del 90\%.\\
+I parametri risultanti dal tuning sono invece:
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|c|}
+        \hline
+         & \textbf{Best value} \\
+        \hline
+        \textbf{n\_neighbors} & 8 \\
+        \hline
+        \textbf{weights} & distance \\
+        \hline
+        \textbf{leaf\_size} & 1 \\
+        \hline
+        \textbf{p} & 2 \\
+        \hline
+    \end{tabular}
+\end{table}
 
 \subsection{Random Forest}
 Come per il KNN, anche per il Random Forest è stato effettuato un tuning degli iperparametri, sempre con \emph{GridSearchCV}, per ottenere una prestazione ottimale del modello.\
@@ -137,7 +155,7 @@ I risultati del tuning degli iperparametri utilizzando il dataset precedentement
     \end{tabular}
 \end{table}
 
-Con questi parametri siamo riusciti ad ottenere un'accuratezza finale del 93.5\% utilizzando il dataset su cui non è stato applicato il MinMaxScaling.
+Con questi parametri siamo riusciti ad ottenere un'accuratezza finale del 95.24\% utilizzando il dataset su cui non è stato applicato il MinMaxScaling.
 
 Facendo tuning sul modello Random Forest utilizzando il modello con il MinMaxScaling, si è ottenuto un'accuratezza del 89,83\%.\\
 I parametri ottenuti dal tuning sono:
@@ -217,7 +235,7 @@ Utilizzando il dataset su cui è stato applicato il MinMaxScaling i risultati so
             \rowcolor{lightgray}
             \textbf{1} & 0.23 & 0.02 & 0.04 & 0.93 & 0.97 & 0.90 &  &  &  & 2043 \\
             \hline
-            \textbf{Accuracy} & \multicolumn{3}{c|}{0.8927855711422845} &\multicolumn{3}{c|}{0.0.8982965931863728} &\multicolumn{3}{c|}{}& 3992 \\
+            \textbf{Accuracy} & \multicolumn{3}{c|}{0.8927855711422845} &\multicolumn{3}{c|}{0.8982965931863728} &\multicolumn{3}{c|}{}& 3992 \\
             \hline
             \rowcolor{lightgray}
             \textbf{Macro AVG} & 0.89 & 0.89 & 0.89 &0.90  & 0.90 & 0.90 &  &  &  & 3992 \\

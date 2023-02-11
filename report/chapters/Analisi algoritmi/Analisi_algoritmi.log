@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (MiKTeX 21.8) (preloaded format=pdflatex 2021.9.3)  10 FEB 2023 22:58
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (MiKTeX 21.8) (preloaded format=pdflatex 2021.9.3)  11 FEB 2023 11:17
 entering extended mode
 **"c:/Users/tomas/Desktop/ParkingBO/report/chapters/Analisi algoritmi/Analisi_algoritmi.tex"
 (c:/Users/tomas/Desktop/ParkingBO/report/chapters/Analisi algoritmi/Analisi_algoritmi.tex
@@ -8,7 +8,7 @@ Document Class: subfiles 2020/11/14 v2.2 Multi-file projects (class)
 Preamble taken from file `../../Report.tex'
 (C:\Users\tomas\AppData\Local\Programs\MiKTeX\tex/latex/import\import.sty
 Package: import 2020/04/01  v 6.2
-) (c:\Users\tomas\Desktop\ParkingBO\report\Report.tex (C:\Users\tomas\AppData\Local\Programs\MiKTeX\tex/latex/base\report.cls
+) (../../Report.tex (C:\Users\tomas\AppData\Local\Programs\MiKTeX\tex/latex/base\report.cls
 Document Class: report 2021/02/12 v1.4n Standard LaTeX document class
 (C:\Users\tomas\AppData\Local\Programs\MiKTeX\tex/latex/base\size12.clo
 File: size12.clo 2021/02/12 v1.4n Standard LaTeX file (size option)
@@ -276,7 +276,7 @@ File: dvipsnam.def 2016/06/17 v3.0m Driver-dependent file (DPC,SPQR)
 File: l3backend-pdftex.def 2021-08-04 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count288
 \l__pdf_internal_box=\box54
-) (c:\Users\tomas\Desktop\ParkingBO\report\chapters\Analisi algoritmi\Analisi_algoritmi.aux)
+) (c:/Users\tomas\Desktop\ParkingBO\report\chapters\Analisi algoritmi\Analisi_algoritmi.aux)
 \openout1 = `Analisi_algoritmi.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 4.
@@ -321,7 +321,7 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 4.
 LaTeX Info: Redefining \pageref on input line 4.
 LaTeX Info: Redefining \nameref on input line 4.
- (c:\Users\tomas\Desktop\ParkingBO\report\chapters\Analisi algoritmi\Analisi_algoritmi.out) (c:\Users\tomas\Desktop\ParkingBO\report\chapters\Analisi algoritmi\Analisi_algoritmi.out)
+ (c:/Users\tomas\Desktop\ParkingBO\report\chapters\Analisi algoritmi\Analisi_algoritmi.out) (c:/Users\tomas\Desktop\ParkingBO\report\chapters\Analisi algoritmi\Analisi_algoritmi.out)
 \@outlinefile=\write3
 \openout3 = `Analisi_algoritmi.out'.
 
@@ -376,37 +376,32 @@ Underfull \hbox (badness 10000) in paragraph at lines 61--62
 
  []
 
-[2] [3]
-Underfull \hbox (badness 10000) in paragraph at lines 99--100
-
- []
-
-[4]
-Overfull \hbox (50.99516pt too wide) in paragraph at lines 178--200
+[2] [3] [4] [5]
+Overfull \hbox (50.99516pt too wide) in paragraph at lines 196--218
  [] 
  []
 
-[5]
-Overfull \hbox (53.11356pt too wide) in paragraph at lines 207--229
+
+Overfull \hbox (50.99516pt too wide) in paragraph at lines 225--247
  [] 
  []
 
-[6] (c:\Users\tomas\Desktop\ParkingBO\report\chapters\Analisi algoritmi\Analisi_algoritmi.aux)
+[6] (c:/Users\tomas\Desktop\ParkingBO\report\chapters\Analisi algoritmi\Analisi_algoritmi.aux)
 Package rerunfilecheck Info: File `Analisi_algoritmi.out' has not changed.
 (rerunfilecheck)             Checksum: BA6BED714EE6A6BE7C1A3D9C35CABAB6;1362.
  ) 
 Here is how much of TeX's memory you used:
  11601 strings out of 478927
- 182722 string characters out of 2852536
+ 182635 string characters out of 2852536
  538447 words of memory out of 3000000
  29269 multiletter control sequences out of 15000+600000
  409292 words of font info for 48 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 89i,12n,96p,561b,360s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 89i,12n,96p,561b,357s stack positions out of 5000i,500n,10000p,200000b,80000s
  <C:\Users\tomas\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on "c:\Users\tomas\Desktop\ParkingBO\report\chapters\Analisi algoritmi\Analisi_algoritmi.pdf" (6 pages, 75168 bytes).
+Output written on "c:/Users\tomas\Desktop\ParkingBO\report\chapters\Analisi algoritmi\Analisi_algoritmi.pdf" (6 pages, 75746 bytes).
 PDF statistics:
- 97 PDF objects out of 1000 (max. 8388607)
- 24 named destinations out of 1000 (max. 500000)
+ 99 PDF objects out of 1000 (max. 8388607)
+ 25 named destinations out of 1000 (max. 500000)
  65 words of extra memory for PDF output out of 10000 (max. 10000000)
 
