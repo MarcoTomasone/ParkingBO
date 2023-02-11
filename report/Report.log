@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.6) (preloaded format=pdflatex 2021.9.5)  11 FEB 2023 15:46
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.6) (preloaded format=pdflatex 2021.9.5)  11 FEB 2023 15:54
 entering extended mode
 **"c:/Users/dino9/Desktop/UNI/MAGISTRALE/SISTEMI CONTEX-AWARE/Progetto/ParkingBO/report/Report.tex"
 (c:/Users/dino9/Desktop/UNI/MAGISTRALE/SISTEMI CONTEX-AWARE/Progetto/ParkingBO/report/Report.tex
@@ -377,7 +377,12 @@ Capitolo 1.
 Capitolo 2.
 [4
 
-]) (chapters/Analisi algoritmi/Analisi_algoritmi.tex [5]
+]
+Underfull \hbox (badness 10000) in paragraph at lines 30--35
+
+ []
+
+) (chapters/Analisi algoritmi/Analisi_algoritmi.tex [5]
 Capitolo 3.
 
 Underfull \hbox (badness 10000) in paragraph at lines 6--8
@@ -397,12 +402,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 61--62
  []
 
 [7] [8] [9] [10]
-Overfull \hbox (50.99516pt too wide) in paragraph at lines 196--218
+Overfull \hbox (50.99516pt too wide) in paragraph at lines 196--217
  [] 
  []
 
 
-Overfull \hbox (50.99516pt too wide) in paragraph at lines 225--247
+Overfull \hbox (50.99516pt too wide) in paragraph at lines 224--246
  [] 
  []
 
@@ -834,9 +839,9 @@ Here is how much of TeX's memory you used:
  29154 multiletter control sequences out of 15000+600000
  410693 words of font info for 55 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 69i,12n,79p,747b,476s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 69i,12n,79p,949b,477s stack positions out of 5000i,500n,10000p,200000b,80000s
  <C:\Users\dino9\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk><C:/Users/dino9/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/dino9/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/dino9/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/dino9/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/dino9/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/dino9/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/dino9/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/dino9/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on Report.pdf (13 pages, 144152 bytes).
+Output written on Report.pdf (13 pages, 148167 bytes).
 PDF statistics:
  190 PDF objects out of 1000 (max. 8388607)
  41 named destinations out of 1000 (max. 500000)
