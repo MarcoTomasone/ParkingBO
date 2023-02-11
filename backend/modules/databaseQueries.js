@@ -59,19 +59,21 @@ module.exports = {
         await client.connect();
         const geom = `${position[0]} ${position[1]}`;
         try {
-            const exist = await check_user(id);
+            const user_data = await check_user(id);
             let result;
             let id_user;
-            if(exis > 0 ) { //if(exist.count > 0 && exist.parking_type != parking_type)
-                const zone = await module.exports.find_zone(position);
-                if(zone instanceof Error)
-                    throw new Error(zone.message)
-                result = await client.query(`UPDATE user_events SET parking_type = $1, zone = $2, position = ST_GeomFromText('POINT(${geom})', 4326) WHERE id_user = $3 RETURNING id_user, id_station `, [parking_type, zone, id]);
-                await insert_event_history(parking_type, zone, position);
-                await update_parkings(parking_type, zone);
-                id_user = result.rows[0].id_user;
-                if(result.rows[0].id_station != null)
-                    await update_charging_station( parking_type, result.rows[0].id_station);
+            if(user_data.count > 0) { //if(exist.count > 0 && exist.parking_type != parking_type)
+                if(user_data.parking_type != parking_type) {
+                    const zone = await module.exports.find_zone(position);
+                    if(zone instanceof Error)
+                        throw new Error(zone.message)
+                    result = await client.query(`UPDATE user_events SET parking_type = $1, zone = $2, position = ST_GeomFromText('POINT(${geom})', 4326) WHERE id_user = $3 RETURNING id_user, id_station `, [parking_type, zone, id]);
+                    await insert_event_history(parking_type, zone, position);
+                    await update_parkings(parking_type, zone);
+                    id_user = result.rows[0].id_user;
+                    if(result.rows[0].id_station != null)
+                        await update_charging_station( parking_type, result.rows[0].id_station);
+                }
             }
             else{
                 result = await module.exports.insert_activity(parking_type, position); 
@@ -447,9 +449,8 @@ const check_user = async (id) => {
     const client = new Client(QUERY_CONFIGURATION);
     await client.connect();
     try {
-        const result = await client.query(`SELECT COUNT(1), parking_type  FROM user_events WHERE id_user = ${id};`);
-        const count = result.rows[0].count;
-        return count;
+        const result = await client.query(`SELECT COUNT(1), parking_type  FROM user_events WHERE id_user = ${id} GROUP BY id_user, parking_type;`);
+        return result.rows[0];
     } catch (e) {
         console.error(e);
         return e;

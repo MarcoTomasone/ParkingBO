@@ -69,7 +69,7 @@ class ActivityRecognition {
       lastActivity = activity.type;
       //detectTransition(activity); TODO: CANCEL IF NOT USED AT ALL
     }
-    this.updateCurrentActivity(activity.type);
+    if(activity.confidence == ActivityConfidence.HIGH)this.updateCurrentActivity(activity.type);
   }
  
   void dispose() {
