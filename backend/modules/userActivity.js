@@ -9,6 +9,7 @@ module.exports = {
             }
             else {
                 let id_user = req.body.id_user;
+                console.log("ID ARRIVATO: " + id_user)
                 const parking_type = req.body.type;
                 const position = req.body.position.coordinates;
                 var charge_station = null;
@@ -44,13 +45,15 @@ module.exports = {
                         return;
                     }
                     else{
+                        console.log("ELSE UPDATE: " + result);
                         id_user = result.id_user;
                         if(result.charge_station != undefined && result.charge_station != null)
                             charge_station = result.charge_station;
                     }
                 }
+                console.log("PRIMA DI MANDARE: " + id_user)
                 const encoded = JSON.stringify({id_user: id_user, charge_station: charge_station});
-                console.log(encoded);
+                console.log("CIO CHE MANDO " + encoded);
                 res.status(200).send(encoded);
             } 
         });
