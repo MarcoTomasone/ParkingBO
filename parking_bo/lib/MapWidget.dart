@@ -210,7 +210,10 @@ class _MapWidgetState extends State<MapWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return FlutterMap(
+    return 
+    Column(
+      children: <Widget>[
+      FlutterMap(
       options: MapOptions(
         center: currentLocation,
         zoom: 18,
@@ -255,7 +258,9 @@ class _MapWidgetState extends State<MapWidget> {
                   )),
         ]),
         MarkerLayer(markers: markers),
-        Container(
+      ], //Children
+    ),
+    Container(
             alignment: Alignment.bottomCenter,
             child: Row(
               //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -319,8 +324,9 @@ class _MapWidgetState extends State<MapWidget> {
                     },
                     child: const Text('UpdateMarkers'))
               ],
-            )),
-      ], //Children
-    );
+          )),
+  ],
+);
+    
   }
 }
