@@ -47,29 +47,12 @@ class ActivityRecognition {
   void _handleError(dynamic error) {
     dev.log('Catch Error NON STO TRACCIANDO>> $error');
   }
-//TODO: CANCEL IF NOT USED AT ALL
-  /*void detectTransition(Activity activity) {
-    ActivityType currentActivity = activity.type;
-    if(currentActivity != lastActivity) {
-      //We are exiting a parking lot
-      if(lastActivity == ActivityType.WALKING && currentActivity == ActivityType.IN_VEHICLE) {
-       // sendTransition(ParkingType.EXITING);
-      }
-      //We just parked
-      else if(lastActivity == ActivityType.IN_VEHICLE && currentActivity == ActivityType.WALKING) {
-       // sendTransition(ParkingType.ENTERING);
-      }
-    }
-  }*/
 
   void _onActivityReceive(Activity activity) {
     debugPrint('Activity Detected >> ${activity.toJson()}');
     //Took only the activities that interest us
-    if((activity.type == ActivityType.WALKING || activity.type == ActivityType.IN_VEHICLE) && activity.confidence == ActivityConfidence.HIGH) {
-      lastActivity = activity.type;
-      //detectTransition(activity); TODO: CANCEL IF NOT USED AT ALL
-    }
-    if(activity.confidence == ActivityConfidence.HIGH) this.updateCurrentActivity(activity.type);
+    if(activity.confidence == ActivityConfidence.HIGH) 
+      this.updateCurrentActivity(activity.type);
   }
  
   void dispose() {

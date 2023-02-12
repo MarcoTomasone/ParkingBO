@@ -402,7 +402,7 @@ module.exports = {
      * @returns the centroid of the multipoint
      */
     computeMultipointCentroid: async (coordinates) => {
-        const client = new Client(configuration);
+        const client = new Client(QUERY_CONFIGURATION);
         await client.connect();
         try {
             let multipoint = '';
