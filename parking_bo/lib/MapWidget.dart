@@ -74,7 +74,7 @@ class _MapWidgetState extends State<MapWidget> {
           backgroundColor: Colors.red,
           textColor: Colors.white,
           fontSize: 16.0);
-      //sendActivity(ParkingType.ENTERING, currentLocation, this.context);   //TODO: Uncomment if server up
+      sendActivity(ParkingType.ENTERING, currentLocation, this.context);   //TODO: Uncomment if server up
     }
     Fluttertoast.showToast(
         msg: "New Activity Detected: " + activityType.toString(),

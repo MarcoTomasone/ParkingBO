@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.6) (preloaded format=pdflatex 2021.9.5)  11 FEB 2023 15:51
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.6) (preloaded format=pdflatex 2021.9.5)  12 FEB 2023 19:05
 entering extended mode
 **"c:/Users/dino9/Desktop/UNI/MAGISTRALE/SISTEMI CONTEX-AWARE/Progetto/ParkingBO/report/chapters/Progettazione/Progettazione.tex"
 (c:/Users/dino9/Desktop/UNI/MAGISTRALE/SISTEMI CONTEX-AWARE/Progetto/ParkingBO/report/chapters/Progettazione/Progettazione.tex
@@ -349,38 +349,33 @@ Package caption Info: End \AtBeginDocument code.
 
 Capitolo 1.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 10.
+(Font)              <12> on input line 8.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 10.
+(Font)              <8> on input line 8.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 10.
-LaTeX Font Info:    Trying to load font information for U+lasy on input line 10.
+(Font)              <6> on input line 8.
+LaTeX Font Info:    Trying to load font information for U+lasy on input line 8.
 (C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex/latex/base\ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 ) [1
 
 
-{C:/Users/dino9/AppData/Local/MiKTeX/pdftex/config/pdftex.map}]
-Underfull \hbox (badness 10000) in paragraph at lines 30--35
-
- []
-
-[2] (c:\Users\dino9\Desktop\UNI\MAGISTRALE\SISTEMI CONTEX-AWARE\Progetto\ParkingBO\report\chapters\Progettazione\Progettazione.aux)
+{C:/Users/dino9/AppData/Local/MiKTeX/pdftex/config/pdftex.map}] [2] (c:\Users\dino9\Desktop\UNI\MAGISTRALE\SISTEMI CONTEX-AWARE\Progetto\ParkingBO\report\chapters\Progettazione\Progettazione.aux)
 Package rerunfilecheck Info: File `Progettazione.out' has not changed.
 (rerunfilecheck)             Checksum: B86B66C7D36CCCD90236D81B2F587E38;108.
  ) 
 Here is how much of TeX's memory you used:
- 11362 strings out of 478864
- 177161 string characters out of 2848661
- 511533 words of memory out of 3000000
- 29115 multiletter control sequences out of 15000+600000
- 408081 words of font info for 44 fonts, out of 8000000 for 9000
+ 11358 strings out of 478864
+ 177114 string characters out of 2848661
+ 512533 words of memory out of 3000000
+ 29112 multiletter control sequences out of 15000+600000
+ 407734 words of font info for 43 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 89i,5n,96p,928b,397s stack positions out of 5000i,500n,10000p,200000b,80000s
- <C:\Users\dino9\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk><C:/Users/dino9/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/dino9/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/dino9/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/dino9/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on "c:\Users\dino9\Desktop\UNI\MAGISTRALE\SISTEMI CONTEX-AWARE\Progetto\ParkingBO\report\chapters\Progettazione\Progettazione.pdf" (2 pages, 63394 bytes).
+ 89i,5n,96p,976b,333s stack positions out of 5000i,500n,10000p,200000b,80000s
+ <C:\Users\dino9\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk><C:/Users/dino9/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/dino9/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/dino9/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
+Output written on "c:\Users\dino9\Desktop\UNI\MAGISTRALE\SISTEMI CONTEX-AWARE\Progetto\ParkingBO\report\chapters\Progettazione\Progettazione.pdf" (2 pages, 44969 bytes).
 PDF statistics:
- 45 PDF objects out of 1000 (max. 8388607)
+ 40 PDF objects out of 1000 (max. 8388607)
  4 named destinations out of 1000 (max. 500000)
  9 words of extra memory for PDF output out of 10000 (max. 10000000)
 

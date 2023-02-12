@@ -62,7 +62,7 @@ module.exports = {
             const user_data = await check_user(id);
             let result;
             let id_user;
-            if(user_data.count > 0) { //if(exist.count > 0 && exist.parking_type != parking_type)
+            if(user_data.count > 0) { 
                 if(user_data.parking_type != parking_type) {
                     const zone = await module.exports.find_zone(position);
                     if(zone instanceof Error)
@@ -74,6 +74,8 @@ module.exports = {
                     if(result.rows[0].id_station != null)
                         await update_charging_station( parking_type, result.rows[0].id_station);
                 }
+                else 
+                    return id;
             }
             else{
                 result = await module.exports.insert_activity(parking_type, position); 

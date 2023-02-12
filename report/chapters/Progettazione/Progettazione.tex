@@ -3,34 +3,13 @@
 
 \begin{document}
     \chapter{Progettazione}
-    La prima fase di questo progetto ha riguardato lo studio dei requisiti al fine di scegliere le migliori tecnologie da utilizzare. Nello specifico:\\
-    \textbf{L'app mobile deve prevedere:}
-        \begin{itemize}
-            \item Il riconoscimento dell'attività dell'utente
-            \item Il riconoscimento della variazione dell'attività di un utente (WALKING-$>$ DRIVING e viceversa)
-            \item La possibilità di visualizzare una mappa con le varie aree poligonali di Bologna
-            \item La possibilità di chiedere al backend la disponibilità di parcheggi all'interno di una certa area poligonale
-            \item Il riconoscimento della posizione dell'utente
-            \item L'invio al server degli eventi di entrata e uscita di un parcheggio
-        \end{itemize}
-    \textbf{Il server deve prevedere:}
-        \begin{itemize}
-            \item La possibilità di ricevere e rispondere alle richieste di disponibilità di parcheggi da parte dell'app
-            \item La possibilità di ricevere le richieste di entrata e uscita di parcheggi da parte dell'app
-            \item La possibilità di inviare le aree poligonali di Bologna all'app
-            \item In caso di zone prive di dati (ad esempio per mancanza di utilizzo dell'app da parte di utenti in quella zona) il backend deve prevedere un meccanismo di interpolazione dei dat, per stimare il numero di parcheggi disponibili
-        \end{itemize}
-    \textbf{Il frontend deve prevedere:}
-        \begin{itemize}
-            \item Visualizzare, per ogni zona della città, il numero totale di richieste di parcheggio provenienti da quella zona.
-            \item  Utilizzare il clustering K-Means per visualizzare gli eventi di parcheggio.
-            \item Representare gli eventi di parcheggio mediante una heatmap.
-        \end{itemize}
-        
-    Dopo aver studiato i requisiti siamo passati alla scelta dei linguaggi e delle librerie da utilizzare.\\
-    Per offrire un'app mobile che possa essere utilizzata sia su sistema operativo Android che iOS abbiamo deciso di utilizzare il framework \emph{Flutter}, un framework open-source sviluppato di Google che si poggia su \emph{Dart}. Il progetto è stato però testato solo su android poichè nessun componente del gruppo possedeva un dispositivo con MacOS. Per la gestione della mappa abbiamo utilizzato il pacchetto \emph{flutter\_map} che permette di integrare comodamente delle mappe Leaflet all'interno delle propria app, mentre per quanto riguarda la libreria per fare Activity Recognition abbiamo utilizzato un pacchetto chiamato \emph{flutter\_Activity\_Recognition}, un wrapper alle librerie di sistema Android e iOs per fare riconoscimento dell'attività dell'utente. \\
-    Per il backend abbiamo deciso di utilizzare \emph{Node.js}, un runtime Javascript che permette di creare applicazioni web veloci e scalabili, il Database invece, è stato creato utilizzando \emph{PostgreSQL} con estensione \emph{PostGIS} per la gestione dei dati spaziali.\\
-    Per  motivi di riusabilità del codice e dei componenti abbiamo deciso di utilizzare il framework React per il frontend, un framework \emph{Javascript} open-source sviluppato da Facebook che permette di creare componenti riutilizzabili. 
-    Per la gestione delle mappe sia nel frontend abbiamo utilizzato la libreria \emph{Leaflet}, un framework Javascript open-source che permette di creare mappe interattive, dal quale abbiamo preso anche due pacchetti per fare Clustering e per visualizzare la Heatmap dei dati. Infine per la parte grafica è stato utilizzato il framework \emph{Material-UI}, un framework Javascript open-source che permette di creare componenti grafici in stile \emph{Material Design}.\\
+    Nella prima fase di questo progetto, abbiamo eseguito un'analisi approfondita dei requisiti specifici. Abbiamo identificato le seguenti esigenze per l'app mobile, il server e il frontend:
+    \begin{itemize}
+        \item \textbf{Applicazione mobile:} L'applicazione mobile deve essere in grado di riconoscere l'attività dell'utente, la variazione dell'attività di un utente (WALKING $\rightarrow$ DRIVING e viceversa), visualizzare una mappa con le varie aree poligonali di Bologna, chiedere al backend la disponibilità di parcheggi all'interno di una certa area poligonale, riconoscere la posizione dell'utente e inviare al server gli eventi di entrata e uscita di un parcheggio.
+        \item \textbf{Server:} Il server deve essere in grado di ricevere e rispondere alle richieste di disponibilità di parcheggi da parte dell'app, ricevere le richieste di entrata e uscita di parcheggi da parte dell'app, inviare le aree poligonali di Bologna all'app e, in caso di zone prive di dati (ad esempio per mancanza di utilizzo dell'app da parte di utenti in quella zona) deve prevedere un meccanismo di interpolazione dei dati, per stimare il numero di parcheggi disponibili.
+        \item \textbf{Frontend:} Il frontend deve essere in grado di visualizzare, per ogni zona della città, il numero totale di richieste di parcheggio provenienti da quella zona, utilizzare il clustering K-Means per visualizzare gli eventi di parcheggio e rappresentare gli eventi di parcheggio mediante una heatmap.
+    \end{itemize}
+
+    Per quanto riguarda la seconda fase, è stato richiesto di valutare l'accuratezza di tre classificatori di attività binari. In particolare si è lavorato su un dataset fornito per allenare il modello di Human Activity Recognition (HAR). Sono stati testati tre algoritmi di classificazione: Random Forest, KNN, Guassian Bayes. Inoltre, è stata valutata l'accuratezza del sistema di HAR della libreria nell'app mobile mediante un piccolo testbed (esperimenti con pochi dati reali) e confrontata con l'accuratezza degli algoritmi testati, tenendo presente che il confronto ha una valenza scientifica limitata in quanto si basa su dataset differenti. Infine, è stato integrato il Random Forest direttamente nell'app mobile prendendo i dati dai sensori e sono state sviluppate due feature aggiuntive a discrezione del gruppo.
     
 \end{document}
