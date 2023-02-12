@@ -259,7 +259,9 @@ const initialize_charge_stations_table = async (client) => {
         for (var i = 0; i < features.length; i++) {
             var properties = features[i].properties;
             const geom = `${features[i].geometry.coordinates[0]} ${features[i].geometry.coordinates[1]}`;
-            await client.query(`INSERT INTO charge_stations (operator, location, district, year, n_charging_points, n_charging_points_available, state, owner, point) VALUES ('${properties.operatore}', '${properties.ubicazione}', '${properties.quartiere}', ${properties.anno}, ${1}, ${1}, '${properties.stato}', '${properties.proprieta}', ST_GeomFromText('POINT(${geom})', 4326))`);
+            //If the the station is not inside a polygon, it is not inserted in the database
+            if( await checkStationInPolygon(geom, client) )
+                await client.query(`INSERT INTO charge_stations (operator, location, district, year, n_charging_points, n_charging_points_available, state, owner, point) VALUES ('${properties.operatore}', '${properties.ubicazione}', '${properties.quartiere}', ${properties.anno}, ${1}, ${1}, '${properties.stato}', '${properties.proprieta}', ST_GeomFromText('POINT(${geom})', 4326))`);
         } //TODO: in query change 1 to properties.numstalli 
         console.log("Table charge_stations initialized");
     }
@@ -267,4 +269,17 @@ const initialize_charge_stations_table = async (client) => {
         console.error(e);
         return e;
     }
+}
+
+/**
+ * This functions takes a geometry and checks if it is inside a polygon
+ * @param {POINT} geom the geometry of the station 
+ */
+const checkStationInPolygon = async  (geom, client) => {
+    const result = await client.query(`SELECT id_zone FROM zones WHERE ST_Contains(polygon, ST_GeomFromText('POINT(${geom})', 4326))`);
+    console.log(result.rows.length);
+    if(result.rows.length == 1)
+        return true; 
+    else 
+        return false;
 }

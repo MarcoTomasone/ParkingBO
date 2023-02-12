@@ -73,7 +73,7 @@ module.exports = {
                     await insert_event_history(parking_type, zone, position);
                     await update_parkings(parking_type, zone);
                     id_user = result.rows[0].id_user;
-                    if(result.rows[0].id_station != null)
+                    if(result.rows[0].id_station != null && parking_type == "EXITING")
                         await update_charging_station( parking_type, result.rows[0].id_station);
                 }
                 else return {id_user: id};

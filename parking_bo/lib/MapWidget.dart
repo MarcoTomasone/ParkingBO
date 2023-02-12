@@ -28,7 +28,7 @@ import 'Model.dart';
 final LocationSettings locationSettings =
     LocationSettings(accuracy: LocationAccuracy.high, distanceFilter: 15);
 
-enum userActivity { DRIVING, WALKING, STILL }
+enum userActivity { DRIVING, WALKING, STILL, UNKNOWN }
 
 class MapWidget extends StatefulWidget {
   //Initialize Activity Recognition class
@@ -55,26 +55,32 @@ class _MapWidgetState extends State<MapWidget> {
   int currentActivityModel = 0;
 
   void updateCurrentActivity(ar.ActivityType activityType) {
+    //if (currentActivity == ar.ActivityType.WALKING && activityType == ar.ActivityType.STILL) {
     if (currentActivity == ar.ActivityType.IN_VEHICLE && activityType == ar.ActivityType.WALKING) {
       Fluttertoast.showToast(
           msg: "Change from driving to walking",
+          //msg: "You exited from the parking",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 5,
           backgroundColor: Colors.red,
           textColor: Colors.white,
           fontSize: 16.0);
-      //sendActivity(ParkingType.EXITING, currentLocation, this.context);  //TODO: Uncomment if server up
+      //sendActivity(ParkingType.EXITING, currentLocation, this.context);  
+      sendActivity(ParkingType.ENTERING, currentLocation, this.context);
+    //} else if (currentActivity == ar.ActivityType.STILL && activityType == ar.ActivityType.WALKING) {
     } else if (currentActivity == ar.ActivityType.WALKING && activityType == ar.ActivityType.IN_VEHICLE) {
       Fluttertoast.showToast(
           msg: "Change from walking to driving",
+          //msg: "Entering in a parking",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 5,
           backgroundColor: Colors.red,
           textColor: Colors.white,
           fontSize: 16.0);
-      //sendActivity(ParkingType.ENTERING, currentLocation, this.context);   //TODO: Uncomment if server up
+      //sendActivity(ParkingType.ENTERING, currentLocation, this.context);   
+      sendActivity(ParkingType.EXITING, currentLocation, this.context); 
     }
     Fluttertoast.showToast(
         msg: "New Activity Detected: " + activityType.toString(),
@@ -87,7 +93,7 @@ class _MapWidgetState extends State<MapWidget> {
 
     markerActivity = activityType;
     setState(() {
-      if((activityType == ar.ActivityType.WALKING || activityType == ar.ActivityType.IN_VEHICLE) && (currentActivity != activityType)) 
+      if((activityType == ar.ActivityType.WALKING || activityType == ar.ActivityType.IN_VEHICLE || activityType == ar.ActivityType.STILL) && (currentActivity != activityType)) 
           currentActivity = activityType;
     });
   }
@@ -118,7 +124,7 @@ class _MapWidgetState extends State<MapWidget> {
     setState(() {
       markers.clear();
     });
-   /* Map<String, dynamic> chargers = await getChargingStations();
+    Map<String, dynamic> chargers = await getChargingStations();
     for (var element in chargers["chargers"]) {
       setState(() {
         markers.add(
@@ -132,7 +138,7 @@ class _MapWidgetState extends State<MapWidget> {
                   )),
         );
       });
-    }*/
+    }
   }
 
   Future<bool> _getPermissionLocation() async {

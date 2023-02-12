@@ -1,7 +1,5 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'dart:math';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_sensors/flutter_sensors.dart';
 import 'dart:async';
 import 'dart:developer' as dev; //Just for debug
