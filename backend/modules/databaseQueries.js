@@ -1,3 +1,4 @@
+const e = require('express');
 const { Client } = require('pg');
 const { QUERY_CONFIGURATION } = require( './Configurations');
 
@@ -62,6 +63,7 @@ module.exports = {
             const user_data = await check_user(id);
             let result;
             let id_user;
+            console.log(user_data);
             if(user_data.count > 0) { //if(exist.count > 0 && exist.parking_type != parking_type)
                 if(user_data.parking_type != parking_type) {
                     const zone = await module.exports.find_zone(position);
@@ -74,6 +76,7 @@ module.exports = {
                     if(result.rows[0].id_station != null)
                         await update_charging_station( parking_type, result.rows[0].id_station);
                 }
+                else return {id_user: id};
             }
             else{
                 result = await module.exports.insert_activity(parking_type, position); 
@@ -86,7 +89,7 @@ module.exports = {
                     if(charge_station[0].n_charging_points_available > 0)
                         return {id_user, charge_station: charge_station[0].id};
             } 
-            return id_user;
+            return {id_user: id_user};
         } catch (e) {
             console.error(e);
             return e;
@@ -290,19 +293,19 @@ module.exports = {
             if (zone instanceof Error)
             throw new Error(zone.message);
             const parkingInZone = await get_nParkingEvents_for_zone(zone);
-            console.log("Eventi di parcheggio in zona: " + zone)
+            console.log("Parking Events in zone: " + zone)
             console.log(parkingInZone);
-            if(parkingInZone < 5){ //TODO: prendere total_parking - parking in zone 
+            if(parkingInZone < 5){ 
                 console.log("I'm interpolating the result from other zones")
                 n_parkings = await parkingIDWInterpolation(zone);
-                console.log("Posti occupati interpolati in zona: " + zone)
+                console.log("Used parking in zone : " + zone)
                 console.log(n_parkings);
                 const total_parking = await client.query(`SELECT total_parking FROM zones WHERE id_zone = ${zone}`);
-                n_parkings =  total_parking.rows[0]['total_parking'] - parseInt(n_parkings);
+                n_parkings =  total_parking.rows[0]['total_parking'] - parseInt(n_parkings) - parkingInZone; //Total - Interpolated - Used[between 0-5]
             } else {
                 n_parkings = await module.exports.getParkingsFromZone(zone);
             }
-            console.log("Posti liberi in zona: " + zone)
+            console.log("Free Parking in zone: " + zone)
             console.log(n_parkings);
             return n_parkings;
             
@@ -450,7 +453,10 @@ const check_user = async (id) => {
     await client.connect();
     try {
         const result = await client.query(`SELECT COUNT(1), parking_type  FROM user_events WHERE id_user = ${id} GROUP BY id_user, parking_type;`);
-        return result.rows[0];
+        if(result.rows.length > 0 )
+            return result.rows[0];
+        else 
+            return 0;
     } catch (e) {
         console.error(e);
         return e;
@@ -581,14 +587,18 @@ const parkingIDWInterpolation = async (zone) => {
         interpolatedValue = 0;
         //Compute result
         for(row in nParkEventsForZone.rows) {
-            interpolatedValue += nParkEventsForZone.rows[row].count * nParkEventsForZone.rows[row].distance;
+            if(nParkEventsForZone.rows[row].distance != 0)
+                interpolatedValue += nParkEventsForZone.rows[row].count * (1/nParkEventsForZone.rows[row].distance);
+            else
+                interpolatedValue += nParkEventsForZone.rows[row].count;
         }
         
         sumOfDistances = 0;
         for(row in nParkEventsForZone.rows) 
-            sumOfDistances += nParkEventsForZone.rows[row].distance;
+            if(nParkEventsForZone.rows[row].distance != 0)    
+                sumOfDistances += (1/nParkEventsForZone.rows[row].distance);
         
-        interpolatedValue =interpolatedValue / sumOfDistances;
+        interpolatedValue = interpolatedValue / sumOfDistances;
         return interpolatedValue;
     } catch (e) {
         console.error(e);
