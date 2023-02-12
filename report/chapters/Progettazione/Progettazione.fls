@@ -645,8 +645,8 @@ INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\00miktex\epstopdf-s
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex\latex\00miktex\epstopdf-sys.cfg
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmr17.tfm
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmbx12.tfm
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmbx12.tfm
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\jknappen\ec\tcrm1200.tfm
+INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmbx12.tfm
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmr8.tfm
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmr6.tfm
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmmi12.tfm
@@ -663,7 +663,6 @@ INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\latex-fonts\
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\latex-fonts\lasy8.tfm
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\latex-fonts\lasy6.tfm
 INPUT C:\Users\dino9\AppData\Local\MiKTeX\pdftex\config\pdftex.map
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmti12.tfm
 INPUT c:\Users\dino9\Desktop\UNI\MAGISTRALE\SISTEMI CONTEX-AWARE\Progetto\ParkingBO\report\chapters\Progettazione\Progettazione.aux
 INPUT c:\Users\dino9\Desktop\UNI\MAGISTRALE\SISTEMI CONTEX-AWARE\Progetto\ParkingBO\report\chapters\Progettazione\Progettazione.out
 INPUT c:\Users\dino9\Desktop\UNI\MAGISTRALE\SISTEMI CONTEX-AWARE\Progetto\ParkingBO\report\chapters\Progettazione\Progettazione.out
@@ -671,9 +670,7 @@ INPUT C:\Users\dino9\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\tcr
 INPUT C:\Users\dino9\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\tcrm1200.pk
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmbx12.pfb
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmbx12.pfb
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi12.pfb
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi12.pfb
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr12.pfb
 INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr12.pfb
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmti12.pfb
-INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmti12.pfb
+INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy10.pfb
+INPUT C:\Users\dino9\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy10.pfb
