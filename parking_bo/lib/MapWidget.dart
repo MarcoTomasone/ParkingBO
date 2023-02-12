@@ -79,7 +79,7 @@ class _MapWidgetState extends State<MapWidget> {
           backgroundColor: Colors.red,
           textColor: Colors.white,
           fontSize: 16.0);
-      sendActivity(ParkingType.ENTERING, currentLocation, this.context);   
+      //sendActivity(ParkingType.ENTERING, currentLocation, this.context);   
       sendActivity(ParkingType.EXITING, currentLocation, this.context); 
     }
     Fluttertoast.showToast(
