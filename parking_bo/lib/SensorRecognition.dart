@@ -171,9 +171,9 @@ class SensorRecognition {
         _gyroscopeMagnitude.length == 0 ||
         _gyroscopeUncalibratedMagnitude.length == 0) return [];
     List<double> features = _getList();
-    _accelerometerMagnitude.clear();
-    _gyroscopeMagnitude.clear();
-    _gyroscopeUncalibratedMagnitude.clear();
+  //  _accelerometerMagnitude.clear();
+  //  _gyroscopeMagnitude.clear();
+  //  _gyroscopeUncalibratedMagnitude.clear();
 
     return features;
   }

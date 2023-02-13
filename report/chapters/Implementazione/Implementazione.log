@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.6) (preloaded format=pdflatex 2021.9.5)  13 FEB 2023 10:33
+=======
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (MiKTeX 21.8) (preloaded format=pdflatex 2021.9.3)  13 FEB 2023 12:22
+>>>>>>> 916956f91bff270d882e8acb7de23464fb43b682
 entering extended mode
 **"c:/Users/dino9/Desktop/UNI/MAGISTRALE/SISTEMI CONTEX-AWARE/Progetto/ParkingBO/report/chapters/Implementazione/Implementazione.tex"
 (c:/Users/dino9/Desktop/UNI/MAGISTRALE/SISTEMI CONTEX-AWARE/Progetto/ParkingBO/report/chapters/Implementazione/Implementazione.tex
@@ -233,12 +237,83 @@ Package caption Info: hyperref package is loaded.
 \c@lotdepth=\count283
 \sf@top=\skip55
 \sf@bottom=\skip56
+<<<<<<< HEAD
 ) (C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex/latex/appendix\appendix.sty
 Package: appendix 2020/02/08 v1.2c extra appendix facilities
 \c@@pps=\count284
 \c@@ppsavesec=\count285
 \c@@ppsaveapp=\count286
 ) (C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex/latex/xcolor\xcolor.sty
+=======
+) (C:\Users\tomas\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\@emptytoks=\toks21
+\symAMSa=\mathgroup5
+\symAMSb=\mathgroup6
+LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+) (C:\Users\tomas\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsmath.sty
+Package: amsmath 2021/04/20 v2.17j AMS math features
+\@mathmargin=\skip57
+
+For additional information on amsmath, use the `?' option.
+(C:\Users\tomas\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amstext.sty
+Package: amstext 2000/06/29 v2.01 AMS text
+ (C:\Users\tomas\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks22
+\ex@=\dimen156
+)) (C:\Users\tomas\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen157
+) (C:\Users\tomas\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsopn.sty
+Package: amsopn 2016/03/08 v2.02 operator names
+)
+\inf@bad=\count284
+LaTeX Info: Redefining \frac on input line 234.
+\uproot@=\count285
+\leftroot@=\count286
+LaTeX Info: Redefining \overline on input line 399.
+\classnum@=\count287
+\DOTSCASE@=\count288
+LaTeX Info: Redefining \ldots on input line 496.
+LaTeX Info: Redefining \dots on input line 499.
+LaTeX Info: Redefining \cdots on input line 620.
+\Mathstrutbox@=\box52
+\strutbox@=\box53
+\big@size=\dimen158
+LaTeX Font Info:    Redeclaring font encoding OML on input line 743.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
+\macc@depth=\count289
+\c@MaxMatrixCols=\count290
+\dotsspace@=\muskip17
+\c@parentequation=\count291
+\dspbrk@lvl=\count292
+\tag@help=\toks23
+\row@=\count293
+\column@=\count294
+\maxfields@=\count295
+\andhelp@=\toks24
+\eqnshift@=\dimen159
+\alignsep@=\dimen160
+\tagshift@=\dimen161
+\tagwidth@=\dimen162
+\totwidth@=\dimen163
+\lineht@=\dimen164
+\@envbody=\toks25
+\multlinegap=\skip58
+\multlinetaggap=\skip59
+\mathdisplay@stack=\toks26
+LaTeX Info: Redefining \[ on input line 2923.
+LaTeX Info: Redefining \] on input line 2924.
+) (C:\Users\tomas\AppData\Local\Programs\MiKTeX\tex/latex/appendix\appendix.sty
+Package: appendix 2020/02/08 v1.2c extra appendix facilities
+\c@@pps=\count296
+\c@@ppsavesec=\count297
+\c@@ppsaveapp=\count298
+) (C:\Users\tomas\AppData\Local\Programs\MiKTeX\tex/latex/xcolor\xcolor.sty
+>>>>>>> 916956f91bff270d882e8acb7de23464fb43b682
 Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
  (C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\color.cfg
 File: color.cfg 2016/01/02 v1.6 sample color configuration
@@ -248,6 +323,7 @@ Package xcolor Info: Driver file: pdftex.def on input line 225.
 Package: colortbl 2020/01/04 v1.0e Color table columns (DPC)
  (C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex/latex/tools\array.sty
 Package: array 2021/04/20 v2.5e Tabular extension package (FMi)
+<<<<<<< HEAD
 \col@sep=\dimen155
 \ar@mcellbox=\box52
 \extrarowheight=\dimen156
@@ -255,11 +331,20 @@ Package: array 2021/04/20 v2.5e Tabular extension package (FMi)
 \extratabsurround=\skip57
 \backup@length=\skip58
 \ar@cellbox=\box53
+=======
+\col@sep=\dimen165
+\ar@mcellbox=\box54
+\extrarowheight=\dimen166
+\NC@list=\toks27
+\extratabsurround=\skip60
+\backup@length=\skip61
+\ar@cellbox=\box55
+>>>>>>> 916956f91bff270d882e8acb7de23464fb43b682
 )
-\everycr=\toks22
-\minrowclearance=\skip59
+\everycr=\toks28
+\minrowclearance=\skip62
 )
-\rownum=\count287
+\rownum=\count299
 Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1348.
 Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1352.
 Package xcolor Info: Model `RGB' extended on input line 1364.
@@ -271,6 +356,7 @@ Package xcolor Info: Model `Gray' substituted by `gray' on input line 1370.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
  (C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex/latex/graphics\dvipsnam.def
 File: dvipsnam.def 2016/06/17 v3.0m Driver-dependent file (DPC,SPQR)
+<<<<<<< HEAD
 )) (C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex/latex/listings\listings.sty
 \lst@mode=\count288
 \lst@gtempboxa=\box54
@@ -298,6 +384,35 @@ File: l3backend-pdftex.def 2021-05-07 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count296
 \l__pdf_internal_box=\box56
 ) (Implementazione.aux)
+=======
+)) (C:\Users\tomas\AppData\Local\Programs\MiKTeX\tex/latex/listings\listings.sty
+\lst@mode=\count300
+\lst@gtempboxa=\box56
+\lst@token=\toks29
+\lst@length=\count301
+\lst@currlwidth=\dimen167
+\lst@column=\count302
+\lst@pos=\count303
+\lst@lostspace=\dimen168
+\lst@width=\dimen169
+\lst@newlines=\count304
+\lst@lineno=\count305
+\lst@maxwidth=\dimen170
+ (C:\Users\tomas\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstmisc.sty
+File: lstmisc.sty 2020/03/24 1.8d (Carsten Heinz)
+\c@lstnumber=\count306
+\lst@skipnumbers=\count307
+\lst@framebox=\box57
+) (C:\Users\tomas\AppData\Local\Programs\MiKTeX\tex/latex/listings\listings.cfg
+File: listings.cfg 2020/03/24 1.8d listings configuration
+))
+Package: listings 2020/03/24 1.8d (Carsten Heinz)
+)) (C:\Users\tomas\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
+File: l3backend-pdftex.def 2021-08-04 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count308
+\l__pdf_internal_box=\box58
+) (c:\Users\tomas\Desktop\ParkingBO\report\chapters\Implementazione\Implementazione.aux)
+>>>>>>> 916956f91bff270d882e8acb7de23464fb43b682
 \openout1 = `Implementazione.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 5.
@@ -337,7 +452,7 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 ) (C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex/generic/gettitlestring\gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count297
+\c@section@level=\count309
 )
 LaTeX Info: Redefining \ref on input line 5.
 LaTeX Info: Redefining \pageref on input line 5.
@@ -348,6 +463,7 @@ LaTeX Info: Redefining \nameref on input line 5.
 
  (C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
+<<<<<<< HEAD
 \scratchcounter=\count298
 \scratchdimen=\dimen161
 \scratchbox=\box57
@@ -360,6 +476,20 @@ LaTeX Info: Redefining \nameref on input line 5.
 \makeMPintoPDFobject=\count303
 \everyMPtoPDFconversion=\toks25
 ) (C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-base.sty
+=======
+\scratchcounter=\count310
+\scratchdimen=\dimen171
+\scratchbox=\box59
+\nofMPsegments=\count311
+\nofMParguments=\count312
+\everyMPshowfont=\toks30
+\MPscratchCnt=\count313
+\MPscratchDim=\dimen172
+\MPnumerator=\count314
+\makeMPintoPDFobject=\count315
+\everyMPtoPDFconversion=\toks31
+) (C:\Users\tomas\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-base.sty
+>>>>>>> 916956f91bff270d882e8acb7de23464fb43b682
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
  (C:\Users\dino9\AppData\Local\Programs\MiKTeX\tex/latex/00miktex\epstopdf-sys.cfg
@@ -369,7 +499,7 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: subfig package v1.3 is loaded.
 Package caption Info: listings package is loaded.
 Package caption Info: End \AtBeginDocument code.
-\c@lstlisting=\count304
+\c@lstlisting=\count316
 
 Capitolo 1.
 
@@ -451,21 +581,135 @@ Overfull \hbox (57.59912pt too wide) in paragraph at lines 47--48
 [][][][][][][][][][][] 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 60--61
-
- []
-
+<./img//dbSchema.png, id=59, 526.96875pt x 362.5545pt>
+File: ./img//dbSchema.png Graphic file (type png)
+<use ./img//dbSchema.png>
+Package pdftex.def Info: ./img//dbSchema.png  used on input line 64.
+(pdftex.def)             Requested size: 450.0pt x 309.61667pt.
 [3]
-Underfull \hbox (badness 10000) in paragraph at lines 63--65
+LaTeX Font Info:    Trying to load font information for OML+cmr on input line 72.
+ (C:\Users\tomas\AppData\Local\Programs\MiKTeX\tex/latex/base\omlcmr.fd
+File: omlcmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <12> not available
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 72.
+ [4 <./img//dbSchema.png>]
+Overfull \hbox (15.2992pt too wide) in paragraph at lines 76--77
+[][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (71.6991pt too wide) in paragraph at lines 80--81
+[][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (85.79907pt too wide) in paragraph at lines 84--85
+[][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (8.2492pt too wide) in paragraph at lines 85--86
+[][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (367.79858pt too wide) in paragraph at lines 88--89
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (614.54816pt too wide) in paragraph at lines 89--90
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (85.79907pt too wide) in paragraph at lines 91--92
+[][][][][][][][][][][][][][][][][][] 
+ []
+
+LaTeX Font Info:    Trying to load font information for U+lasy on input line 109.
+(C:\Users\tomas\AppData\Local\Programs\MiKTeX\tex/latex/base\ulasy.fd
+File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
+)
+LaTeX Font Info:    Trying to load font information for U+msa on input line 109.
+ (C:\Users\tomas\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 109.
+ (C:\Users\tomas\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+Overfull \hbox (14.45502pt too wide) in paragraph at lines 106--110
+\OT1/cmr/m/n/12 L'interpolazione dei da-ti e sta-ta fat-ta tra-mi-te l'al-go-rit-mo IDW (In-ver-se Di-stan-ce Weighting),
+ []
+
+[5]
+Overfull \hbox (106.94904pt too wide) in paragraph at lines 124--125
+[][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 126--127
 
  []
 
+
+Overfull \hbox (487.64838pt too wide) in paragraph at lines 129--130
+[][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (367.79858pt too wide) in paragraph at lines 135--136
+[][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (57.59912pt too wide) in paragraph at lines 137--138
+[][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (85.79907pt too wide) in paragraph at lines 143--145
+[][][][][][][][][][][][][][][][][] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 148--149
+
+ []
+
+<<<<<<< HEAD
 [4] (Implementazione.aux)
+=======
+[6]
+<./img//heatmapFull.png, id=157, 587.796pt x 308.352pt>
+File: ./img//heatmapFull.png Graphic file (type png)
+<use ./img//heatmapFull.png>
+Package pdftex.def Info: ./img//heatmapFull.png  used on input line 163.
+(pdftex.def)             Requested size: 234.00192pt x 122.75517pt.
+<./img//heatmapPolygons.png, id=158, 579.96675pt x 354.72525pt>
+File: ./img//heatmapPolygons.png Graphic file (type png)
+<use ./img//heatmapPolygons.png>
+Package pdftex.def Info: ./img//heatmapPolygons.png  used on input line 164.
+(pdftex.def)             Requested size: 202.49863pt x 123.85258pt.
+<./img//clusteringKmeans.png, id=159, 1144.87724pt x 524.55975pt>
+File: ./img//clusteringKmeans.png Graphic file (type png)
+<use ./img//clusteringKmeans.png>
+Package pdftex.def Info: ./img//clusteringKmeans.png  used on input line 171.
+(pdftex.def)             Requested size: 202.49863pt x 92.77583pt.
+<./img//clusteringDBSCAN.png, id=160, 1133.4345pt x 450.483pt>
+File: ./img//clusteringDBSCAN.png Graphic file (type png)
+<use ./img//clusteringDBSCAN.png>
+Package pdftex.def Info: ./img//clusteringDBSCAN.png  used on input line 172.
+(pdftex.def)             Requested size: 234.00192pt x 93.00261pt.
+ [7 <./img//heatmapFull.png> <./img//heatmapPolygons.png>] [8 <./img//clusteringKmeans.png> <./img//clusteringDBSCAN.png>] (c:\Users\tomas\Desktop\ParkingBO\report\chapters\Implementazione\Implementazione.aux)
+>>>>>>> 916956f91bff270d882e8acb7de23464fb43b682
 Package rerunfilecheck Info: File `Implementazione.out' has not changed.
 (rerunfilecheck)             Checksum: 1A7C193CB4214858337C98811721621D;793.
  ) 
 Here is how much of TeX's memory you used:
+<<<<<<< HEAD
  12993 strings out of 478864
  198186 string characters out of 2848661
  549588 words of memory out of 3000000
@@ -475,8 +719,19 @@ Here is how much of TeX's memory you used:
  89i,5n,96p,1215b,1240s stack positions out of 5000i,500n,10000p,200000b,80000s
 <C:/Users/dino9/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/dino9/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/dino9/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/dino9/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb>
 Output written on Implementazione.pdf (4 pages, 83208 bytes).
+=======
+ 14083 strings out of 478927
+ 215880 string characters out of 2852536
+ 578323 words of memory out of 3000000
+ 31612 multiletter control sequences out of 15000+600000
+ 411822 words of font info for 59 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 89i,10n,96p,1168b,1767s stack positions out of 5000i,500n,10000p,200000b,80000s
+ <C:\Users\tomas\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx8.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cmextra/cmex8.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on c:\Users\tomas\Desktop\ParkingBO\report\chapters\Implementazione\Implementazione.pdf (8 pages, 5588366 bytes).
+>>>>>>> 916956f91bff270d882e8acb7de23464fb43b682
 PDF statistics:
- 110 PDF objects out of 1000 (max. 8388607)
- 41 named destinations out of 1000 (max. 500000)
- 57 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 257 PDF objects out of 1000 (max. 8388607)
+ 104 named destinations out of 1000 (max. 500000)
+ 82 words of extra memory for PDF output out of 10000 (max. 10000000)
 
