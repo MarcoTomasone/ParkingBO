@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { MapContainer, Marker, Popup, TileLayer, GeoJSON } from 'react-leaflet';
+import { MapContainer, Marker, Popup, TileLayer, GeoJSON, ZoomControl } from 'react-leaflet';
 import { Card, CardContent, Typography, Switch, FormControl, Grid, FormControlLabel, Checkbox  } from '@mui/material';
 import {HeatmapLayer} from 'react-leaflet-heatmap-layer-v3';
 import {heatmap,  getData, eChargers} from '../../utils/requests';
@@ -159,6 +159,7 @@ class Heatmap extends React.Component<Props, State> {
                 attributionControl={false}>
                     {this.state.heatmapLayer}
                     {this.state.eChargers}
+                <ZoomControl position="bottomright" />
                 <TileLayer
                 url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' />

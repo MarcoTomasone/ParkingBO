@@ -19,42 +19,21 @@ Per la gestione della mappa abbiamo utilizzato il pacchetto \emph{flutter\_map} 
 Il riconoscimento della posizione è stato fatto tramite il pacchetto Geolocator che permette di ottenere la posizione dell'utente in tempo reale.\\
 
 Lato implementativo, questo widget è il widget più importante di tutta l'applicazione. Difatti nell'initState di questo widget esso si occuperà di inizializzare anche altre classi usate all'interno del progetto, come la classe per fare il riconoscimento dell'attività dell'utente. Lo snippet di codice più importante di questa classe è probabilmente la funzione che viene chiamata nella callback del listener dell'activity Recognition: updateCurrentActivity. Questa funzione si occupa di aggiornare l'attività corrente dell'utente e di inviare un messaggio al server per indicare che l'utente è entrato o uscito dall'area di parcheggio.\\
-\begin{lstlisting}
-    void updateCurrentActivity(ar.ActivityType activityType) {
-   
-    if (currentActivity == ar.ActivityType.IN_VEHICLE && activityType == ar.ActivityType.WALKING) {
-      sendActivity(ParkingType.ENTERING, currentLocation, this.context);
-    } else if (currentActivity == ar.ActivityType.WALKING && activityType == ar.ActivityType.IN_VEHICLE) { 
-      sendActivity(ParkingType.EXITING, currentLocation, this.context); 
-    }
-    print(activityType)
-    markerActivity = activityType;
-    setState(() {
-      if((activityType == ar.ActivityType.WALKING || activityType == ar.ActivityType.IN_VEHICLE ) && (currentActivity != activityType)) 
-          currentActivity = activityType;
-    });
-  }
-\end{lstlisting}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{UpdateCurrentActivity.png}
+  \caption{Funzione updateCurrentActivity}
+\end{figure}
 Lo state currentActivity verrà aggiornato solo se l'attività riconosciuta è \emph{WALKING} o \emph{IN\_VEHICLE} poichè spesso è molto facile che guidando o camminando ci si fermi, portando il sistema a riconoscere l'attività come \emph{STILL}. Questo causerbbe un'impossibilità da parte dell'app di riconoscere un cambiamento netto di attività da \emph{WALKING} a \emph{DRIVING} e viceversa. Tutte le altre attività vengono comunque riconsociute e salvate nella variabile markerActivity che, tramite uno switch permette di cambiare la visualizzazione a schermo, permettendo all'utente di capire quale attività viene riconosciuta in quel momento dal sistema.\\
 
 \subsection{Activity Recognition}
 Per la parte di Activity Recognition, come precedentemente accenato abbiamo utilizzato il pacchetto \emph{flutter\_Activity\_Recognition} che permette di fare riconoscimento dell'attività dell'utente. Il pacchetto riconosce varie attività come: \emph{WALKING}, \emph{RUNNING}, \emph{IN\_BICYCLE}, \emph{IN\_VEICHLE}, \emph{STILL}, \emph{UNKNOWN}. L'implementazione del sistema di activity recognition è stata fatta tramite la classe \emph{ActivityRecognitionClass}. Questa classe viene inizializzata all'interno del MapWidget (la schermata principale dell'app). Al momento della sua inizializzazione questa classe farà partire un listener che farà partire una callback ogni qualvolta viene riconosciuta una nuova attività. Importante notare come verranno eseguite operazioni (aggiornamento dell'attività corrente ed eventuali transizioni) solo dal momento in cui l'attività riconosciuta viene riconosciuta con un grado di confidenza alto. In più, tutto funziona se e solo se l'utente ha dato i permessi all'app di far riconoscere la propria attività.\\
 Mostriamo ora il costruttore della classe e la callback che viene eseguita ogni qualvolta viene riconosciuta una nuova attività.\\
-\begin{lstlisting}
-    ActivityRecognition(Function updateCurrentActivity){
-        this.updateCurrentActivity = updateCurrentActivity;
-        isPermissionGrants();
-        _activityStreamSubscription = activityRecognition.activityStream
-        .handleError(_handleError)
-        .listen(_onActivityReceive);
-      }
-    
-      void _onActivityReceive(Activity activity) {
-        //Took only the activities that interest us
-        if(activity.confidence == ActivityConfidence.HIGH) 
-          this.updateCurrentActivity(activity.type);
-      }
-\end{lstlisting}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{ActivityRecognitionCode.png}
+  \caption{Costruttore e callback di ActivityRecognitionClass}
+  \end{figure}
 
 \section{Backend}
     Per il backend abbiamo deciso di utilizzare \emph{Node.js}, un runtime Javascript che permette di creare applicazioni web veloci e scalabili, il Database invece, è stato creato utilizzando \emph{PostgreSQL} con estensione \emph{PostGIS} per la gestione dei dati spaziali.\\
@@ -68,41 +47,12 @@ Mostriamo ora il costruttore della classe e la callback che viene eseguita ogni 
     \end{figure}
     Il database è stato gestito tramite pgAdmin, un software open-source che permette di gestire database PostgreSQL, al quale abbiamo utilizzato anche il plugin PostGIS per la gestione dei dati spaziali.\\
     Entrando nello specifico delle query, mostriamo la query che viene chiamata quando un utente chiede il numero di parcheggi disponibili in una zona:
-    \begin{lstlisting}
-      getParkingsInterpolation: async (position) => {
-        const client = new Client(QUERY_CONFIGURATION);
-        await client.connect();
-        try {
-            const zone = await module.exports.find_zone(position);
-            let n_parkings;
-            if (zone instanceof Error)
-            throw new Error(zone.message);
-            const parkingInZone = await get_nParkingEvents_for_zone(zone);
-            console.log("Parking Events in zone: " + zone)
-            console.log(parkingInZone);
-            if(parkingInZone < 5){ 
-                console.log("I'm interpolating the result from other zones")
-                n_parkings = await parkingIDWInterpolation(zone);
-                console.log("Used parking in zone : " + zone)
-                console.log(n_parkings);
-                const total_parking = await client.query(`SELECT total_parking FROM zones WHERE id_zone = ${zone}`);
-                n_parkings =  total_parking.rows[0]['total_parking'] - parseInt(n_parkings) - parkingInZone; //Total - Interpolated - Used[between 0-5]
-            } else {
-                n_parkings = await module.exports.getParkingsFromZone(zone);
-            }
-            console.log("Free Parking in zone: " + zone)
-            console.log(n_parkings);
-            return n_parkings;
-            
-        } catch (e) {
-            console.error(e);
-            return e;
-        }
-        finally {
-            await client.end();
-        }
-    },
-    \end{lstlisting}
+    \begin{figure}[H]
+      \includegraphics[width=\textwidth]{getParkingsIDW.png}
+      \centering
+      \caption{Query per il numero di parcheggi disponibili}
+      \label{fig:query}
+    \end{figure}
     Questa query ci permette di discutere di un'altra importante feature presente nel progetto, l'interpolazione dei parcheggi. Come si può notare dapprima calcoleremo il numero di posti occupati in zona, se questo è minore di 5, un numero molto basso per una città come Bologna dove ci sono molti parcheggi, allora procederemo con l'interpolazione dei dati, altrimenti restituiamo semplicemente il numero di posti liberi in zona.\\
     L'interpolazione dei dati è stata fatta tramite l'algoritmo IDW (Inverse Distance Weighting), un algoritmo che permette di interpolare i dati in base alla distanza tra i punti. Per calcolare la distanza tra due zone, abbiamo dapprima calcolato i centroidi delle zone, poi abbiamo calcolato la distanza tra i centroidi delle zone e infine abbiamo interpolato i dati in base alla distanza tra i centroidi.\\
     Dato un insieme di punti:  
@@ -121,30 +71,15 @@ Mostriamo ora il costruttore della classe e la callback che viene eseguita ogni 
     $$
     Guardando l'implementazione lato codice:
     \begin{lstlisting}
-      SELECT ST_AsText(ST_Centroid(polygon)) FROM zones WHERE id_zone = ${zone}
+    SELECT ST_AsText(ST_Centroid(polygon)) FROM zones WHERE id_zone = ${zone}
     \end{lstlisting}
     Questa query ci permette di calcolare il centroide di una zona, dato il suo id.\\
-    \begin{lstlisting}
-      for(row in nParkEventsForZone.rows) {
-            nParkEventsForZone.rows[row].distance = computeDistance(nParkEventsForZone.rows[row].centroid, centroidOfZoneOfInterest);
-        }
-        interpolatedValue = 0;
-        //Compute result
-        for(row in nParkEventsForZone.rows) {
-            if(nParkEventsForZone.rows[row].distance != 0)
-                interpolatedValue += nParkEventsForZone.rows[row].count * (1/nParkEventsForZone.rows[row].distance);
-            else
-                interpolatedValue += nParkEventsForZone.rows[row].count;
-        }
-        
-        sumOfDistances = 0;
-        for(row in nParkEventsForZone.rows) 
-            if(nParkEventsForZone.rows[row].distance != 0)    
-                sumOfDistances += (1/nParkEventsForZone.rows[row].distance);
-        
-        interpolatedValue = interpolatedValue / sumOfDistances;
-        return interpolatedValue;
-    \end{lstlisting}
+    \begin{figure}[H]
+      \includegraphics[width=\textwidth]{computeValueIDW.png}
+      \centering
+      \caption{Calcolo dell'interpolazione dei dati}
+      \label{fig:query2}
+    \end{figure}
     Questo codice rappresenta invece la computazione effettiva del valore interpolato.\\
 
 \section{Frontend}

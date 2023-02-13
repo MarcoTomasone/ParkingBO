@@ -42,6 +42,7 @@ class _MapWidgetState extends State<MapWidget> {
   final polygons = <Polygon>[];
   final markers = <Marker>[];
   bool start_listen = false;
+  bool switch_value = false;
   userActivity? userActivitySel = userActivity.WALKING;
   int? freeParking = 0;
   var id_user = null;
@@ -124,21 +125,23 @@ class _MapWidgetState extends State<MapWidget> {
     setState(() {
       markers.clear();
     });
-    /*Map<String, dynamic> chargers = await getChargingStations();
-    for (var element in chargers["chargers"]) {
-      setState(() {
-        markers.add(
-          Marker(
-              point: LatLng(element["y"], element["x"]),
-              builder: (ctx) => Icon(
-                    Icons.ev_station_outlined,
-                    color: element["n_charging_points_available"] > 0
-                        ? Colors.green
-                        : Colors.red, 
-                  )),
-        );
-      });
-    }*/
+    if(switch_value) {
+      Map<String, dynamic> chargers = await getChargingStations();
+      for (var element in chargers["chargers"]) {
+        setState(() {
+          markers.add(
+            Marker(
+                point: LatLng(element["y"], element["x"]),
+                builder: (ctx) => Icon(
+                      Icons.ev_station_outlined,
+                      color: element["n_charging_points_available"] > 0
+                          ? Colors.green
+                          : Colors.red, 
+                    )),
+          );
+        });
+      }
+    }
   }
 
   Future<bool> _getPermissionLocation() async {
@@ -214,118 +217,167 @@ class _MapWidgetState extends State<MapWidget> {
   @override
   Widget build(BuildContext context) {
     return 
-      FlutterMap(
-      options: MapOptions(
-        center: currentLocation,
-        zoom: 18,
-        onTap: (tapPosition, point) async => {
-          freeParking = await getParkings(point),
-          Fluttertoast.showToast(
-              msg: "In this area we have " +
-                  freeParking.toString() +
-                  " free parking",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 1,
-              backgroundColor: (freeParking != null && freeParking! > 0)
-                  ? Colors.green
-                  : Colors.red,
-              textColor: Colors.white,
-              fontSize: 14.0),
-        },
-        onPositionChanged: (MapPosition position, bool hasGesture) {
-          if (hasGesture) {
-            setState(
-              () => _centerOnLocationUpdate = CenterOnLocationUpdate.never,
-            );
-          }
-        },
-      ),
-      children: [
-        TileLayer(
-          urlTemplate: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-          userAgentPackageName: 'dev.fleaflet.flutter_map.example',
-        ),
-        PolygonLayer(polygonCulling: false, polygons: polygons),
-        CurrentLocationLayer(
-          centerOnLocationUpdate: _centerOnLocationUpdate,
-        ),
-        MarkerLayer(markers: [
-          Marker(
-              point: currentLocation,
-              builder: (ctx) => Icon(
-                    getMarkerType(),
-                    color: Colors.red,
-                  )),
-        ]),
-        MarkerLayer(markers: markers),
-        Container(
+    Scaffold(body:
+      Stack(
+        children: [
+          Container(
+            child: FlutterMap(
+              options: MapOptions(
+                center: currentLocation,
+                zoom: 18,
+                onTap: (tapPosition, point) async => {
+                  freeParking = await getParkings(point),
+                  Fluttertoast.showToast(
+                    msg: "In this area we have " + freeParking.toString() + " free parking",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: (freeParking != null && freeParking! > 0)
+                        ? Colors.green
+                        : Colors.red,
+                    textColor: Colors.white,
+                    fontSize: 14.0
+                  )
+                },
+                onPositionChanged: (MapPosition position, bool hasGesture) {
+                  if (hasGesture) {
+                    setState(
+                      () => _centerOnLocationUpdate = CenterOnLocationUpdate.never,
+                    );
+                  }
+                }
+              ),
+            children: [
+              TileLayer(
+                urlTemplate: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                userAgentPackageName: 'dev.fleaflet.flutter_map.example',
+              ),
+              PolygonLayer(polygonCulling: false, polygons: polygons),
+              CurrentLocationLayer(
+                centerOnLocationUpdate: _centerOnLocationUpdate,
+              ),
+              MarkerLayer(markers: [
+                Marker(
+                    point: currentLocation,
+                    builder: (ctx) => Icon(
+                          getMarkerType(),
+                          color: Colors.red,
+                    )
+                ),
+              ]),
+              MarkerLayer(markers: markers),
+            ]),
+          ),
+          Container(
             alignment: Alignment.bottomLeft,
-            child: Column(
-              verticalDirection: VerticalDirection.up,
-              //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            margin: const EdgeInsets.only(left: 20.0, bottom: 20.0),
+            child: Row(
               children: [
-                ElevatedButton(
-                    onPressed: () {
-                      sensorRecognition.dispose();
-                    },
-                    child: const Text('Stop Listen')),
-                ElevatedButton(
-                    style: ButtonStyle(
-                        backgroundColor:
-                            (userActivitySel! == userActivity.STILL)
-                                ? MaterialStateProperty.all(Colors.green)
-                                : MaterialStateProperty.all(Colors.blue)),
-                    onPressed: () {
-                      dev.log("STILL");
-                      //sendActivity(ParkingType.EXITING, LatLng(44.496462, 11.355446), context);
-                      //sendActivity(
-                        //  ParkingType.EXITING, currentLocation, context);
-                      setState(() {
-                        userActivitySel = userActivity.STILL;
-                      });
-                    },
-                    child: const Text('STILL/Exit')),
-                ElevatedButton(
-                    style: ButtonStyle(
-                        backgroundColor:
-                            (userActivitySel! == userActivity.WALKING)
-                                ? MaterialStateProperty.all(Colors.green)
-                                : MaterialStateProperty.all(Colors.blue)),
-                    onPressed: () {
-                      //sendActivity(ParkingType.ENTERING, LatLng(44.496462, 11.355446), context);
-                     // sendActivity(
-                      //    ParkingType.ENTERING, currentLocation, context);
-                      setState(() {
-                        userActivitySel = userActivity.WALKING;
-                      });
-                    },
-                    child: const Text('WALKING/Enter')),
-                ElevatedButton(
-                    style: ButtonStyle(
-                        backgroundColor:
-                            (userActivitySel! == userActivity.DRIVING)
-                                ? MaterialStateProperty.all(Colors.green)
-                                : MaterialStateProperty.all(Colors.blue)),
-                    onPressed: () {
-                      setState(() {
-                        userActivitySel = userActivity.DRIVING;
-                      });
-                    },
-                    child: const Text('DRIVING')),
-                ElevatedButton(
-                    style: ButtonStyle(
-                        backgroundColor:
-                            (userActivitySel! == userActivity.DRIVING)
-                                ? MaterialStateProperty.all(Colors.green)
-                                : MaterialStateProperty.all(Colors.blue)),
-                    onPressed: () {
-                      drawMarkersOnMap();
-                    },
-                    child: const Text('UpdateMarkers'))
-              ],
-          )),
-      ], //Children
+                Column(
+                  verticalDirection: VerticalDirection.up,
+                  //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                        onPressed: () {
+                          sensorRecognition.dispose();
+                        },
+                        child: const Text('Stop Listen')
+                    ),
+                    ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor:
+                                (userActivitySel! == userActivity.STILL)
+                                    ? MaterialStateProperty.all(Colors.green)
+                                    : MaterialStateProperty.all(Colors.blue)),
+                        onPressed: () {
+                          dev.log("STILL");
+                          //sendActivity(ParkingType.EXITING, LatLng(44.496462, 11.355446), context);
+                          sendActivity(
+                              ParkingType.EXITING, currentLocation, context);
+                          setState(() {
+                            userActivitySel = userActivity.STILL;
+                          });
+                        },
+                        child: const Text('STILL/Exit')
+                    ),
+                  ],
+                ),
+                Column(
+                  verticalDirection: VerticalDirection.up,
+                  children: [
+                    ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor:
+                                (userActivitySel! == userActivity.WALKING)
+                                    ? MaterialStateProperty.all(Colors.green)
+                                    : MaterialStateProperty.all(Colors.blue)),
+                        onPressed: () {
+                          //sendActivity(ParkingType.ENTERING, LatLng(44.496462, 11.355446), context);
+                          sendActivity(
+                              ParkingType.ENTERING, currentLocation, context);
+                          setState(() {
+                            userActivitySel = userActivity.WALKING;
+                          });
+                        },
+                        child: const Text('WALKING/Enter')
+                    ),
+                    ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor:
+                                (userActivitySel! == userActivity.DRIVING)
+                                    ? MaterialStateProperty.all(Colors.green)
+                                    : MaterialStateProperty.all(Colors.blue)),
+                        onPressed: () {
+                          setState(() {
+                            userActivitySel = userActivity.DRIVING;
+                          });
+                        },
+                        child: const Text('DRIVING')
+                    ),
+                  ],
+                )     
+              ]
+            ),
+          ),
+          Align(
+            alignment: Alignment.topRight,
+            child: 
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.grey[800],
+                  borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(20.0),
+                  bottomRight: Radius.circular(20.0),
+                  topLeft: Radius.circular(20.0),
+                  bottomLeft: Radius.circular(20.0)),
+                ),
+                height: 150,
+                width: 180,
+                margin: const EdgeInsets.only(right: 20.0, top: 50.0),
+                child: 
+                  Column(
+                    verticalDirection: VerticalDirection.down,
+                    children: [
+                      SizedBox(height: 20),
+                      Text("Show e-charging stations", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                      Switch(value: switch_value,onChanged: (value) {setState(() {switch_value = value;});}),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor:
+                                (userActivitySel! == userActivity.DRIVING)
+                                    ? MaterialStateProperty.all(Colors.green)
+                                    : MaterialStateProperty.all(Colors.blue)),
+                        onPressed: () {
+                          drawMarkersOnMap();
+                        },
+                        child: const Text('UpdateMarkers')
+                    )
+                    ],
+                  )
+              )
+          )
+        ]
+      )
     );
   }
 }
