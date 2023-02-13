@@ -29,7 +29,7 @@ final LocationSettings locationSettings =
     LocationSettings(accuracy: LocationAccuracy.high, distanceFilter: 15);
 
 enum userActivity { DRIVING, WALKING, STILL, UNKNOWN }
-
+const activityModel  = ['DRIVING' , ' WALKING' , 'STILL'];
 class MapWidget extends StatefulWidget {
   //Initialize Activity Recognition class
 
@@ -124,7 +124,7 @@ class _MapWidgetState extends State<MapWidget> {
     setState(() {
       markers.clear();
     });
-    Map<String, dynamic> chargers = await getChargingStations();
+    /*Map<String, dynamic> chargers = await getChargingStations();
     for (var element in chargers["chargers"]) {
       setState(() {
         markers.add(
@@ -138,7 +138,7 @@ class _MapWidgetState extends State<MapWidget> {
                   )),
         );
       });
-    }
+    }*/
   }
 
   Future<bool> _getPermissionLocation() async {
@@ -176,13 +176,10 @@ class _MapWidgetState extends State<MapWidget> {
     model.loadModel();
 
     Timer.periodic(Duration(seconds: 10), (timer) {
-      int activityDetectedModel =
-          model.predict(sensorRecognition.getFeatures());
+      int indexActv = model.predict(sensorRecognition.getFeatures());
       sensorRecognition.getRow(userActivitySel.toString(), currentActivity.toString());
-      dev.log(activityDetectedModel.toString());
         Fluttertoast.showToast(
-            msg: ((activityDetectedModel == 0) ? "DRIVING" : "WALKING") +
-                " detected OUR MODEL",
+            msg:  activityModel[indexActv] + " detected OUR MODEL",
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.CENTER,
             timeInSecForIosWeb: 3,
@@ -282,8 +279,8 @@ class _MapWidgetState extends State<MapWidget> {
                     onPressed: () {
                       dev.log("STILL");
                       //sendActivity(ParkingType.EXITING, LatLng(44.496462, 11.355446), context);
-                      sendActivity(
-                          ParkingType.EXITING, currentLocation, context);
+                      //sendActivity(
+                        //  ParkingType.EXITING, currentLocation, context);
                       setState(() {
                         userActivitySel = userActivity.STILL;
                       });
@@ -297,8 +294,8 @@ class _MapWidgetState extends State<MapWidget> {
                                 : MaterialStateProperty.all(Colors.blue)),
                     onPressed: () {
                       //sendActivity(ParkingType.ENTERING, LatLng(44.496462, 11.355446), context);
-                      sendActivity(
-                          ParkingType.ENTERING, currentLocation, context);
+                     // sendActivity(
+                      //    ParkingType.ENTERING, currentLocation, context);
                       setState(() {
                         userActivitySel = userActivity.WALKING;
                       });
