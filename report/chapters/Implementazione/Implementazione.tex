@@ -58,10 +58,123 @@ Mostriamo ora il costruttore della classe e la callback che viene eseguita ogni 
 
 \section{Backend}
     Per il backend abbiamo deciso di utilizzare \emph{Node.js}, un runtime Javascript che permette di creare applicazioni web veloci e scalabili, il Database invece, è stato creato utilizzando \emph{PostgreSQL} con estensione \emph{PostGIS} per la gestione dei dati spaziali.\\
+    Lato implementativo abbiamo deciso di dividere il nostro database in moduli, in modo da avere una struttura più pulita e ordinata. Avremo quindi un modulo per la creazione del database, uno per le query e rispettivamente uno per le funzioni esposte al frontend e all'applicazione mobile.\\
+    Il nostro database è composto da 5 tabelle e ha questo schema:
+    \begin{figure}[H]
+      \includegraphics[width=\textwidth]{dbSchema.png}
+      \centering
+        \caption{Schema del database}
+        \label{fig:schema}  
+    \end{figure}
+    Il database è stato gestito tramite pgAdmin, un software open-source che permette di gestire database PostgreSQL, al quale abbiamo utilizzato anche il plugin PostGIS per la gestione dei dati spaziali.\\
+    Entrando nello specifico delle query, mostriamo la query che viene chiamata quando un utente chiede il numero di parcheggi disponibili in una zona:
+    \begin{lstlisting}
+      getParkingsInterpolation: async (position) => {
+        const client = new Client(QUERY_CONFIGURATION);
+        await client.connect();
+        try {
+            const zone = await module.exports.find_zone(position);
+            let n_parkings;
+            if (zone instanceof Error)
+            throw new Error(zone.message);
+            const parkingInZone = await get_nParkingEvents_for_zone(zone);
+            console.log("Parking Events in zone: " + zone)
+            console.log(parkingInZone);
+            if(parkingInZone < 5){ 
+                console.log("I'm interpolating the result from other zones")
+                n_parkings = await parkingIDWInterpolation(zone);
+                console.log("Used parking in zone : " + zone)
+                console.log(n_parkings);
+                const total_parking = await client.query(`SELECT total_parking FROM zones WHERE id_zone = ${zone}`);
+                n_parkings =  total_parking.rows[0]['total_parking'] - parseInt(n_parkings) - parkingInZone; //Total - Interpolated - Used[between 0-5]
+            } else {
+                n_parkings = await module.exports.getParkingsFromZone(zone);
+            }
+            console.log("Free Parking in zone: " + zone)
+            console.log(n_parkings);
+            return n_parkings;
+            
+        } catch (e) {
+            console.error(e);
+            return e;
+        }
+        finally {
+            await client.end();
+        }
+    },
+    \end{lstlisting}
+    Questa query ci permette di discutere di un'altra importante feature presente nel progetto, l'interpolazione dei parcheggi. Come si può notare dapprima calcoleremo il numero di posti occupati in zona, se questo è minore di 5, un numero molto basso per una città come Bologna dove ci sono molti parcheggi, allora procederemo con l'interpolazione dei dati, altrimenti restituiamo semplicemente il numero di posti liberi in zona.\\
+    L'interpolazione dei dati è stata fatta tramite l'algoritmo IDW (Inverse Distance Weighting), un algoritmo che permette di interpolare i dati in base alla distanza tra i punti. Per calcolare la distanza tra due zone, abbiamo dapprima calcolato i centroidi delle zone, poi abbiamo calcolato la distanza tra i centroidi delle zone e infine abbiamo interpolato i dati in base alla distanza tra i centroidi.\\
+    Dato un insieme di punti:  
+    $ \{\mathbf{x}_i, u_i \mid \text{ per } \mathbf{x}_i \in \mathbb{R}^n, u_i \in \mathbb{R}\}_{i=1}^N $, la funzione di interpolazione $u(\mathbf{x}): \mathbb{R}^n \rightarrow \mathbb{R}$ è definita come:
+    $$
+    u(\mathbf{x})= 
+    \begin{cases}
+      \frac{\sum_{i=1}^N w_i(\mathbf{z}) u_i}{\sum_{i=1}^N w_i(\mathbf{x})},
+       & \text { if } d(\mathbf{x}, \mathbf{x}_i) \neq 0 \text { per ogni  } i \\
+      u_i, & \text{ if } d(\mathbf{x}, \mathbf{x}_i)=0 \text{ per alcune } i
+    \end{cases}
+    $$
+    Dove
+    $$
+    w_i(\mathbf{x})=\frac{1}{d\left(\mathbf{x}, \mathbf{x}_i\right)^p}
+    $$
+    Guardando l'implementazione lato codice:
+    \begin{lstlisting}
+      SELECT ST_AsText(ST_Centroid(polygon)) FROM zones WHERE id_zone = ${zone}
+    \end{lstlisting}
+    Questa query ci permette di calcolare il centroide di una zona, dato il suo id.\\
+    \begin{lstlisting}
+      for(row in nParkEventsForZone.rows) {
+            nParkEventsForZone.rows[row].distance = computeDistance(nParkEventsForZone.rows[row].centroid, centroidOfZoneOfInterest);
+        }
+        interpolatedValue = 0;
+        //Compute result
+        for(row in nParkEventsForZone.rows) {
+            if(nParkEventsForZone.rows[row].distance != 0)
+                interpolatedValue += nParkEventsForZone.rows[row].count * (1/nParkEventsForZone.rows[row].distance);
+            else
+                interpolatedValue += nParkEventsForZone.rows[row].count;
+        }
+        
+        sumOfDistances = 0;
+        for(row in nParkEventsForZone.rows) 
+            if(nParkEventsForZone.rows[row].distance != 0)    
+                sumOfDistances += (1/nParkEventsForZone.rows[row].distance);
+        
+        interpolatedValue = interpolatedValue / sumOfDistances;
+        return interpolatedValue;
+    \end{lstlisting}
+    Questo codice rappresenta invece la computazione effettiva del valore interpolato.\\
 
 \section{Frontend}
     Per  motivi di riusabilità del codice e dei componenti abbiamo deciso di utilizzare il framework React per il frontend, un framework \emph{Javascript} open-source sviluppato da Facebook che permette di creare componenti riutilizzabili. 
     Per la gestione delle mappe sia nel frontend abbiamo utilizzato la libreria \emph{Leaflet}, un framework Javascript open-source che permette di creare mappe interattive, dal quale abbiamo preso anche due pacchetti per fare Clustering e per visualizzare la Heatmap dei dati. Infine per la parte grafica è stato utilizzato il framework \emph{Material-UI}, un framework Javascript open-source che permette di creare componenti grafici in stile \emph{Material Design}.\\
+    Il frontend è composto da tra sezioni, accessibili tramite delle tab in una navbar: 
+    \begin{itemize}
+      \item La sezione delle richieste: in cui è possibile vedere le zone poligonali di Bologna, selezionarne una e visualizzare il numero di posti liberi in quella zone ed il numero di richieste di parcheggio, cioè quante volte gli utenti hanno chiesto la disponibilità di parcheggi in quella zona.
+      \item La sezione della Heatmap: in cui è possibile visualizzare la mappa di Bologna con la heatmap dei dati, cioè il numero di richieste di parcheggio per ogni zona poligonale. La Heatmap è visibile sia complessiva che suddivisa per poligono.
+      \item La sezione del Clustering: in cui è possibile visualizzare una visualizzazione dei dati in forma di cluster, cioè dei ragguagliamenti dei dati in base alla loro vicinanza. Sono presenti due visualizzazioni possibili, il clustering K-means e il clusterings DBSCAN. 
+    \end{itemize}
+    Di seguito mostriamo delle schermate della sezione della Heatmap, sia complessiva che suddivisa per poligono:
+    %Two images side by side
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.52\textwidth]{heatmapFull.png}
+        \includegraphics[width=0.45\textwidth]{heatmapPolygons.png}
+        \caption{Heatmap complessiva e suddivisa per poligono}
+        \label{fig:heatmap}
+    \end{figure}
+    Mostriamo ora la schermata della sezione del Clustering, in cui è possibile visualizzare i cluster K-means e DBSCAN:
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.45\textwidth]{clusteringKmeans.png}
+        \includegraphics[width=0.52\textwidth]{clusteringDBSCAN.png}
+        \caption{Schermata della sezione del Clustering}
+        \label{fig:clustering}
+    \end{figure}
+    
 
+    
 
 \end{document}

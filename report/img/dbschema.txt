@@ -1,0 +1,79 @@
+//// -- LEVEL 1
+//// -- Schemas, Tables and References
+
+// Creating tables
+// You can define the tables with full schema names
+
+
+ Table useractivity.zones {
+            id_zone int 
+            total_parking int
+            available_parking int 
+            polygon geometry
+    Indexes {
+       (id_zone) [pk]
+   }
+ }
+ 
+ Table useractivity.user_events{
+            id_user int 
+            parking_type text
+            position geometry
+            zone int [ref: > useractivity.zones.id_zone]
+            id_station int  [ref: > useractivity.charge_stations.id_station]
+             Indexes {
+       (id_user) [pk]
+   }
+ }
+  
+  Table useractivity.history {
+            id_event int 
+            parking_type text
+            position geometry
+            zone int [ref: > useractivity.zones.id_zone]
+              Indexes {
+       (id_event) [pk]
+   }
+  }
+
+table useractivity.parking_requests {
+            id_request int 
+            position geometry
+            zone int [ref: > useractivity.zones.id_zone]
+              Indexes {
+       (id_request) [pk]
+   }
+}
+table useractivity.charge_stations {
+            id_station int 
+            operator text
+            location text
+            district text
+            year int
+            n_charging_points int 
+            n_charging_points_available int
+            state text
+            owner text
+            point geometry
+    Indexes {
+       (id_station) [pk]
+   }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
