@@ -300,6 +300,11 @@ class _MapWidgetState extends State<MapWidget> {
                         },
                         child: const Text('STILL/Exit')
                     ),
+                  ],
+                ),
+                Column(
+                  verticalDirection: VerticalDirection.up,
+                  children: [
                     ElevatedButton(
                         style: ButtonStyle(
                             backgroundColor:
@@ -316,11 +321,6 @@ class _MapWidgetState extends State<MapWidget> {
                         },
                         child: const Text('WALKING/Enter')
                     ),
-                  ],
-                ),
-                Column(
-                  verticalDirection: VerticalDirection.up,
-                  children: [
                     ElevatedButton(
                         style: ButtonStyle(
                             backgroundColor:
@@ -334,7 +334,34 @@ class _MapWidgetState extends State<MapWidget> {
                         },
                         child: const Text('DRIVING')
                     ),
-                    ElevatedButton(
+                  ],
+                )     
+              ]
+            ),
+          ),
+          Align(
+            alignment: Alignment.topRight,
+            child: 
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.grey[800],
+                  borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(20.0),
+                  bottomRight: Radius.circular(20.0),
+                  topLeft: Radius.circular(20.0),
+                  bottomLeft: Radius.circular(20.0)),
+                ),
+                height: 150,
+                width: 180,
+                margin: const EdgeInsets.only(right: 20.0, top: 50.0),
+                child: 
+                  Column(
+                    verticalDirection: VerticalDirection.down,
+                    children: [
+                      SizedBox(height: 20),
+                      Text("Show e-charging stations", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                      Switch(value: switch_value,onChanged: (value) {setState(() {switch_value = value;});}),
+                      ElevatedButton(
                         style: ButtonStyle(
                             backgroundColor:
                                 (userActivitySel! == userActivity.DRIVING)
@@ -345,27 +372,6 @@ class _MapWidgetState extends State<MapWidget> {
                         },
                         child: const Text('UpdateMarkers')
                     )
-                  ],
-                )     
-              ]
-            ),
-          ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: 
-              Container(
-                height: 100,
-                width: 100,
-                margin: const EdgeInsets.only(right: 20.0),
-                color: Colors.grey,
-                child: 
-                  Column(
-                    verticalDirection: VerticalDirection.up,
-                    children: [
-                      Text("Show e-charging stations"),
-                      Switch(value: switch_value,onChanged: (value) {setState(() {switch_value = value;});
-                  },
-                )
                     ],
                   )
               )
@@ -375,88 +381,3 @@ class _MapWidgetState extends State<MapWidget> {
     );
   }
 }
-
-/*
-Container(
-          alignment: Alignment.bottomLeft,
-          margin: const EdgeInsets.only(left: 20.0, bottom: 20.0),
-          child: Row(
-            children: [
-              Column(
-                verticalDirection: VerticalDirection.up,
-                //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                      onPressed: () {
-                        sensorRecognition.dispose();
-                      },
-                      child: const Text('Stop Listen')
-                  ),
-                  ElevatedButton(
-                      style: ButtonStyle(
-                          backgroundColor:
-                              (userActivitySel! == userActivity.STILL)
-                                  ? MaterialStateProperty.all(Colors.green)
-                                  : MaterialStateProperty.all(Colors.blue)),
-                      onPressed: () {
-                        dev.log("STILL");
-                        //sendActivity(ParkingType.EXITING, LatLng(44.496462, 11.355446), context);
-                        sendActivity(
-                            ParkingType.EXITING, currentLocation, context);
-                        setState(() {
-                          userActivitySel = userActivity.STILL;
-                        });
-                      },
-                      child: const Text('STILL/Exit')
-                  ),
-                  ElevatedButton(
-                      style: ButtonStyle(
-                          backgroundColor:
-                              (userActivitySel! == userActivity.WALKING)
-                                  ? MaterialStateProperty.all(Colors.green)
-                                  : MaterialStateProperty.all(Colors.blue)),
-                      onPressed: () {
-                        //sendActivity(ParkingType.ENTERING, LatLng(44.496462, 11.355446), context);
-                        sendActivity(
-                            ParkingType.ENTERING, currentLocation, context);
-                        setState(() {
-                          userActivitySel = userActivity.WALKING;
-                        });
-                      },
-                      child: const Text('WALKING/Enter')
-                  ),
-                ],
-              ),
-              Column(
-                verticalDirection: VerticalDirection.up,
-                children: [
-                  ElevatedButton(
-                      style: ButtonStyle(
-                          backgroundColor:
-                              (userActivitySel! == userActivity.DRIVING)
-                                  ? MaterialStateProperty.all(Colors.green)
-                                  : MaterialStateProperty.all(Colors.blue)),
-                      onPressed: () {
-                        setState(() {
-                          userActivitySel = userActivity.DRIVING;
-                        });
-                      },
-                      child: const Text('DRIVING')
-                  ),
-                  ElevatedButton(
-                      style: ButtonStyle(
-                          backgroundColor:
-                              (userActivitySel! == userActivity.DRIVING)
-                                  ? MaterialStateProperty.all(Colors.green)
-                                  : MaterialStateProperty.all(Colors.blue)),
-                      onPressed: () {
-                        drawMarkersOnMap();
-                      },
-                      child: const Text('UpdateMarkers')
-                  )
-                ],
-              )     
-            ]
-          ),
-        ),
-*/
