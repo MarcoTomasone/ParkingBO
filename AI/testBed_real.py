@@ -16,12 +16,12 @@ data = pd.read_csv(f)
 f.close()
 print(len(data))
 data.rename({'userTarget': 'target'}, axis=1, inplace=True)
-data = data[(data['target'] == 1) | (data['target'] == 0)]
+data = data[(data['target'] == 1) | (data['target'] == 0) | (data['target'] == 2)]
 y = data['target']
 x = data.drop(['target'],axis=1);
 
 X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.1, random_state=5)
-rf = RandomForestClassifier(n_estimators=100, random_state=5)
+rf = RandomForestClassifier(n_estimators=300, random_state=5)
 rf.fit(X_train, y_train)
 y_pred_rf = rf.predict(X_test)
 
