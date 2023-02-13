@@ -31,15 +31,3 @@ for polygon in polygons:
 with open('../backend/files/fake_coordinates.json', 'w') as outfile:
     json.dump(allFakePoints, outfile)
 
-'''
-xp,yp = polygonP.exterior.xy
-plt.plot(xp,yp)
-
-# Plot the list of points
-xs = [point.x for point in points]
-ys = [point.y for point in points]
-plt.scatter(xs, ys,color="red")
-plt.show()
-'''
-
-

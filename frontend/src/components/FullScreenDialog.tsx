@@ -42,7 +42,7 @@ type Props = {
 const FullScreenDialog =  React.forwardRef((props: Props, ref) => {
     const [open, setOpen] = React.useState(false);
     const [zone, setzone] = React.useState(0);
-    const [requests, setRequests] = React.useState([<></>]);
+    const [requests, setRequests] = React.useState([]);
     const [n_parkings, setNParkings] = React.useState(null);
 
     React.useImperativeHandle(ref, () => ({
@@ -67,7 +67,7 @@ const FullScreenDialog =  React.forwardRef((props: Props, ref) => {
     const handleClose = () => {
         setOpen(false);
         setNParkings(null);
-        setRequests([<></>]);
+        setRequests([]);
     };
 
     return (

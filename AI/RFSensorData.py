@@ -5,47 +5,45 @@ from operator import itemgetter
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn import metrics
+from sklearn.metrics import confusion_matrix,ConfusionMatrixDisplay
 from sklite import LazyExport
+import matplotlib.pyplot as plt
 
-fw = open('./supports/real_data.csv')
-har = open('./supports/har_dataset_preprocessedUnscaled.csv')
+realdata = pd.read_csv('./supports/real_data.csv')
+data =pd.read_csv('./supports/har_dataset_preprocessedUnscaledWithStill.csv')
 
-#  Creiamo un modello addestrato con i dati del prof
-#  e lo testiamo con i nostri dati reali
+#  Creiamo un modello addestrato sia con i dati reali che con quelli di HAR 
+# e poi lo testiamo per vedere se riesce a riconoscere i movimenti reali 
 
-rd = pd.read_csv(fw)
-datahar = pd.read_csv(har)
-
-fw.close()
-har.close()
-
-
-data = datahar
+data = data.reindex(columns=['android.sensor.accelerometer#mean','android.sensor.accelerometer#max','android.sensor.accelerometer#min','android.sensor.accelerometer#std','android.sensor.gyroscope#mean','android.sensor.gyroscope#max','android.sensor.gyroscope#min','android.sensor.gyroscope#std','android.sensor.gyroscope_uncalibrated#mean','android.sensor.gyroscope_uncalibrated#max','android.sensor.gyroscope_uncalibrated#min','android.sensor.gyroscope_uncalibrated#std','target'])
 y = data['target'] 
 x = data.drop(['target'],axis=1);
-X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.1, random_state=5)
-rf = RandomForestClassifier(n_estimators=1000,max_depth=50, min_samples_split=2, min_samples_leaf=1, bootstrap=False)
+
+yr = realdata['target']
+xr = realdata.drop(['target'],axis=1)
+X_trainR, X_testR,y_trainR, y_testR = train_test_split(xr, yr, test_size=0.1,random_state=42,shuffle=True)
+
+X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.1,random_state=42,shuffle=True)
+rf = RandomForestClassifier(n_estimators=300)
+X_train = pd.concat([X_trainR,X_train])
+y_train = pd.concat([y_trainR,y_train])
 rf.fit(X_train, y_train)
+
 y_pred = rf.predict(X_test)
 
 print('Accuracy:', metrics.accuracy_score(y_test, y_pred))
 print('Precision:', metrics.confusion_matrix(y_test, y_pred))
 
+y_predR = rf.predict(X_testR)
+print('Accuracy:', metrics.accuracy_score(y_testR, y_predR))
+print('Precision:', metrics.confusion_matrix(y_testR, y_predR))
+cf = metrics.confusion_matrix(y_testR, y_predR,labels=rf.classes_)
+disp = ConfusionMatrixDisplay(confusion_matrix = cf,display_labels=rf.classes_)
+disp.plot()
+plt.show()
 
-#for i in dataW.index:
-#    for j in dataW.columns:
-#        if j != 'target':
-#            dataW.loc[i,j] =float(str(dataW.loc[i,j]).replace(',', ''))
-
-#rd = rd[(rd['target']==1)| (rd['target']==0)]
-#y_w  = rd['target']
-#x_w  = rd.drop(['target'],axis=1)
-#y_pred_w = rf.predict(x_w)
-#print('Accuracy:', metrics.accuracy_score(y_w, y_pred_w))
-#print('Precision:', metrics.confusion_matrix(y_w, y_pred_w).ravel())
-
-exp = LazyExport(rf)
-exp.save('./supports/model.json')
+#exp = LazyExport(rf)
+#exp.save('./supports/model.json')
 
 
 
