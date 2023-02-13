@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (MiKTeX 21.8) (preloaded format=pdflatex 2021.9.3)  13 FEB 2023 16:14
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (MiKTeX 21.8) (preloaded format=pdflatex 2021.9.3)  13 FEB 2023 22:22
 entering extended mode
 **"c:/Users/tomas/Desktop/ParkingBO/report/chapters/Analisi algoritmi/Analisi_algoritmi.tex"
 (c:/Users/tomas/Desktop/ParkingBO/report/chapters/Analisi algoritmi/Analisi_algoritmi.tex
@@ -465,12 +465,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 61--62
  []
 
 [3]
-<./img//ConfusionMatrixKNNUnscaled.png, id=53, 353.32pt x 266.9975pt>
+<./img//ConfusionMatrixKNNUnscaled.png, id=61, 353.32pt x 266.9975pt>
 File: ./img//ConfusionMatrixKNNUnscaled.png Graphic file (type png)
 <use ./img//ConfusionMatrixKNNUnscaled.png>
 Package pdftex.def Info: ./img//ConfusionMatrixKNNUnscaled.png  used on input line 121.
 (pdftex.def)             Requested size: 220.50247pt x 166.63264pt.
-<./img//ConfusionMatrixKNNScaled.png, id=55, 353.32pt x 262.9825pt>
+<./img//ConfusionMatrixKNNScaled.png, id=63, 353.32pt x 262.9825pt>
 File: ./img//ConfusionMatrixKNNScaled.png Graphic file (type png)
 <use ./img//ConfusionMatrixKNNScaled.png>
 Package pdftex.def Info: ./img//ConfusionMatrixKNNScaled.png  used on input line 122.
@@ -481,42 +481,53 @@ Underfull \hbox (badness 10000) in paragraph at lines 126--127
  []
 
 [4 <./img//ConfusionMatrixKNNUnscaled.png> <./img//ConfusionMatrixKNNScaled.png>] [5]
-<./img//ConfusionMatrixRFUnscaled.png, id=72, 353.32pt x 262.9825pt>
+<./img//ConfusionMatrixRFUnscaled.png, id=80, 353.32pt x 262.9825pt>
 File: ./img//ConfusionMatrixRFUnscaled.png Graphic file (type png)
 <use ./img//ConfusionMatrixRFUnscaled.png>
-Package pdftex.def Info: ./img//ConfusionMatrixRFUnscaled.png  used on input line 197.
+Package pdftex.def Info: ./img//ConfusionMatrixRFUnscaled.png  used on input line 198.
 (pdftex.def)             Requested size: 220.50247pt x 164.12689pt.
-<./img//ConfusionMatrixRFScaled.png, id=73, 353.32pt x 265.99374pt>
+<./img//ConfusionMatrixRFScaled.png, id=81, 353.32pt x 265.99374pt>
 File: ./img//ConfusionMatrixRFScaled.png Graphic file (type png)
 <use ./img//ConfusionMatrixRFScaled.png>
-Package pdftex.def Info: ./img//ConfusionMatrixRFScaled.png  used on input line 198.
+Package pdftex.def Info: ./img//ConfusionMatrixRFScaled.png  used on input line 199.
 (pdftex.def)             Requested size: 220.50247pt x 166.00621pt.
- [6 <./img//ConfusionMatrixRFUnscaled.png> <./img//ConfusionMatrixRFScaled.png>]
-Overfull \hbox (50.99516pt too wide) in paragraph at lines 215--236
+
+Underfull \hbox (badness 10000) in paragraph at lines 205--217
+
+ []
+
+[6 <./img//ConfusionMatrixRFUnscaled.png> <./img//ConfusionMatrixRFScaled.png>]
+<./img//ConfusionMatrixGNBUnscaled.png, id=90, 353.32pt x 262.9825pt>
+File: ./img//ConfusionMatrixGNBUnscaled.png Graphic file (type png)
+<use ./img//ConfusionMatrixGNBUnscaled.png>
+Package pdftex.def Info: ./img//ConfusionMatrixGNBUnscaled.png  used on input line 221.
+(pdftex.def)             Requested size: 314.99863pt x 234.46298pt.
+
+Overfull \hbox (50.99516pt too wide) in paragraph at lines 234--255
  [] 
  []
 
-
-Overfull \hbox (50.99516pt too wide) in paragraph at lines 243--265
+[7 <./img//ConfusionMatrixGNBUnscaled.png>]
+Overfull \hbox (50.99516pt too wide) in paragraph at lines 262--284
  [] 
  []
 
-[7] [8] (c:\Users\tomas\Desktop\ParkingBO\report\chapters\Analisi algoritmi\Analisi_algoritmi.aux)
+[8] [9] [10] (c:\Users\tomas\Desktop\ParkingBO\report\chapters\Analisi algoritmi\Analisi_algoritmi.aux)
 Package rerunfilecheck Info: File `Analisi_algoritmi.out' has not changed.
-(rerunfilecheck)             Checksum: BA6BED714EE6A6BE7C1A3D9C35CABAB6;1362.
+(rerunfilecheck)             Checksum: C7D4D61E6CEC8995F43EF34D8C14B798;1867.
  ) 
 Here is how much of TeX's memory you used:
- 13696 strings out of 478927
- 212275 string characters out of 2852536
- 563309 words of memory out of 3000000
- 31309 multiletter control sequences out of 15000+600000
+ 13716 strings out of 478927
+ 212776 string characters out of 2852536
+ 571414 words of memory out of 3000000
+ 31320 multiletter control sequences out of 15000+600000
  411201 words of font info for 57 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 89i,12n,96p,843b,406s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 89i,12n,96p,1117b,406s stack positions out of 5000i,500n,10000p,200000b,80000s
  <C:\Users\tomas\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on "c:\Users\tomas\Desktop\ParkingBO\report\chapters\Analisi algoritmi\Analisi_algoritmi.pdf" (8 pages, 112817 bytes).
+Output written on "c:\Users\tomas\Desktop\ParkingBO\report\chapters\Analisi algoritmi\Analisi_algoritmi.pdf" (10 pages, 131071 bytes).
 PDF statistics:
- 120 PDF objects out of 1000 (max. 8388607)
- 29 named destinations out of 1000 (max. 500000)
- 85 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 147 PDF objects out of 1000 (max. 8388607)
+ 37 named destinations out of 1000 (max. 500000)
+ 106 words of extra memory for PDF output out of 10000 (max. 10000000)
 

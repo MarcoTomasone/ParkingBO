@@ -17,7 +17,7 @@ data =pd.read_csv('./supports/har_dataset_preprocessedUnscaledWithStill.csv')
 
 data = data.reindex(columns=['android.sensor.accelerometer#mean','android.sensor.accelerometer#max','android.sensor.accelerometer#min','android.sensor.accelerometer#std','android.sensor.gyroscope#mean','android.sensor.gyroscope#max','android.sensor.gyroscope#min','android.sensor.gyroscope#std','android.sensor.gyroscope_uncalibrated#mean','android.sensor.gyroscope_uncalibrated#max','android.sensor.gyroscope_uncalibrated#min','android.sensor.gyroscope_uncalibrated#std','target'])
 y = data['target'] 
-x = data.drop(['target'],axis=1);
+x = data.drop(['target'],axis=1)
 
 yr = realdata['target']
 xr = realdata.drop(['target'],axis=1)

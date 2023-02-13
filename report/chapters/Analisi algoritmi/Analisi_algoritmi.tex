@@ -126,6 +126,7 @@ I parametri risultanti dal tuning sono invece:
 Si può notare come questo modello commetta più facilmente errori nel riconoscere la classe DRIVING.\\
 
 \subsection{Random Forest}
+\label{sec:random_forest}
 Come per il KNN, anche per il Random Forest è stato effettuato un tuning degli iperparametri per ottenere una prestazione ottimale del modello.\
 I parametri che sono stati modificati sono stati:
 \begin{itemize}
@@ -202,7 +203,25 @@ Mostriamo adesso i grafici delle Matrici di confusione ottenute per i due modell
 Queste matrici di confusione mostrano come il modello Radom Forest sia ottimo per la classificazione di questo tipo dati. Sia il modello senza scaling che quello con scaling sono in grado di classificare correttamente la maggior parte dei dati, ma è possibile notare cme riescano a riconoscere più facilmente l'etichetta WALKING, rispetto a quella DRIVING, nella quale è presente un errore maggiore. 
 \subsection{Gaussian Naive Bayes}
 Per quanto riguarda il Gaussian Naive Bayes, abbiamo deciso di utilizzare questo algoritmo per la classificazione dei dati in quanto si tratta di un metodo semplice e veloce per la classificazione basato sull'assunzione che le feature siano distribuite secondo una distribuzione normale.\\
-In questo caso, non era necessario effettuare un tuning degli iperparametri, in quanto il Gaussian Naive Bayes non ha parametri che possono essere ottimizzati per migliorare le sue prestazioni.
+Per questo modello il tuning dei parametri è stato effettuato utilizzando la funzione \emph{GridSearchCV} di \emph{Scikit-learn} solo su un'unico parametro \emph{var\_smoothing}, che rappresenta la varianza della distribuzione normale.\\
+%Table 2 column 1 row 
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        &\textbf{Unscaled}& \textbf{Scaled} \\
+        \hline
+        \textbf{var\_smoothing} & 0.0012328467394420659 & 0.0003511191734215131 \\
+        \hline
+    \end{tabular}
+\end{table}
+Nonostante ciò le accuracy sono risultate essere identiche per entrambi i modelli. Mostriamo quindi solo una delle due matrici di confunsione ottenute, essendo esse identiche.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{ConfusionMatrixGNBUnscaled.png}
+    \caption{Matrice di confusione }
+    \label{fig:confusion_matrix_gaussian}
+\end{figure}
 
 \subsubsection{Risultati}
 Il modello Gaussian Naive Bayes ha fornito un'accuratezza del 81.82\%, che risulta essere un risultato inferiore rispetto ai modelli KNN e Random Forest.
@@ -266,6 +285,66 @@ Utilizzando il dataset su cui è stato applicato il MinMaxScaling i risultati so
     \end{center}
 \end{table}
 
+Prima di confrontare i tre modelli tra loro, confrontiamo le differenze tra l'applicazione per ogni modello dello scaling dei valori. Per quanto riguarda il Gaussian Naive Bayes i risultati sono praticamente identici, mentre per il modello KNN c'è un miglioramento di circa un 0.1\% dell'accuratezza. Per il modello Random Forest invece c'è un peggioramento dell'accuratezza di circa il 6\%, un risultato molto significativo. Dati i risultati ottenuti abbiamo tralasciato quindi questa tecnica. Riguardo invece al confronto tra i tre modelli, con ben un 6\% di accuratezza in più il modello Random Forest è il modello migliore.
+\section{Accuratezza sistema Har integrato}
+Dati i precedenti risultati, abbiamo valutato l'accuratezza del sistema di HAR integrato nell'applicazione e offerto dalla libreria \emph{flutter\_activity\_recognition}. Per farlo, data l'impossibilità di testare la libreria con il dataset utilizzato per testare i modelli precedentemente presentati, abbiamo raccolto un piccolo testbed tramite esperimenti reali. Abbiamo raccolto 1147
+record, formati dai dati dei sensori e due colonne target: il target riconosciuto dall'utente (la ground truth) e il target riconosciuto dalla libreria. Proprio il confronto tra questi target ci ha permesso di valutare l'accuratezza del sistema. Il risultato ottenuto è un'accuratezza del \textbf{91,02}\%. Dato che il dataset è stato raccolto da noi stessi e che abbiamo previsto l'apparizione di un toast sull'app mobile quando la libreria riconosceva un'attività, abbiamo potuto verificare sul campo quali fossero le situazioni che portavano in errore la libreria. Dobbiamo dire che sul riconscimento di un'attività di WALKING o STILL la libreria si presenta solida. Qualche errore è stato commesso durante il riconoscimento di attività IN\_VEICHLE, in cui seppur noi fossimo in macchina la libreria ci raramente segnalato il riconoscimento di un'attività IN\_BICYCLE oppure, in caso di grandi frenate o curve particolari portavano la libreria per qualche secondo a riconoscere UNKNOWN.
+
+\section{Implementazione del Random Forest nell'app}
+Dati i risultati ottenuti nella sezione \ref{sec:random_forest}, comparati con i risultati ottenuti dagli altri due modelli, abbiamo scelto il Random Forest come algoritmo di classificazione da implementare direttamente nell'applicazione. Nonostante nella fase precedente è stato allenato un classificatore binario, implementando direttamente nell'applicazione questo tipo di classificatore fa si che l'applicazione non sia in grado di riconoscere quando l'utente è fermo, riconoscendo comunque un'attività. Per motivi di completezza quindi, abbiamo deciso di trasformare il classificatore da binario a ternario riconoscendo WALKING, DRIVING e STILL. Data la poca disponibilità di dati raccolti da noi stessi, questo è stato allenato su una combinazione dei dati raccolti direttamente tramite l'applicazione e dei dati del dataset HAR, discusso nelle sezioni precedenti. Anche il successivo testing è stato fatto su una combinazione dei dati provenienti da queste due diverse fonti.\\
+Data la variazione del dataset, abbiamo deciso di effettuare nuovamente il tuning degli iperparametri del modello.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|c|}
+        \hline
+        & \textbf{Best value} \\
+        \hline
+        \textbf{n\_estimators} & 800 \\
+        \hline
+        \textbf{max\_depth} & 90 \\
+        \hline
+        \textbf{min\_samples\_split} & 5 \\
+        \hline
+        \textbf{min\_samples\_leaf} & 1 \\
+        \hline
+        \textbf{max\_features} & sqrt \\
+        \hline
+        \textbf{bootstrap} & False \\
+        \hline
+    \end{tabular}
+\end{table}
+Nella tabella precedente possiamo vedere i migliori valori trovati per ogni iperparametro, mentre nella successiva mostriamo i risultati ottenuti dalla fase di testing del nostro modello. 
+
+\begin{table}[H]
+    \begin{center}
+        \begin{tabular}{ |P{2cm}|P{1cm}|P{1cm}|P{1cm}|P{1.8cm}| } 
+            \multicolumn{5}{c}{\textbf{Evaluating algorithm}} \\
+            \hline
+            & \multicolumn{3}{c|}{\textbf{Random Forest}} & \\
+            \hline
+            \rowcolor{lightgray}
+            & \textbf{P} & \textbf{R} & \textbf{F1} & \textbf{Support} \\
+            \hline
+            \textbf{0} & 0.88 & 0.92 & 0.90 & 1949 \\
+            \hline
+            \rowcolor{lightgray}
+            \textbf{1} & 0.92 & 0.87 & 0.90 & 2043 \\
+            \hline
+            \textbf{2} & 0.92 & 0.87 & 0.90 & 2043 \\
+            \hline
+            \rowcolor{lightgray}
+            \textbf{Accuracy} & \multicolumn{3}{c|}{0.8987975951903807} & 3992 \\
+            \hline
+            \textbf{Macro AVG} & 0.90 & 0.90 & 0.90 & 3992 \\
+            \hline
+            \rowcolor{lightgray}
+            \textbf{Weighted AVG} & 0.90 & 0.90 & 0.90 & 3992 \\
+            \hline
+        \end{tabular}
+        \caption{P = Precision, R = Recall e F1 = F1-score}
+    \end{center}
+\end{table}
 
 
 \end{document}
