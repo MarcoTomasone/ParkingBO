@@ -52,8 +52,8 @@ Le etichette di questo dataset assumono 5 valori differenti:
 
 \subsection{Data mining}
     Per il data mining è stato utilizzato il linguaggio di programmazione \emph{Python} e per il training e prediction dei modelli la libreria \emph{Scikit-learn}. Inoltre, durante la fase di preprocessing e per la gestione dei dati è stata utilizzata la libreria di Python \emph{Pandas}.\\
-    Non è stato fatto un grande preprocessing dei dati, in quanto il dataset è stato fornito abbbastanza pulito. I dati sono stati lavorati al fine di eliminare i valori NaN e di normalizzare i dati, scalandoli utilizzando la funzione \emph{MinMaxScaling}. Inoltre sono state eliminate tutte le tuple che non riguardavano le attività di interesse (WALKING e DRIVING).\\
-    Per tutti e tre gli algoritmi il dataset è stato suddiviso in tre parti:
+    Non è stato fatto un grande preprocessing dei dati, in quanto il dataset fornitoci era già di ottima qualità. Per la rimozione dei valori mancanti, abbiamo rimosso solo le righe per le quali mancavano almeno due attributi per ogni classe di sensori. Questo ci ha portato a perdere circa 5000 tuple. Per quelle righe in cui era presente solamente un valore mancante questo è stato sostituito con la media. I dati sono stati lavorati al fine di eliminare i valori NaN e di normalizzare i dati, scalandoli utilizzando la funzione \emph{MinMaxScaling}. Inoltre sono state eliminate tutte le tuple che non riguardavano le attività di interesse (WALKING e DRIVING).\\
+    Per tutti e tre gli algoritmi il dataset è stato suddiviso in due parti:
     \begin{itemize}
         \item \textbf{Training}: è stato utilizzato per il training del modello.
         \item \textbf{Testing}: è stato utilizzato per il testing del modello.
@@ -116,6 +116,15 @@ I parametri risultanti dal tuning sono invece:
     \end{tabular}
 \end{table}
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.49\textwidth]{ConfusionMatrixKNNUnscaled.png}
+    \includegraphics[width=0.49\textwidth]{ConfusionMatrixKNNScaled.png}
+    \caption{Matrice di confusione del modello senza scaling (sx) e con scaling (dx)}
+    \label{fig:confusion_matrix_KNN}
+\end{figure}
+Si può notare come questo modello commetta più facilmente errori nel riconoscere la classe DRIVING.\\
+
 \subsection{Random Forest}
 Come per il KNN, anche per il Random Forest è stato effettuato un tuning degli iperparametri per ottenere una prestazione ottimale del modello.\
 I parametri che sono stati modificati sono stati:
@@ -128,7 +137,7 @@ I parametri che sono stati modificati sono stati:
 \item \textbf{bootstrap}: che rappresenta la modalità di campionamento dei dati
 \end{itemize}
 Il tuning degli iperparametri è stato effettuato utilizzando la funzione \emph{RandomizedSearchCV} di \emph{Scikit-learn}.\\
-L'obiettivo di questa ottimizzazione era quello di migliorare la precisione del modello Random Forest e di fornire una soluzione ottimale per la classificazione dei dati. Il risultato ottenuto ha dimostrato che l'ottimizzazione degli iperparametri è stata efficace e ha contribuito a migliorare la performance del modello. La RandomizedSearchCV è stata eseguita per un numero di 100 iterazioni, usando una 5-fold cross validation. Per un totale di 500 test. 
+L'obiettivo di questa ottimizzazione era quello di migliorare la precisione del modello Random Forest e di fornire una soluzione ottimale per la classificazione dei dati. Il risultato ottenuto ha dimostrato che l'ottimizzazione degli iperparametri è stata efficace e ha contribuito a migliorare la performance del modello. La RandomizedSearchCV è stata eseguita per un numero di 100 iterazioni, usando una 5-fold cross validation. Per un totale di 500 fit. In questo caso è stata preferita una RandomizedSearchCV rispetto ad una GridSearchCV poichè il numero di combinazioni di iperparametri da testare è molto elevato e testarli tutti avrebbe richiesto un tempo di esecuzione molto elevato rispetto alla potenza di calcolo disponibile. 
 
 \subsubsection{Risultati}
 
@@ -157,7 +166,7 @@ I risultati del tuning degli iperparametri utilizzando il dataset precedentement
 
 Con questi parametri siamo riusciti ad ottenere un'accuratezza finale del 95.24\% utilizzando il dataset su cui non è stato applicato il MinMaxScaling.
 
-Facendo tuning sul modello Random Forest utilizzando il modello con il MinMaxScaling, si è ottenuto un'accuratezza del 89,83\%.\\
+Facendo tuning sul modello Random Forest utilizzando il modello con il MinMaxScaling, si è ottenuto un'accuratezza del 89,95\%.\\
 I parametri ottenuti dal tuning sono:
 
 \begin{table}[H]
@@ -181,6 +190,16 @@ I parametri ottenuti dal tuning sono:
     \end{tabular}
 \end{table}
 
+Mostriamo adesso i grafici delle Matrici di confusione ottenute per i due modelli Random Forest, uno con il dataset su cui non è stato applicato il MinMaxScaling e l'altro con il dataset su cui è stato applicato il MinMaxScaling.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.49\textwidth]{ConfusionMatrixRFUnscaled.png}
+    \includegraphics[width=0.49\textwidth]{ConfusionMatrixRFScaled.png}
+    \caption{Matrice di confusione del modello senza scaling (sx) e con scaling (dx)}
+    \label{fig:confusion_matrix_rf}
+\end{figure}
+Queste matrici di confusione mostrano come il modello Radom Forest sia ottimo per la classificazione di questo tipo dati. Sia il modello senza scaling che quello con scaling sono in grado di classificare correttamente la maggior parte dei dati, ma è possibile notare cme riescano a riconoscere più facilmente l'etichetta WALKING, rispetto a quella DRIVING, nella quale è presente un errore maggiore. 
 \subsection{Gaussian Naive Bayes}
 Per quanto riguarda il Gaussian Naive Bayes, abbiamo deciso di utilizzare questo algoritmo per la classificazione dei dati in quanto si tratta di un metodo semplice e veloce per la classificazione basato sull'assunzione che le feature siano distribuite secondo una distribuzione normale.\\
 In questo caso, non era necessario effettuare un tuning degli iperparametri, in quanto il Gaussian Naive Bayes non ha parametri che possono essere ottimizzati per migliorare le sue prestazioni.
@@ -232,9 +251,9 @@ Utilizzando il dataset su cui è stato applicato il MinMaxScaling i risultati so
             \textbf{0} & 0.88 & 0.88 & 0.92 & 0.87 & 0.93 & 0.90 & 0.76 & 0.98 & 0.86 & 1949 \\
             \hline
             \rowcolor{lightgray}
-            \textbf{1} & 0.92 & 0.88 & 0.90 & 0.93 & 0.97 & 0.90 & 0.98 & 0.71 & 0.82 & 2043 \\
+            \textbf{1} & 0.92 & 0.88 & 0.90 & 0.93 & 0.87 & 0.90 & 0.98 & 0.71 & 0.82 & 2043 \\
             \hline
-            \textbf{Accuracy} & \multicolumn{3}{c|}{0.8997995991983968} &\multicolumn{3}{c|}{0.8982965931863728} &\multicolumn{3}{c|}{0.843436873747495}& 3992 \\
+            \textbf{Accuracy} & \multicolumn{3}{c|}{0.8997995991983968} &\multicolumn{3}{c|}{0.8995490981963928} &\multicolumn{3}{c|}{0.843436873747495}& 3992 \\
             \hline
             \rowcolor{lightgray}
             \textbf{Macro AVG} & 0.90 & 0.90 & 0.90 &0.90  & 0.90 & 0.90 & 0.87 & 0.85 & 0.84 & 3992 \\

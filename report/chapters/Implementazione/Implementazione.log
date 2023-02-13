@@ -1,8 +1,12 @@
 <<<<<<< HEAD
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (MiKTeX 21.8) (preloaded format=pdflatex 2021.9.3)  13 FEB 2023 14:29
+=======
+<<<<<<< HEAD
 This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.6) (preloaded format=pdflatex 2021.9.5)  13 FEB 2023 10:33
 =======
 This is pdfTeX, Version 3.141592653-2.6-1.40.23 (MiKTeX 21.8) (preloaded format=pdflatex 2021.9.3)  13 FEB 2023 12:22
 >>>>>>> 916956f91bff270d882e8acb7de23464fb43b682
+>>>>>>> e69ad01e3c51e87b954fe8e6c484cb2bea7491fd
 entering extended mode
 **"c:/Users/dino9/Desktop/UNI/MAGISTRALE/SISTEMI CONTEX-AWARE/Progetto/ParkingBO/report/chapters/Implementazione/Implementazione.tex"
 (c:/Users/dino9/Desktop/UNI/MAGISTRALE/SISTEMI CONTEX-AWARE/Progetto/ParkingBO/report/chapters/Implementazione/Implementazione.tex
@@ -530,7 +534,15 @@ Underfull \hbox (badness 10000) in paragraph at lines 19--20
 
  []
 
+<./img//UpdateCurrentActivity.png, id=39, 1000.73875pt x 466.74374pt>
+File: ./img//UpdateCurrentActivity.png Graphic file (type png)
+<use ./img//UpdateCurrentActivity.png>
+Package pdftex.def Info: ./img//UpdateCurrentActivity.png  used on input line 24.
+(pdftex.def)             Requested size: 450.0pt x 209.88318pt.
 
+<<<<<<< HEAD
+Underfull \hbox (badness 10000) in paragraph at lines 21--26
+=======
 Underfull \hbox (badness 10000) in paragraph at lines 21--22
 
  []
@@ -568,147 +580,126 @@ Overfull \hbox (501.74835pt too wide) in paragraph at lines 33--34
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 38--39
+>>>>>>> e69ad01e3c51e87b954fe8e6c484cb2bea7491fd
 
  []
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 41--43
+Underfull \hbox (badness 10000) in paragraph at lines 27--28
 
  []
 
+<./img//ActivityRecognitionCode.png, id=45, 735.74875pt x 482.80376pt>
+File: ./img//ActivityRecognitionCode.png Graphic file (type png)
+<use ./img//ActivityRecognitionCode.png>
+Package pdftex.def Info: ./img//ActivityRecognitionCode.png  used on input line 34.
+(pdftex.def)             Requested size: 360.00137pt x 236.2444pt.
 
-Overfull \hbox (57.59912pt too wide) in paragraph at lines 47--48
-[][][][][][][][][][][] 
+Underfull \hbox (badness 10000) in paragraph at lines 30--36
+
  []
 
-<./img//dbSchema.png, id=59, 526.96875pt x 362.5545pt>
+[3 <./img//UpdateCurrentActivity.png>]
+<./img//dbSchema.png, id=52, 526.96875pt x 362.5545pt>
 File: ./img//dbSchema.png Graphic file (type png)
 <use ./img//dbSchema.png>
-Package pdftex.def Info: ./img//dbSchema.png  used on input line 64.
+Package pdftex.def Info: ./img//dbSchema.png  used on input line 43.
 (pdftex.def)             Requested size: 450.0pt x 309.61667pt.
-[3]
-LaTeX Font Info:    Trying to load font information for OML+cmr on input line 72.
- (C:\Users\tomas\AppData\Local\Programs\MiKTeX\tex/latex/base\omlcmr.fd
-File: omlcmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
-)
-LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <12> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 72.
- [4 <./img//dbSchema.png>]
-Overfull \hbox (15.2992pt too wide) in paragraph at lines 76--77
-[][][][][][][][][][][][][][][][][][][][] 
- []
-
-
-Overfull \hbox (71.6991pt too wide) in paragraph at lines 80--81
-[][][][][][][][][][][][][][][][] 
- []
-
-
-Overfull \hbox (85.79907pt too wide) in paragraph at lines 84--85
-[][][][][][][][][][][][][][][][][][][][][][][][] 
- []
-
-
-Overfull \hbox (8.2492pt too wide) in paragraph at lines 85--86
-[][][][][][][][][][][][][][] 
- []
-
-
-Overfull \hbox (367.79858pt too wide) in paragraph at lines 88--89
-[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
- []
-
-
-Overfull \hbox (614.54816pt too wide) in paragraph at lines 89--90
-[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
- []
-
-
-Overfull \hbox (85.79907pt too wide) in paragraph at lines 91--92
-[][][][][][][][][][][][][][][][][][] 
- []
-
-LaTeX Font Info:    Trying to load font information for U+lasy on input line 109.
-(C:\Users\tomas\AppData\Local\Programs\MiKTeX\tex/latex/base\ulasy.fd
+ [4 <./img//ActivityRecognitionCode.png>]
+<./img//getParkingsIDW.png, id=59, 1134.2375pt x 785.93625pt>
+File: ./img//getParkingsIDW.png Graphic file (type png)
+<use ./img//getParkingsIDW.png>
+Package pdftex.def Info: ./img//getParkingsIDW.png  used on input line 51.
+(pdftex.def)             Requested size: 450.0pt x 311.81454pt.
+ [5 <./img//dbSchema.png>]
+LaTeX Font Info:    Trying to load font information for U+lasy on input line 59.
+ (C:\Users\tomas\AppData\Local\Programs\MiKTeX\tex/latex/base\ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
-LaTeX Font Info:    Trying to load font information for U+msa on input line 109.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 59.
  (C:\Users\tomas\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 109.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 59.
  (C:\Users\tomas\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Overfull \hbox (14.45502pt too wide) in paragraph at lines 106--110
+Overfull \hbox (14.45502pt too wide) in paragraph at lines 56--60
 \OT1/cmr/m/n/12 L'interpolazione dei da-ti e sta-ta fat-ta tra-mi-te l'al-go-rit-mo IDW (In-ver-se Di-stan-ce Weighting),
  []
 
-[5]
-Overfull \hbox (106.94904pt too wide) in paragraph at lines 124--125
+[6 <./img//getParkingsIDW.png>]
+LaTeX Font Info:    Trying to load font information for OMS+cmr on input line 74.
+ (C:\Users\tomas\AppData\Local\Programs\MiKTeX\tex/latex/base\omscmr.fd
+File: omscmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 74.
+
+Overfull \hbox (92.84906pt too wide) in paragraph at lines 74--75
 [][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
+<./img//computeValueIDW.png, id=81, 1093.08376pt x 560.0925pt>
+File: ./img//computeValueIDW.png Graphic file (type png)
+<use ./img//computeValueIDW.png>
+Package pdftex.def Info: ./img//computeValueIDW.png  used on input line 78.
+(pdftex.def)             Requested size: 450.0pt x 230.5795pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 126--127
-
- []
-
-
-Overfull \hbox (487.64838pt too wide) in paragraph at lines 129--130
-[][][][][][][][][][][][][][][][][][][][][][][][][][][] 
- []
-
-
-Overfull \hbox (367.79858pt too wide) in paragraph at lines 135--136
-[][][][][][][][][][][][][][][][][][][][][][][][][][][] 
- []
-
-
-Overfull \hbox (57.59912pt too wide) in paragraph at lines 137--138
-[][][][][][][][][][][][][][][][] 
- []
-
-
-Overfull \hbox (85.79907pt too wide) in paragraph at lines 143--145
-[][][][][][][][][][][][][][][][][] 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 148--149
+Underfull \hbox (badness 10000) in paragraph at lines 76--82
 
  []
 
+
+Underfull \hbox (badness 10000) in paragraph at lines 83--84
+
+ []
+
+<<<<<<< HEAD
+[7 <./img//computeValueIDW.png>]
+<./img//heatmapFull.png, id=92, 587.796pt x 308.352pt>
+=======
 <<<<<<< HEAD
 [4] (Implementazione.aux)
 =======
 [6]
 <./img//heatmapFull.png, id=157, 587.796pt x 308.352pt>
+>>>>>>> e69ad01e3c51e87b954fe8e6c484cb2bea7491fd
 File: ./img//heatmapFull.png Graphic file (type png)
 <use ./img//heatmapFull.png>
-Package pdftex.def Info: ./img//heatmapFull.png  used on input line 163.
+Package pdftex.def Info: ./img//heatmapFull.png  used on input line 98.
 (pdftex.def)             Requested size: 234.00192pt x 122.75517pt.
-<./img//heatmapPolygons.png, id=158, 579.96675pt x 354.72525pt>
+<./img//heatmapPolygons.png, id=93, 579.96675pt x 354.72525pt>
 File: ./img//heatmapPolygons.png Graphic file (type png)
 <use ./img//heatmapPolygons.png>
-Package pdftex.def Info: ./img//heatmapPolygons.png  used on input line 164.
+Package pdftex.def Info: ./img//heatmapPolygons.png  used on input line 99.
 (pdftex.def)             Requested size: 202.49863pt x 123.85258pt.
-<./img//clusteringKmeans.png, id=159, 1144.87724pt x 524.55975pt>
+<./img//clusteringKmeans.png, id=94, 1144.87724pt x 524.55975pt>
 File: ./img//clusteringKmeans.png Graphic file (type png)
 <use ./img//clusteringKmeans.png>
-Package pdftex.def Info: ./img//clusteringKmeans.png  used on input line 171.
+Package pdftex.def Info: ./img//clusteringKmeans.png  used on input line 106.
 (pdftex.def)             Requested size: 202.49863pt x 92.77583pt.
-<./img//clusteringDBSCAN.png, id=160, 1133.4345pt x 450.483pt>
+<./img//clusteringDBSCAN.png, id=95, 1133.4345pt x 450.483pt>
 File: ./img//clusteringDBSCAN.png Graphic file (type png)
 <use ./img//clusteringDBSCAN.png>
-Package pdftex.def Info: ./img//clusteringDBSCAN.png  used on input line 172.
+Package pdftex.def Info: ./img//clusteringDBSCAN.png  used on input line 107.
 (pdftex.def)             Requested size: 234.00192pt x 93.00261pt.
+<<<<<<< HEAD
+ [8 <./img//heatmapFull.png> <./img//heatmapPolygons.png> <./img//clusteringKmeans.png> <./img//clusteringDBSCAN.png>] (c:\Users\tomas\Desktop\ParkingBO\report\chapters\Implementazione\Implementazione.aux)
+=======
  [7 <./img//heatmapFull.png> <./img//heatmapPolygons.png>] [8 <./img//clusteringKmeans.png> <./img//clusteringDBSCAN.png>] (c:\Users\tomas\Desktop\ParkingBO\report\chapters\Implementazione\Implementazione.aux)
 >>>>>>> 916956f91bff270d882e8acb7de23464fb43b682
+>>>>>>> e69ad01e3c51e87b954fe8e6c484cb2bea7491fd
 Package rerunfilecheck Info: File `Implementazione.out' has not changed.
 (rerunfilecheck)             Checksum: 1A7C193CB4214858337C98811721621D;793.
  ) 
 Here is how much of TeX's memory you used:
+<<<<<<< HEAD
+ 14016 strings out of 478927
+ 215413 string characters out of 2852536
+ 541469 words of memory out of 3000000
+ 31623 multiletter control sequences out of 15000+600000
+=======
 <<<<<<< HEAD
  12993 strings out of 478864
  198186 string characters out of 2848661
@@ -724,14 +715,19 @@ Output written on Implementazione.pdf (4 pages, 83208 bytes).
  215880 string characters out of 2852536
  578323 words of memory out of 3000000
  31612 multiletter control sequences out of 15000+600000
+>>>>>>> e69ad01e3c51e87b954fe8e6c484cb2bea7491fd
  411822 words of font info for 59 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 89i,10n,96p,1168b,1767s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 89i,10n,96p,1168b,1251s stack positions out of 5000i,500n,10000p,200000b,80000s
  <C:\Users\tomas\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx8.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cmextra/cmex8.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+<<<<<<< HEAD
+Output written on c:\Users\tomas\Desktop\ParkingBO\report\chapters\Implementazione\Implementazione.pdf (8 pages, 5824730 bytes).
+=======
 Output written on c:\Users\tomas\Desktop\ParkingBO\report\chapters\Implementazione\Implementazione.pdf (8 pages, 5588366 bytes).
 >>>>>>> 916956f91bff270d882e8acb7de23464fb43b682
+>>>>>>> e69ad01e3c51e87b954fe8e6c484cb2bea7491fd
 PDF statistics:
- 257 PDF objects out of 1000 (max. 8388607)
- 104 named destinations out of 1000 (max. 500000)
- 82 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 169 PDF objects out of 1000 (max. 8388607)
+ 25 named destinations out of 1000 (max. 500000)
+ 102 words of extra memory for PDF output out of 10000 (max. 10000000)
 

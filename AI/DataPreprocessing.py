@@ -6,7 +6,7 @@ dataset = dataset[(dataset['target'] == 'Car') | (dataset['target'] == 'Walking'
 dataset['target'] = dataset['target'].map({'Car': 0, 'Walking': 1, 'Still':2}) # Map the target values to 0 and 1
 
 print(dataset.shape)
-# Drop all the rows with NaN values
+# Drop all the rows with missing values
 dataset.dropna(thresh=2, subset=["android.sensor.gyroscope#mean", "android.sensor.gyroscope#min", "android.sensor.gyroscope#max","android.sensor.gyroscope#std"], inplace=True) 
 dataset.dropna(thresh=2, subset=["android.sensor.gyroscope_uncalibrated#mean", "android.sensor.gyroscope_uncalibrated#min", "android.sensor.gyroscope_uncalibrated#max","android.sensor.gyroscope_uncalibrated#std"], inplace=True)
 print(dataset.shape) #Losing 5500 rows
