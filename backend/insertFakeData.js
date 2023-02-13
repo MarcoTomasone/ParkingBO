@@ -26,4 +26,28 @@ async function insertFakeCoordinates(fileName) {
         console.error("Dir not found");
 }
 
-insertFakeCoordinates('fake_coordinates.json');    
+async function insertFakeParkingRequests(fileName) {
+    const dirPath = path.join(__dirname, "./files");
+    if(fs.existsSync(dirPath)) {
+        try {
+            const filePath = path.join(dirPath, fileName);
+            const fakeCoordinates = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+            for (let i = 0; i < fakeCoordinates.length; i++) { //for each zone
+                for(let j = 0; j < fakeCoordinates[i].length; j++) { //for each coordinate
+                    const zone = await databasepg.find_zone(fakeCoordinates[i][j]);
+                    console.log(`Inserting ${j+1}/${fakeCoordinates[i].length} in zone ${zone}`);
+                    await databasepg.insertParkingRequest(fakeCoordinates[i][j], zone);
+                };
+            }
+        } catch(err) {
+            console.error('File not found');
+        }
+    }
+    else
+        console.error("Dir not found");
+}
+
+console.log("INSERTING FAKE DATA FOR PARKING");
+insertFakeCoordinates('fake_coordinates.json');
+console.log("\n\nINSERTING FAKE DATA FOR PARKING REQUESTS");    
+insertFakeParkingRequests('fake_parking_requests.json');

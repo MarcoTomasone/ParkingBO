@@ -25,7 +25,6 @@ type State = {
     polygons: any;
     clusters: any;
     form: any;
-    colorField: any;
     epsilon: any;
     minPts: any;
     splitting: boolean;
@@ -39,7 +38,6 @@ class Clustering extends React.Component<Props, State> {
             polygons: [],
             clusters: [],
             form: [],
-            colorField: "primary",
             epsilon: 0.001,
             minPts: 2,
             splitting: false,
@@ -49,7 +47,8 @@ class Clustering extends React.Component<Props, State> {
     
     public componentDidMount(): void {
         this.getPolygons();
-        const kmeans =  <TextField id="size" variant="filled" required label="K-Means'size" color={this.state.colorField} sx={{backgroundColor: "white", top: 20, left: 20, borderRadius: '5px'}} onChange={(event: React.ChangeEvent<HTMLInputElement>) => {this.handleTextFieldChange_kmeans(event.target.value)}} />
+        const kmeans = 
+            <TextField id="size" variant="filled" required label="K-Means'size" sx={{backgroundColor: "white", top: 20, left: 20, borderRadius: '5px'}} />
         this.setState({form: kmeans});
     }
 
@@ -59,24 +58,25 @@ class Clustering extends React.Component<Props, State> {
     /**
      * This method handle the change of the algorithm from the radio buttons
      * @param event is the event of the change
-     */
-    private handleChangeAlgorithm = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        const value = (event.target as HTMLInputElement).value;
-        let form;
+    */
+   private handleChangeAlgorithm = (event: React.ChangeEvent<HTMLInputElement>): void => {
+       const value = (event.target as HTMLInputElement).value;
+       this.setState({clusters: [], splitting: false, algorithm: value == clusterAlgorithm.DBSCAN ? clusterAlgorithm.DBSCAN : clusterAlgorithm.Kmeans});
+       let form;
         if(value == clusterAlgorithm.Kmeans) {
-            form =  <TextField
-            id="size"
-            variant="filled"
-                        required
-                        label="K-Means'size"
-                        color={this.state.colorField}
-                        sx={{backgroundColor: "white", top: 20, left: 20, borderRadius: '5px'}}
-                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {this.handleTextFieldChange_kmeans(event.target.value)}}>
-                    </TextField>
+            form =      
+                        <TextField
+                            id="size"
+                            variant="filled"
+                            required
+                            label="K-Means'size"
+                            sx={{backgroundColor: "white", top: 20, left: 20, borderRadius: '5px'}}
+                        >
+                        </TextField>
         }
         else {
             form = <>
-                 <Typography gutterBottom color='white'>Epsilon</Typography>
+                <Typography gutterBottom color='white'>Epsilon</Typography>
                     <Slider
                         sx={{width: '80%'}}
                         id="epsilon"
@@ -86,50 +86,41 @@ class Clustering extends React.Component<Props, State> {
                         step={sliders_dbscan.epsilon.step}
                         onChange={(event: Event | React.SyntheticEvent<Element, Event>, newValue: number | number[]) => {
                             this.setState({epsilon: newValue})}}
-                            onChangeCommitted={(event: Event | React.SyntheticEvent<Element, Event>, value: number | number[]) => {
-                                this.setState({epsilon: value});
-                            this.handleSlidersChange_dbscan();
-                        }}
+                            onChangeCommitted={(event: Event | React.SyntheticEvent<Element, Event>, value: number | number[]) => {this.setState({epsilon: value});}}
                         aria-labelledby="input-slider"
                         />
-            <Typography gutterBottom color='white'>Min sample</Typography>
-                <Slider
-                    sx={{width: '80%'}}
-                    id="minPts"
-                    valueLabelDisplay="auto"
-                    max={sliders_dbscan.minPts.max}
-                    min={sliders_dbscan.minPts.min}
-                    defaultValue={sliders_dbscan.minPts.min}
-                    step={1}
-                    onChangeCommitted={(event: Event | React.SyntheticEvent<Element, Event>, value: number | number[]) => {
-                        this.setState({minPts: value});
-                        this.handleSlidersChange_dbscan();}}
-                />
+                <Typography gutterBottom color='white'>Min sample</Typography>
+                    <Slider
+                        sx={{width: '80%'}}
+                        id="minPts"
+                        valueLabelDisplay="auto"
+                        max={sliders_dbscan.minPts.max}
+                        min={sliders_dbscan.minPts.min}
+                        defaultValue={sliders_dbscan.minPts.min}
+                        step={1}
+                        onChangeCommitted={(event: Event | React.SyntheticEvent<Element, Event>, value: number | number[]) => {this.setState({minPts: value});}}
+                    />
             </>
         }
-        this.setState({clusters: [], splitting: false, form: form, algorithm: value == clusterAlgorithm.DBSCAN ? clusterAlgorithm.DBSCAN : clusterAlgorithm.Kmeans});
+        this.setState({form: form});
     }
     
     /**
      * This method check if the size is valid and then get the cluster markers or set the state to empty
      * @param value is the size of the cluster
     */
-    private handleTextFieldChange_kmeans = (value?: any): void => {
-        if(value) {
-            if(value == "") this.setState({clusters: [], colorField: "primary"});
+    private handle_kmeans = (): void => {
+        const value = (document.getElementById('size') as HTMLInputElement).value;
+        if(value != null || value != undefined) {
+            if(value == "") this.setState({clusters: []});
             else {
                 const size = Number(value);
                 if(size <= 0 || isNaN(size))
-                    this.setState({clusters: [], colorField: "error"});
+                    this.setState({clusters: []});
                 else {
-                    this.setState({colorField: "success"});
                     this.getClusterMarkers(clusterAlgorithm.Kmeans, {size: size});
                 }
             }
-        }
-        else {
-            const value = (document.getElementById('size') as HTMLInputElement).value;
-            this.handleTextFieldChange_kmeans(value);
         }
     }
     
@@ -137,7 +128,7 @@ class Clustering extends React.Component<Props, State> {
      * This method is used to handle the change of the dbscan text fields
      * @param event is the event of the text field
      */
-    private handleSlidersChange_dbscan = async (): Promise<void> => {
+    private handle_dbscan = (): void => {
         const epsilon = this.state.epsilon;
         const minPts = this.state.minPts;
         if(epsilon != "" && minPts != "") {
@@ -149,12 +140,12 @@ class Clustering extends React.Component<Props, State> {
      * This method is used to handle the change if the user wants visualize splitted clusters
      * @param event is the event of the checkbox
      */
-    private handleCheckboxChange = async (event: React.SyntheticEvent<Element, Event>, checked: boolean): Promise<void> => {
+    private handleCheckboxChange = (event: React.SyntheticEvent<Element, Event>, checked: boolean): void => {
         this.setState({splitting: checked});
         if(this.state.algorithm == clusterAlgorithm.Kmeans)
-            this.handleTextFieldChange_kmeans();
+            this.handle_kmeans();
         else
-            this.handleSlidersChange_dbscan();
+            this.handle_dbscan();
     }
     
     
@@ -183,38 +174,34 @@ class Clustering extends React.Component<Props, State> {
         let clusters: any = [];
         let cont: number = 0; //for keys
         try {
+            if(result?.length === 0) throw new Error("Vincolo/i troppo stringenti per il numero di dati.\n");
             result?.forEach((element: any, index: number) => {
                 const markers: any = [];
-                //if we have a cluster with no elements we throw an error
-                if(element.cluster.length === 0) throw new Error("Cluster size troppo grande per il numero di dati.\n");
-                //if we have to render all elements of each cluster
-                else {                
-                    element.cluster.forEach((coord: any, index: number) => {
-                        cont++;
-                        markers.push(
-                            <Marker
-                            key={cont + "_marker"}
-                            position={[coord[1], coord[0]]} //reverse coords
-                                title={coord[1]}
-                                icon={carIcon}
-                                ></Marker>)
-                            });
-                
-                    clusters.push(
-                        <MarkerClusterGroup
-                            key={"cluster_" + cont}
-                            maxClusterRadius={ this.state.splitting ? (zoom: any) => {return 80} : 100000 } 
-                            spiderfyDistanceMultiplier={1}
-                            showCoverageOnHover={true}>
-                                {markers}
-                        </MarkerClusterGroup>
-                    );
-                }
+                element.cluster.forEach((coord: any, index: number) => {
+                    cont++;
+                    markers.push(
+                        <Marker
+                        key={cont + "_marker"}
+                        position={[coord[1], coord[0]]} //reverse coords
+                            title={coord[1]}
+                            icon={carIcon}
+                            ></Marker>)
+                        });
+            
+                clusters.push(
+                    <MarkerClusterGroup
+                        key={"cluster_" + cont}
+                        maxClusterRadius={ this.state.splitting ? (zoom: any) => {return 80} : 100000 } 
+                        spiderfyDistanceMultiplier={1}
+                        showCoverageOnHover={true}>
+                            {markers}
+                    </MarkerClusterGroup>
+                );
             });
             //update the state with the new clusters
             this.setState({clusters: clusters});
         } catch (error) {
-            this.setState({colorField: "error", clusters: []});
+            this.setState({clusters: []});
             console.log(error);
             alert(error);
         }
@@ -239,7 +226,7 @@ class Clustering extends React.Component<Props, State> {
             <AttributionControl position="bottomright" prefix={false} />
             {this.state.clusters}
         </MapContainer>
-        <Card sx={{backgroundColor: "rgba(28,28,28, 0.98)", borderRadius: '25px', position: 'absolute', width: 600, height: 250, top: 300, right: 50, zIndex: 2}}>
+        <Card sx={{backgroundColor: "rgba(28,28,28, 0.98)", borderRadius: '25px', position: 'absolute', width: 600, height: 270, top: 300, right: 50, zIndex: 2}}>
             <CardContent>
                 <Grid container spacing={2} sx={{marginTop: 1}}>
                     <Grid item xs={6}>
@@ -263,6 +250,7 @@ class Clustering extends React.Component<Props, State> {
                             <FormControlLabel control={<Checkbox checked={this.state.splitting}/>} label="Splitting on zoom" onChange={this.handleCheckboxChange} />
                         </FormControl>
                     </Grid>
+                    <Button variant="contained" sx={{marginLeft: 5, marginTop: 2, color: 'white'}} onClick={this.state.algorithm == clusterAlgorithm.Kmeans ? this.handle_kmeans : this.handle_dbscan}>COMPUTE</Button>
                 </Grid>
             </CardContent>
         </Card>

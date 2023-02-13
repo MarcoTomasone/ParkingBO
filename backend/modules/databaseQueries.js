@@ -120,16 +120,16 @@ module.exports = {
      * @param {int} id is the id of the user
      * @param {[lat, long]} position is the position of the user
      * */
-    insertParkingRequest: async (id, position, zone) => {
+    insertParkingRequest: async (position, zone) => {
         const client = new Client(QUERY_CONFIGURATION);
         await client.connect();
         if(typeof(position) === 'string')
             position = JSON.parse(position);
         try {
             const geom = `${position[0]} ${position[1]}`;
-            const result = await client.query(`INSERT INTO parking_requests(position, id_user, zone) VALUES(ST_GeomFromText('POINT(${geom})', 4326), $1, $2) RETURNING id_user`, [id, zone]);           
+            const result = await client.query(`INSERT INTO parking_requests(position, zone) VALUES(ST_GeomFromText('POINT(${geom})', 4326), $1)`, [zone]);           
         } catch (e) {
-            console.error(e);
+            //console.error(e);
         }
         finally {
             await client.end();
@@ -223,7 +223,7 @@ module.exports = {
             const zone = await module.exports.find_zone(position);
             if (zone instanceof Error)
                 throw new Error(zone.message);
-            await module.exports.insertParkingRequest(0, position, zone);
+            await module.exports.insertParkingRequest(position, zone);
             const result = await client.query(`SELECT available_parking FROM zones WHERE id_zone = ${zone}`);
             const n_parkings = result.rows[0]['available_parking'];
             return n_parkings;
@@ -334,10 +334,7 @@ module.exports = {
             return zone;
         } catch (e) {
             if(e.message == "Cannot read properties of undefined (reading 'id_zone')")
-            return new Error('Zone not found');
-            
-            console.error(e);
-            return e;
+                return new Error('Zone not found');
         }
         finally {
             await client.end();

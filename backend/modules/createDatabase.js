@@ -277,7 +277,6 @@ const initialize_charge_stations_table = async (client) => {
  */
 const checkStationInPolygon = async  (geom, client) => {
     const result = await client.query(`SELECT id_zone FROM zones WHERE ST_Contains(polygon, ST_GeomFromText('POINT(${geom})', 4326))`);
-    console.log(result.rows.length);
     if(result.rows.length == 1)
         return true; 
     else 
