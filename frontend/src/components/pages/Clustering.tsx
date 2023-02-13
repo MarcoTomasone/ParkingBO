@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapContainer, Marker, TileLayer, AttributionControl, GeoJSON } from "react-leaflet";
+import { MapContainer, Marker, TileLayer, AttributionControl, GeoJSON, ZoomControl } from "react-leaflet";
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import { TextField, Card, CardContent, Typography, Switch, FormControl, Grid, Button, RadioGroup, Radio, FormControlLabel, FormLabel, Slider, styled, Checkbox, Input   } from '@mui/material';
 import { kmeans, getData, dbscan } from '../../utils/requests';
@@ -231,6 +231,7 @@ class Clustering extends React.Component<Props, State> {
           scrollWheelZoom={false}
           center={[44.495852858541745, 11.339634125175587]}
           attributionControl={false}>
+            <ZoomControl position="bottomright" />
             <TileLayer url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' 
             />

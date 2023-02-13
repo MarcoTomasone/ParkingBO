@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { MapContainer, TileLayer, GeoJSON, Tooltip } from 'react-leaflet';
+import { MapContainer, TileLayer, GeoJSON, ZoomControl } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { getAllParkings, getData } from '../utils/requests';
 import FullScreenDialog from './FullScreenDialog';
@@ -95,6 +95,7 @@ class Map extends React.Component<Props, State> {
                     center={position}
                     zoom={14}
                     style={{height: "100vh"}}>
+                        <ZoomControl position="bottomright" />
                     <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                     {this.state.polygons}

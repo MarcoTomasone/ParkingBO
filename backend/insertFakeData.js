@@ -26,5 +26,4 @@ async function insertFakeCoordinates(fileName) {
         console.error("Dir not found");
 }
 
-//createCoordinates();
 insertFakeCoordinates('fake_coordinates.json');    
