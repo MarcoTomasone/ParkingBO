@@ -15,11 +15,11 @@
 \contentsline {subsection}{\numberline {4.1.1}Data mining}{15}{subsection.4.1.1}%
 \contentsline {section}{\numberline {4.2}Gli algoritmi}{16}{section.4.2}%
 \contentsline {subsection}{\numberline {4.2.1}KNN}{16}{subsection.4.2.1}%
-\contentsline {subsubsection}{Risultati}{17}{section*.10}%
+\contentsline {subsubsection}{Risultati}{17}{section*.11}%
 \contentsline {subsection}{\numberline {4.2.2}Random Forest}{18}{subsection.4.2.2}%
-\contentsline {subsubsection}{Risultati}{18}{section*.14}%
+\contentsline {subsubsection}{Risultati}{18}{section*.15}%
 \contentsline {subsection}{\numberline {4.2.3}Gaussian Naive Bayes}{20}{subsection.4.2.3}%
-\contentsline {subsubsection}{Risultati}{20}{section*.20}%
+\contentsline {subsubsection}{Risultati}{20}{section*.21}%
 \contentsline {section}{\numberline {4.3}Confronto dei risultati}{21}{section.4.3}%
 \contentsline {section}{\numberline {4.4}Accuratezza sistema Har integrato}{22}{section.4.4}%
-\contentsline {section}{\numberline {4.5}Implementazione del Random Forest nell'app}{22}{section.4.5}%
+\contentsline {section}{\numberline {4.5}Implementazione del Random Forest nell'app}{23}{section.4.5}%

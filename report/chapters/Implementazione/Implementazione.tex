@@ -9,8 +9,16 @@ In questa parte del report verranno descritte le tecnologie utilizzate per la re
 
 \section{App Mobile}
     Per offrire un'app mobile che possa essere utilizzata sia su sistema operativo Android che iOS abbiamo deciso di utilizzare il framework \emph{Flutter}, un framework open-source sviluppato da Google che si poggia su \emph{Dart}. Il progetto è stato però testato solo su android poichè nessun componente del gruppo possedeva un dispositivo con MacOS. Per la gestione della mappa abbiamo utilizzato il pacchetto \emph{flutter\_map} che permette di integrare comodamente delle mappe Leaflet all'interno delle propria app, mentre per quanto riguarda la libreria per fare Activity Recognition abbiamo utilizzato un pacchetto chiamato \emph{flutter\_Activity\_Recognition}, un wrapper alle librerie di sistema Android e iOs per fare riconoscimento dell'attività dell'utente. \\
+
 \section{Splash Screen}
 Lo splash screen è la prima schermata che viene mostrata all'utente quando avvia l'app. Questa schermata è molto semplice e mostra solo il logo dell'app, una semplice icona di un'auto con il nome dell'applicazione. Questa schermata ha lo scopo di intrattenere l'utente durante il caricamento dell'app e di chiedergli i permessi per la localizzazione e per il riconoscimento dell'attività.\\
+Mostriamo il codice per la richiesta dei permessi:
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{CheckPermission.png}
+  \caption{Codice per la richiesta dei permessi}
+\end{figure}
+
 
 \section{MapWidget}
 MapWidget rappresenta la schermata principale dell'applicazione. In questa schermata l'utente può vedere la sua posizione sulla mappa che mostrerà i poligoni. Cliccando su un poligono verrà visualizzato un Toast che indica il numero di parcheggi disponibili per quella zona. Sono inoltre presenti (solo in questa versione Beta dell'app a scopo dimostrativo) dei pulsanti che permettono di simulare l'arrivo e la partenza dall'area di parcheggio, pulsanti che non sarebbero presenti in un'ipotetica versione commerciale dell'app. \\ 
@@ -84,8 +92,8 @@ Mostriamo ora il costruttore della classe e la callback che viene eseguita ogni 
 
 \section{Frontend}
     Per  motivi di riusabilità del codice e dei componenti abbiamo deciso di utilizzare il framework React per il frontend, un framework \emph{Javascript} open-source sviluppato da Facebook che permette di creare componenti riutilizzabili. 
-    Per la gestione delle mappe sia nel frontend abbiamo utilizzato la libreria \emph{Leaflet}, un framework Javascript open-source che permette di creare mappe interattive, dal quale abbiamo preso anche due pacchetti per fare Clustering e per visualizzare la Heatmap dei dati. Infine per la parte grafica è stato utilizzato il framework \emph{Material-UI}, un framework Javascript open-source che permette di creare componenti grafici in stile \emph{Material Design}.\\
-    Il frontend è composto da tra sezioni, accessibili tramite delle tab in una navbar: 
+    Per la gestione delle mappe nel frontend abbiamo utilizzato la libreria \emph{Leaflet}, un framework Javascript open-source che permette di creare mappe interattive, dal quale abbiamo preso anche due pacchetti per fare Clustering e per visualizzare la Heatmap dei dati. Infine per la parte grafica è stato utilizzato il framework \emph{Material-UI}, un framework Javascript open-source che permette di creare componenti grafici in stile \emph{Material Design}.\\
+    Il frontend è composto da tre sezioni, accessibili tramite delle tab in una navbar: 
     \begin{itemize}
       \item La sezione delle richieste: in cui è possibile vedere le zone poligonali di Bologna, selezionarne una e visualizzare il numero di posti liberi in quella zone ed il numero di richieste di parcheggio, cioè quante volte gli utenti hanno chiesto la disponibilità di parcheggi in quella zona.
       \item La sezione della Heatmap: in cui è possibile visualizzare la mappa di Bologna con la heatmap dei dati, cioè il numero di richieste di parcheggio per ogni zona poligonale. La Heatmap è visibile sia complessiva che suddivisa per poligono.

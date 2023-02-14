@@ -788,6 +788,13 @@ INPUT chapters\Implementazione\Implementazione.tex
 INPUT .\chapters\Implementazione\Implementazione.tex
 INPUT chapters\Implementazione\Implementazione.tex
 INPUT C:\Users\tomas\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmti12.tfm
+INPUT .\img\\CheckPermission.png
+INPUT .\img\\CheckPermission.png
+INPUT img\\CheckPermission.png
+INPUT .\img\\CheckPermission.png
+INPUT .\img\\CheckPermission.png
+INPUT .\img\\CheckPermission.png
+INPUT .\img\\CheckPermission.png
 INPUT .\img\\UpdateCurrentActivity.png
 INPUT .\img\\UpdateCurrentActivity.png
 INPUT img\\UpdateCurrentActivity.png
@@ -897,6 +904,13 @@ INPUT .\img\\ConfusionMatrixGNBUnscaled.png
 INPUT .\img\\ConfusionMatrixGNBUnscaled.png
 INPUT .\img\\ConfusionMatrixGNBUnscaled.png
 INPUT .\img\\ConfusionMatrixGNBUnscaled.png
+INPUT .\img\\HarByClass.png
+INPUT .\img\\HarByClass.png
+INPUT img\\HarByClass.png
+INPUT .\img\\HarByClass.png
+INPUT .\img\\HarByClass.png
+INPUT .\img\\HarByClass.png
+INPUT .\img\\HarByClass.png
 INPUT Report.aux
 INPUT .\Report.out
 INPUT .\Report.out
