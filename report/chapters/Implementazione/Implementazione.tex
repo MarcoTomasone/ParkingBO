@@ -18,7 +18,16 @@ Mostriamo il codice per la richiesta dei permessi:
   \includegraphics[width=\textwidth]{CheckPermission.png}
   \caption{Codice per la richiesta dei permessi}
 \end{figure}
+Qualora l'utente non conceda i permessi, invece che caricare Map Widget verrà caricato un altro Widget con un messaggio di errore. \\
 
+\subsection{Activity Recognition}
+Per la parte di Activity Recognition, come precedentemente accenato abbiamo utilizzato il pacchetto \emph{flutter\_Activity\_Recognition} che permette di fare riconoscimento dell'attività dell'utente. Il pacchetto riconosce varie attività come: \emph{WALKING}, \emph{RUNNING}, \emph{IN\_BICYCLE}, \emph{IN\_VEICHLE}, \emph{STILL}, \emph{UNKNOWN}. L'implementazione del sistema di activity recognition è stata fatta tramite la classe \emph{ActivityRecognitionClass}. Questa classe viene inizializzata all'interno del MapWidget (la schermata principale dell'app). Al momento della sua inizializzazione questa classe farà partire un listener che farà partire una callback ogni qualvolta viene riconosciuta una nuova attività. Importante notare come verranno eseguite operazioni (aggiornamento dell'attività corrente ed eventuali transizioni) solo dal momento in cui l'attività riconosciuta viene riconosciuta con un grado di confidenza alto. In più, tutto funziona se e solo se l'utente ha dato i permessi all'app di far riconoscere la propria attività.\\
+Mostriamo ora il costruttore della classe e la callback che viene eseguita ogni qualvolta viene riconosciuta una nuova attività.\\
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{ActivityRecognitionCode.png}
+  \caption{Costruttore e callback di ActivityRecognitionClass}
+  \end{figure}
 
 \section{MapWidget}
 MapWidget rappresenta la schermata principale dell'applicazione. In questa schermata l'utente può vedere la sua posizione sulla mappa che mostrerà i poligoni. Cliccando su un poligono verrà visualizzato un Toast che indica il numero di parcheggi disponibili per quella zona. Sono inoltre presenti (solo in questa versione Beta dell'app a scopo dimostrativo) dei pulsanti che permettono di simulare l'arrivo e la partenza dall'area di parcheggio, pulsanti che non sarebbero presenti in un'ipotetica versione commerciale dell'app. \\ 
@@ -33,15 +42,29 @@ Lato implementativo, questo widget è il widget più importante di tutta l'appli
   \caption{Funzione updateCurrentActivity}
 \end{figure}
 Lo state currentActivity verrà aggiornato solo se l'attività riconosciuta è \emph{WALKING} o \emph{IN\_VEHICLE} poichè spesso è molto facile che guidando o camminando ci si fermi, portando il sistema a riconoscere l'attività come \emph{STILL}. Questo causerbbe un'impossibilità da parte dell'app di riconoscere un cambiamento netto di attività da \emph{WALKING} a \emph{DRIVING} e viceversa. Tutte le altre attività vengono comunque riconsociute e salvate nella variabile markerActivity che, tramite uno switch permette di cambiare la visualizzazione a schermo, permettendo all'utente di capire quale attività viene riconosciuta in quel momento dal sistema.\\
-
-\subsection{Activity Recognition}
-Per la parte di Activity Recognition, come precedentemente accenato abbiamo utilizzato il pacchetto \emph{flutter\_Activity\_Recognition} che permette di fare riconoscimento dell'attività dell'utente. Il pacchetto riconosce varie attività come: \emph{WALKING}, \emph{RUNNING}, \emph{IN\_BICYCLE}, \emph{IN\_VEICHLE}, \emph{STILL}, \emph{UNKNOWN}. L'implementazione del sistema di activity recognition è stata fatta tramite la classe \emph{ActivityRecognitionClass}. Questa classe viene inizializzata all'interno del MapWidget (la schermata principale dell'app). Al momento della sua inizializzazione questa classe farà partire un listener che farà partire una callback ogni qualvolta viene riconosciuta una nuova attività. Importante notare come verranno eseguite operazioni (aggiornamento dell'attività corrente ed eventuali transizioni) solo dal momento in cui l'attività riconosciuta viene riconosciuta con un grado di confidenza alto. In più, tutto funziona se e solo se l'utente ha dato i permessi all'app di far riconoscere la propria attività.\\
-Mostriamo ora il costruttore della classe e la callback che viene eseguita ogni qualvolta viene riconosciuta una nuova attività.\\
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{ActivityRecognitionCode.png}
-  \caption{Costruttore e callback di ActivityRecognitionClass}
-  \end{figure}
+  \includegraphics[width=0.3\textwidth]{Entering.jpg}
+  \includegraphics[width=0.3\textwidth]{Exiting.jpg}
+
+  \caption{Riconoscimento di un'entrata e di un'uscita da un parcheggio}
+\end{figure}
+
+\subsection{Feature Aggiuntiva}
+Lato app mobile, per l'implementazione della feature aggiuntiva ci limitiamo a chiedere al backend i dati relativi alle colonnine elettriche, che visualizzeremo all'interno della mappa.\\ 
+Quando un utente parcheggerà il suo veicolo, se si trova in una posizione vicina ad una colonnina elettrica, l'app visualizzerà una dialog che chiederà all'utente se sta utilizzando o meno quella colonnina elettrica. Se l'utente risponde di sì, il backend si occuperà di aggiornare lo stato della colonnina nel database.\\
+Mostriamo ora un esempio di questa funzione, tramite una chiamata ad una posizione fissata vicino ad una colonnina elettrica posta in via S.Giacomo: 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.3\textwidth]{EnteringE.jpg}
+  \includegraphics[width=0.3\textwidth]{Dialog.jpg}
+  \includegraphics[width=0.3\textwidth]{ExitingE.jpg}
+
+  \caption{Riconoscimento di un'entrata e di un'uscita da un parcheggio nei pressi di una colonnina}
+\end{figure}
+Dalle immagini si può notare come l'utente sia abbastanza distante dalle colonnine, questo poichè per motivi di test abbiamo deciso di passare una posizione fissata vicina alla colonnina. 
+
+
 
 \section{Backend}
     Per il backend abbiamo deciso di utilizzare \emph{Node.js}, un runtime Javascript che permette di creare applicazioni web veloci e scalabili, il Database invece, è stato creato utilizzando \emph{PostgreSQL} con estensione \emph{PostGIS} per la gestione dei dati spaziali.\\
@@ -75,7 +98,7 @@ Mostriamo ora il costruttore della classe e la callback che viene eseguita ogni 
     $$
     Dove
     $$
-    w_i(\mathbf{x})=\frac{1}{d\left(\mathbf{x}, \mathbf{x}_i\right)^p}
+    w_i(\mathbf{x})=\frac{1}{d\left(\mathbf{x}, \mathbf{x}_i\right)}
     $$
     Guardando l'implementazione lato codice:
     \begin{lstlisting}
