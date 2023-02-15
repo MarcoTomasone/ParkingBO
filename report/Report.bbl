@@ -1,0 +1,27 @@
+\begin{thebibliography}{1}
+
+\bibitem{FlutterHAR}
+flutter activity recognition package.
+\newblock \url{https://pub.dev/packages/flutter_activity_recognition}.
+
+\bibitem{FlutterMap}
+flutter map package.
+\newblock \url{https://pub.dev/packages/flutter_map}.
+
+\bibitem{FlutterPage}
+Flutter official page.
+\newblock \url{https://flutter.dev/}.
+
+\bibitem{Leaflet}
+React leaflet official page.
+\newblock \url{https://react-leaflet.js.org/}.
+
+\bibitem{Node}
+Node.js official page.
+\newblock \url{https://nodejs.org/en/}.
+
+\bibitem{React}
+React official page.
+\newblock \url{https://it.reactjs.org/}.
+
+\end{thebibliography}

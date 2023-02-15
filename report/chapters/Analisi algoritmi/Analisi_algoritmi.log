@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (MiKTeX 21.8) (preloaded format=pdflatex 2021.9.3)  15 FEB 2023 10:12
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (MiKTeX 21.8) (preloaded format=pdflatex 2021.9.3)  15 FEB 2023 11:02
 entering extended mode
 **"c:/Users/tomas/Desktop/ParkingBO/report/chapters/Analisi algoritmi/Analisi_algoritmi.tex"
 (c:/Users/tomas/Desktop/ParkingBO/report/chapters/Analisi algoritmi/Analisi_algoritmi.tex
@@ -518,22 +518,33 @@ File: ./img//HarByClass.png Graphic file (type png)
 <use ./img//HarByClass.png>
 Package pdftex.def Info: ./img//HarByClass.png  used on input line 294.
 (pdftex.def)             Requested size: 314.99863pt x 183.89305pt.
- [9 <./img//HarByClass.png>] [10] [11] (c:\Users\tomas\Desktop\ParkingBO\report\chapters\Analisi algoritmi\Analisi_algoritmi.aux)
+ [9 <./img//HarByClass.png>] [10]
+<./img//cf_HARSensorData.png, id=118, 462.528pt x 346.896pt>
+File: ./img//cf_HARSensorData.png Graphic file (type png)
+<use ./img//cf_HARSensorData.png>
+Package pdftex.def Info: ./img//cf_HARSensorData.png  used on input line 357.
+(pdftex.def)             Requested size: 220.50247pt x 165.38072pt.
+<./img//cf_SensorData.png, id=119, 462.528pt x 346.896pt>
+File: ./img//cf_SensorData.png Graphic file (type png)
+<use ./img//cf_SensorData.png>
+Package pdftex.def Info: ./img//cf_SensorData.png  used on input line 358.
+(pdftex.def)             Requested size: 220.50247pt x 165.38072pt.
+ [11 <./img//cf_HARSensorData.png> <./img//cf_SensorData.png>] (c:\Users\tomas\Desktop\ParkingBO\report\chapters\Analisi algoritmi\Analisi_algoritmi.aux)
 Package rerunfilecheck Info: File `Analisi_algoritmi.out' has not changed.
 (rerunfilecheck)             Checksum: 5F387E686D2D6F6100BD86976111B4CB;1766.
  ) 
 Here is how much of TeX's memory you used:
- 13727 strings out of 478927
- 213011 string characters out of 2852536
- 571553 words of memory out of 3000000
- 31328 multiletter control sequences out of 15000+600000
+ 13745 strings out of 478927
+ 213520 string characters out of 2852536
+ 571684 words of memory out of 3000000
+ 31343 multiletter control sequences out of 15000+600000
  411201 words of font info for 57 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  89i,12n,96p,1401b,406s stack positions out of 5000i,500n,10000p,200000b,80000s
  <C:\Users\tomas\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on "c:\Users\tomas\Desktop\ParkingBO\report\chapters\Analisi algoritmi\Analisi_algoritmi.pdf" (11 pages, 138876 bytes).
+Output written on "c:\Users\tomas\Desktop\ParkingBO\report\chapters\Analisi algoritmi\Analisi_algoritmi.pdf" (11 pages, 168644 bytes).
 PDF statistics:
- 153 PDF objects out of 1000 (max. 8388607)
- 39 named destinations out of 1000 (max. 500000)
- 111 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 158 PDF objects out of 1000 (max. 8388607)
+ 40 named destinations out of 1000 (max. 500000)
+ 121 words of extra memory for PDF output out of 10000 (max. 10000000)
 

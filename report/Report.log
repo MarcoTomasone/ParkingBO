@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (MiKTeX 21.8) (preloaded format=pdflatex 2021.9.3)  15 FEB 2023 11:01
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (MiKTeX 21.8) (preloaded format=pdflatex 2021.9.3)  15 FEB 2023 11:02
 entering extended mode
 **c:/Users/tomas/Desktop/ParkingBO/report/Report.tex
 (c:/Users/tomas/Desktop/ParkingBO/report/Report.tex
@@ -402,6 +402,7 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 31.
 LaTeX Info: Redefining \pageref on input line 31.
 LaTeX Info: Redefining \nameref on input line 31.
+ (Report.out) (Report.out)
 \@outlinefile=\write3
 \openout3 = `Report.out'.
 
@@ -442,7 +443,7 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 33.
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
-{C:/Users/tomas/AppData/Local/MiKTeX/pdftex/config/pdftex.map}]
+{C:/Users/tomas/AppData/Local/MiKTeX/pdftex/config/pdftex.map}] (Report.toc)
 \tf@toc=\write4
 \openout4 = `Report.toc'.
 
@@ -482,7 +483,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 11--12
 
  []
 
-<./img//CheckPermission.png, id=36, 1471.4975pt x 899.36pt>
+<./img//CheckPermission.png, id=143, 1471.4975pt x 899.36pt>
 File: ./img//CheckPermission.png Graphic file (type png)
 <use ./img//CheckPermission.png>
 Package pdftex.def Info: ./img//CheckPermission.png  used on input line 18.
@@ -494,7 +495,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 21--22
 
  []
 
-<./img//ActivityRecognitionCode.png, id=47, 735.74875pt x 482.80376pt>
+<./img//ActivityRecognitionCode.png, id=151, 735.74875pt x 482.80376pt>
 File: ./img//ActivityRecognitionCode.png Graphic file (type png)
 <use ./img//ActivityRecognitionCode.png>
 Package pdftex.def Info: ./img//ActivityRecognitionCode.png  used on input line 28.
@@ -514,7 +515,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 36--37
 
  []
 
-<./img//UpdateCurrentActivity.png, id=55, 1000.73875pt x 466.74374pt>
+<./img//UpdateCurrentActivity.png, id=158, 1000.73875pt x 466.74374pt>
 File: ./img//UpdateCurrentActivity.png Graphic file (type png)
 <use ./img//UpdateCurrentActivity.png>
 Package pdftex.def Info: ./img//UpdateCurrentActivity.png  used on input line 41.
@@ -525,12 +526,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 38--43
  []
 
 [8 <./img//ActivityRecognitionCode.png>]
-<./img//Entering.jpg, id=63, 973.6375pt x 2055.68pt>
+<./img//Entering.jpg, id=165, 973.6375pt x 2055.68pt>
 File: ./img//Entering.jpg Graphic file (type jpg)
 <use ./img//Entering.jpg>
 Package pdftex.def Info: ./img//Entering.jpg  used on input line 47.
 (pdftex.def)             Requested size: 135.00137pt x 285.03293pt.
-<./img//Exiting.jpg, id=64, 973.6375pt x 2055.68pt>
+<./img//Exiting.jpg, id=166, 973.6375pt x 2055.68pt>
 File: ./img//Exiting.jpg Graphic file (type jpg)
 <use ./img//Exiting.jpg>
 Package pdftex.def Info: ./img//Exiting.jpg  used on input line 48.
@@ -541,29 +542,29 @@ Underfull \hbox (badness 10000) in paragraph at lines 44--51
  []
 
 [9 <./img//UpdateCurrentActivity.png>]
-<./img//EnteringE.jpg, id=71, 973.6375pt x 2055.68pt>
+<./img//EnteringE.jpg, id=173, 973.6375pt x 2055.68pt>
 File: ./img//EnteringE.jpg Graphic file (type jpg)
 <use ./img//EnteringE.jpg>
 Package pdftex.def Info: ./img//EnteringE.jpg  used on input line 59.
 (pdftex.def)             Requested size: 135.00137pt x 285.03293pt.
-<./img//Dialog.jpg, id=72, 973.6375pt x 2055.68pt>
+<./img//Dialog.jpg, id=174, 973.6375pt x 2055.68pt>
 File: ./img//Dialog.jpg Graphic file (type jpg)
 <use ./img//Dialog.jpg>
 Package pdftex.def Info: ./img//Dialog.jpg  used on input line 60.
 (pdftex.def)             Requested size: 135.00137pt x 285.03293pt.
-<./img//ExitingE.jpg, id=73, 973.6375pt x 2055.68pt>
+<./img//ExitingE.jpg, id=175, 973.6375pt x 2055.68pt>
 File: ./img//ExitingE.jpg Graphic file (type jpg)
 <use ./img//ExitingE.jpg>
 Package pdftex.def Info: ./img//ExitingE.jpg  used on input line 61.
 (pdftex.def)             Requested size: 135.00137pt x 285.03293pt.
  [10 <./img//Entering.jpg> <./img//Exiting.jpg>]
-<./img//dbSchema.png, id=80, 526.96875pt x 362.5545pt>
+<./img//dbSchema.png, id=181, 526.96875pt x 362.5545pt>
 File: ./img//dbSchema.png Graphic file (type png)
 <use ./img//dbSchema.png>
 Package pdftex.def Info: ./img//dbSchema.png  used on input line 74.
 (pdftex.def)             Requested size: 450.0pt x 309.61667pt.
  [11 <./img//EnteringE.jpg> <./img//Dialog.jpg> <./img//ExitingE.jpg>]
-<./img//getParkingsIDW.png, id=87, 1134.2375pt x 785.93625pt>
+<./img//getParkingsIDW.png, id=187, 1134.2375pt x 785.93625pt>
 File: ./img//getParkingsIDW.png Graphic file (type png)
 <use ./img//getParkingsIDW.png>
 Package pdftex.def Info: ./img//getParkingsIDW.png  used on input line 82.
@@ -585,7 +586,7 @@ Overfull \hbox (71.6991pt too wide) in paragraph at lines 105--106
 [][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
-<./img//computeValueIDW.png, id=109, 1093.08376pt x 560.0925pt>
+<./img//computeValueIDW.png, id=209, 1093.08376pt x 560.0925pt>
 File: ./img//computeValueIDW.png Graphic file (type png)
 <use ./img//computeValueIDW.png>
 Package pdftex.def Info: ./img//computeValueIDW.png  used on input line 109.
@@ -601,22 +602,22 @@ Underfull \hbox (badness 10000) in paragraph at lines 114--115
  []
 
 [14 <./img//computeValueIDW.png>]
-<./img//heatmapFull.png, id=119, 587.796pt x 308.352pt>
+<./img//heatmapFull.png, id=218, 587.796pt x 308.352pt>
 File: ./img//heatmapFull.png Graphic file (type png)
 <use ./img//heatmapFull.png>
 Package pdftex.def Info: ./img//heatmapFull.png  used on input line 129.
 (pdftex.def)             Requested size: 234.00192pt x 122.75517pt.
-<./img//heatmapPolygons.png, id=120, 579.96675pt x 354.72525pt>
+<./img//heatmapPolygons.png, id=219, 579.96675pt x 354.72525pt>
 File: ./img//heatmapPolygons.png Graphic file (type png)
 <use ./img//heatmapPolygons.png>
 Package pdftex.def Info: ./img//heatmapPolygons.png  used on input line 130.
 (pdftex.def)             Requested size: 202.49863pt x 123.85258pt.
-<./img//clusteringKmeans.png, id=121, 1144.87724pt x 524.55975pt>
+<./img//clusteringKmeans.png, id=220, 1144.87724pt x 524.55975pt>
 File: ./img//clusteringKmeans.png Graphic file (type png)
 <use ./img//clusteringKmeans.png>
 Package pdftex.def Info: ./img//clusteringKmeans.png  used on input line 137.
 (pdftex.def)             Requested size: 202.49863pt x 92.77583pt.
-<./img//clusteringDBSCAN.png, id=122, 1133.4345pt x 450.483pt>
+<./img//clusteringDBSCAN.png, id=221, 1133.4345pt x 450.483pt>
 File: ./img//clusteringDBSCAN.png Graphic file (type png)
 <use ./img//clusteringDBSCAN.png>
 Package pdftex.def Info: ./img//clusteringDBSCAN.png  used on input line 138.
@@ -641,12 +642,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 61--62
  []
 
 [18]
-<./img//ConfusionMatrixKNNUnscaled.png, id=148, 353.32pt x 266.9975pt>
+<./img//ConfusionMatrixKNNUnscaled.png, id=242, 353.32pt x 266.9975pt>
 File: ./img//ConfusionMatrixKNNUnscaled.png Graphic file (type png)
 <use ./img//ConfusionMatrixKNNUnscaled.png>
 Package pdftex.def Info: ./img//ConfusionMatrixKNNUnscaled.png  used on input line 121.
 (pdftex.def)             Requested size: 220.50247pt x 166.63264pt.
-<./img//ConfusionMatrixKNNScaled.png, id=149, 353.32pt x 262.9825pt>
+<./img//ConfusionMatrixKNNScaled.png, id=243, 353.32pt x 262.9825pt>
 File: ./img//ConfusionMatrixKNNScaled.png Graphic file (type png)
 <use ./img//ConfusionMatrixKNNScaled.png>
 Package pdftex.def Info: ./img//ConfusionMatrixKNNScaled.png  used on input line 122.
@@ -657,12 +658,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 126--127
  []
 
 [19 <./img//ConfusionMatrixKNNUnscaled.png> <./img//ConfusionMatrixKNNScaled.png>] [20]
-<./img//ConfusionMatrixRFUnscaled.png, id=167, 353.32pt x 262.9825pt>
+<./img//ConfusionMatrixRFUnscaled.png, id=260, 353.32pt x 262.9825pt>
 File: ./img//ConfusionMatrixRFUnscaled.png Graphic file (type png)
 <use ./img//ConfusionMatrixRFUnscaled.png>
 Package pdftex.def Info: ./img//ConfusionMatrixRFUnscaled.png  used on input line 198.
 (pdftex.def)             Requested size: 220.50247pt x 164.12689pt.
-<./img//ConfusionMatrixRFScaled.png, id=168, 353.32pt x 265.99374pt>
+<./img//ConfusionMatrixRFScaled.png, id=261, 353.32pt x 265.99374pt>
 File: ./img//ConfusionMatrixRFScaled.png Graphic file (type png)
 <use ./img//ConfusionMatrixRFScaled.png>
 Package pdftex.def Info: ./img//ConfusionMatrixRFScaled.png  used on input line 199.
@@ -673,7 +674,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 205--217
  []
 
 [21 <./img//ConfusionMatrixRFUnscaled.png> <./img//ConfusionMatrixRFScaled.png>]
-<./img//ConfusionMatrixGNBUnscaled.png, id=177, 353.32pt x 262.9825pt>
+<./img//ConfusionMatrixGNBUnscaled.png, id=270, 353.32pt x 262.9825pt>
 File: ./img//ConfusionMatrixGNBUnscaled.png Graphic file (type png)
 <use ./img//ConfusionMatrixGNBUnscaled.png>
 Package pdftex.def Info: ./img//ConfusionMatrixGNBUnscaled.png  used on input line 221.
@@ -689,80 +690,49 @@ Overfull \hbox (50.99516pt too wide) in paragraph at lines 262--284
  []
 
 [23]
-<./img//HarByClass.png, id=194, 355.92975pt x 207.77625pt>
+<./img//HarByClass.png, id=285, 355.92975pt x 207.77625pt>
 File: ./img//HarByClass.png Graphic file (type png)
 <use ./img//HarByClass.png>
 Package pdftex.def Info: ./img//HarByClass.png  used on input line 294.
 (pdftex.def)             Requested size: 314.99863pt x 183.89305pt.
-
-
-LaTeX Warning: Reference `sec:random_forest' on page 24 undefined on input line 300.
-
-[24 <./img//HarByClass.png>] [25]
-
-LaTeX Warning: File `cf_HARSensorData.png' not found on input line 357.
-
-
-chapters/Analisi algoritmi/Analisi_algoritmi.tex:357: Package pdftex.def Error: File `cf_HARSensorData.png' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.357 ...dth=0.49\textwidth]{cf_HARSensorData.png}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-LaTeX Warning: File `cf_SensorData.png' not found on input line 358.
-
-
-chapters/Analisi algoritmi/Analisi_algoritmi.tex:358: Package pdftex.def Error: File `cf_SensorData.png' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.358 ...[width=0.49\textwidth]{cf_SensorData.png}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-) (chapters/Conclusioni/Conclusioni.tex [26]
+ [24 <./img//HarByClass.png>] [25]
+<./img//cf_HARSensorData.png, id=298, 462.528pt x 346.896pt>
+File: ./img//cf_HARSensorData.png Graphic file (type png)
+<use ./img//cf_HARSensorData.png>
+Package pdftex.def Info: ./img//cf_HARSensorData.png  used on input line 357.
+(pdftex.def)             Requested size: 220.50247pt x 165.38072pt.
+<./img//cf_SensorData.png, id=299, 462.528pt x 346.896pt>
+File: ./img//cf_SensorData.png Graphic file (type png)
+<use ./img//cf_SensorData.png>
+Package pdftex.def Info: ./img//cf_SensorData.png  used on input line 358.
+(pdftex.def)             Requested size: 220.50247pt x 165.38072pt.
+) (chapters/Conclusioni/Conclusioni.tex [26 <./img//cf_HARSensorData.png> <./img//cf_SensorData.png>]
 Capitolo 5.
-)
-No file Report.bbl.
-[27
+) (Report.bbl [27
+
+]
+Underfull \hbox (badness 4060) in paragraph at lines 4--6
+[]\OT1/cmr/m/n/12 flutter ac-ti-vi-ty re-co-gni-tion pac-ka-ge.  []$\OT1/cmtt/m/n/12 https : / / pub . dev / packages / flutter _
+ []
+
+) [28
 
 ] (Report.aux)
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-
-Package rerunfilecheck Warning: File `Report.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `Report.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  11C13E6AF99F04018A09AA59F8A1735B;3181.
+Package rerunfilecheck Info: File `Report.out' has not changed.
+(rerunfilecheck)             Checksum: 11C13E6AF99F04018A09AA59F8A1735B;3181.
  ) 
 Here is how much of TeX's memory you used:
- 14292 strings out of 478927
- 221692 string characters out of 2852536
- 570754 words of memory out of 3000000
- 31790 multiletter control sequences out of 15000+600000
+ 14279 strings out of 478927
+ 221057 string characters out of 2852536
+ 572039 words of memory out of 3000000
+ 31773 multiletter control sequences out of 15000+600000
  414909 words of font info for 74 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  69i,12n,79p,1820b,1340s stack positions out of 5000i,500n,10000p,200000b,80000s
  <C:\Users\tomas\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx8.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cmextra/cmex8.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt12.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on Report.pdf (28 pages, 7170811 bytes).
+Output written on Report.pdf (29 pages, 7217190 bytes).
 PDF statistics:
- 306 PDF objects out of 1000 (max. 8388607)
- 81 named destinations out of 1000 (max. 500000)
- 106 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 419 PDF objects out of 1000 (max. 8388607)
+ 89 named destinations out of 1000 (max. 500000)
+ 292 words of extra memory for PDF output out of 10000 (max. 10000000)
 
