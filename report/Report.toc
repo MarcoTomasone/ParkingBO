@@ -5,12 +5,12 @@
 \contentsline {section}{\numberline {2.1}Feature Aggiuntive}{5}{section.2.1}%
 \contentsline {chapter}{\numberline {3}Implementazione}{6}{chapter.3}%
 \contentsline {section}{\numberline {3.1}App Mobile}{6}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Splash Screen}{6}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}Activity Recognition}{7}{subsection.3.2.1}%
-\contentsline {section}{\numberline {3.3}MapWidget}{8}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Feature Aggiuntiva}{10}{subsection.3.3.1}%
-\contentsline {section}{\numberline {3.4}Backend}{11}{section.3.4}%
-\contentsline {section}{\numberline {3.5}Frontend}{14}{section.3.5}%
+\contentsline {subsection}{\numberline {3.1.1}Splash Screen}{6}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Activity Recognition}{7}{subsection.3.1.2}%
+\contentsline {section}{\numberline {3.2}MapWidget}{8}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Feature Aggiuntiva}{10}{subsection.3.2.1}%
+\contentsline {section}{\numberline {3.3}Backend}{11}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Frontend}{14}{section.3.4}%
 \contentsline {chapter}{\numberline {4}Algoritmi di classificazione e Risultati}{16}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Dataset e tecnologie utilizzate}{16}{section.4.1}%
 \contentsline {subsection}{\numberline {4.1.1}Data mining}{17}{subsection.4.1.1}%

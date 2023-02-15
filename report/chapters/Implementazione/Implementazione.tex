@@ -10,7 +10,7 @@ In questa parte del report verranno descritte le tecnologie utilizzate per la re
 \section{App Mobile}
     Per offrire un'app mobile che possa essere utilizzata sia su sistema operativo Android che iOS abbiamo deciso di utilizzare il framework \emph{Flutter}, un framework open-source sviluppato da Google che si poggia su \emph{Dart}. Il progetto è stato però testato solo su android poichè nessun componente del gruppo possedeva un dispositivo con MacOS. Per la gestione della mappa abbiamo utilizzato il pacchetto \emph{flutter\_map} che permette di integrare comodamente delle mappe Leaflet all'interno delle propria app, mentre per quanto riguarda la libreria per fare Activity Recognition abbiamo utilizzato un pacchetto chiamato \emph{flutter\_Activity\_Recognition}, un wrapper alle librerie di sistema Android e iOs per fare riconoscimento dell'attività dell'utente. \\
 
-\section{Splash Screen}
+\subsection{Splash Screen}
 Lo splash screen è la prima schermata che viene mostrata all'utente quando avvia l'app. Questa schermata è molto semplice e mostra solo il logo dell'app, una semplice icona di un'auto con il nome dell'applicazione. Questa schermata ha lo scopo di intrattenere l'utente durante il caricamento dell'app e di chiedergli i permessi per la localizzazione e per il riconoscimento dell'attività.\\
 Mostriamo il codice per la richiesta dei permessi:
 \begin{figure}[H]
