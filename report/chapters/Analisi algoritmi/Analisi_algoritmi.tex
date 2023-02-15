@@ -306,51 +306,59 @@ Data la variazione del dataset, abbiamo deciso di effettuare nuovamente il tunin
         \hline
         & \textbf{Best value} \\
         \hline
-        \textbf{n\_estimators} & 800 \\
+        \textbf{n\_estimators} & 1600 \\
         \hline
-        \textbf{max\_depth} & 90 \\
+        \textbf{max\_depth} & None \\
         \hline
-        \textbf{min\_samples\_split} & 5 \\
+        \textbf{min\_samples\_split} & 2 \\
         \hline
         \textbf{min\_samples\_leaf} & 1 \\
         \hline
-        \textbf{max\_features} & sqrt \\
+        \textbf{max\_features} & log2 \\
         \hline
         \textbf{bootstrap} & False \\
         \hline
     \end{tabular}
 \end{table}
-Nella tabella precedente possiamo vedere i migliori valori trovati per ogni iperparametro, mentre nella successiva mostriamo i risultati ottenuti dalla fase di testing del nostro modello. 
+Nella tabella precedente possiamo vedere i migliori valori trovati per ogni iperparametro, mentre nella successiva mostriamo i risultati ottenuti dalla fase di testing del nostro modello. La tabella presenterà i risultati ottenuti sul test set del dataset HAR ottenuto dal prof e sul test set dei dati reali raccolti direttamente da noi tramite l'applicazione. Ovviamente questo test set si presenta molto piccolo data la nostra impossibilità a raccogliere una grande quantità di dati, quindi la valenza di questi risultati è molto limitata. 
 
 \begin{table}[H]
     \begin{center}
-        \begin{tabular}{ |P{2cm}|P{1cm}|P{1cm}|P{1cm}|P{1.8cm}| } 
-            \multicolumn{5}{c}{\textbf{Evaluating algorithm}} \\
+        \begin{tabular}{ |P{2cm}|P{1cm}|P{1cm}|P{1cm}|P{1.8cm}|P{1cm}|P{1cm}|P{1cm}|P{1.8cm}| } 
+            \multicolumn{8}{c}{\textbf{Random Forest}} \\
             \hline
-            & \multicolumn{3}{c|}{\textbf{Random Forest}} & \\
-            \hline
-            \rowcolor{lightgray}
-            & \textbf{P} & \textbf{R} & \textbf{F1} & \textbf{Support} \\
-            \hline
-            \textbf{0} & 0.88 & 0.92 & 0.90 & 1949 \\
+            & \multicolumn{3}{c|}{\textbf{Dataset HAR}} & &\multicolumn{3}{c|}{\textbf{Dataset Real}}  & \\
             \hline
             \rowcolor{lightgray}
-            \textbf{1} & 0.92 & 0.87 & 0.90 & 2043 \\
+            & \textbf{P} & \textbf{R} & \textbf{F1} &\textbf{Support} & \textbf{P} & \textbf{R} & \textbf{F1}  & \textbf{Support} \\
             \hline
-            \textbf{2} & 0.92 & 0.87 & 0.90 & 2043 \\
-            \hline
-            \rowcolor{lightgray}
-            \textbf{Accuracy} & \multicolumn{3}{c|}{0.8987975951903807} & 3992 \\
-            \hline
-            \textbf{Macro AVG} & 0.90 & 0.90 & 0.90 & 3992 \\
+            \textbf{0} & 0.90 & 0.91 & 0.90 & 982 &0.70 & 0.81 & 0.75 & 26 \\
             \hline
             \rowcolor{lightgray}
-            \textbf{Weighted AVG} & 0.90 & 0.90 & 0.90 & 3992 \\
+            \textbf{1} & 0.93 & 0.93 & 0.93 & 1004 & 0.81 & 0.96 & 0.88 & 23 \\
+            \hline
+            \textbf{2} & 0.94 & 0.93 & 0.94 & 1125 & 0.93 & 0.82 & 0.87 & 66 \\
+            \hline
+            \rowcolor{lightgray}
+            \textbf{Accuracy} & \multicolumn{3}{c|}{0.9247830279652844} & 3111 &\multicolumn{3}{c|}{0.8434782608695652} & 115 \\
+            \hline
+            \textbf{Macro AVG} & 0.92 & 0.92 & 0.92 & 3111 &0.82  & 0.86 & 0.83 & 115 \\
+            \hline
+            \rowcolor{lightgray}
+            \textbf{Weighted AVG} & 0.92 & 0.92 & 0.92 & 3111 & 0.86 & 0.84 & 0.85  & 115 \\
             \hline
         \end{tabular}
         \caption{P = Precision, R = Recall e F1 = F1-score}
     \end{center}
 \end{table}
+Mostriamo ora per entrambi questi test set le matrici di confusione:
+\begin{figure}
+    \centering
+    \includegraphics[width=0.49\textwidth]{cf_HARSensorData.png}
+    \includegraphics[width=0.49\textwidth]{cf_SensorData.png}
+    \caption{Matrice di confusione per il test set del dataset HAR e per il dataset dei dati raccolti da noi }
+    \label{fig:confusion_matrix_har}
+\end{figure}
 
 
 \end{document}

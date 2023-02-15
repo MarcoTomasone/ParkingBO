@@ -102,7 +102,7 @@ Dalle immagini si può notare come l'utente sia abbastanza distante dalle colonn
     $$
     Guardando l'implementazione lato codice:
     \begin{lstlisting}
-    SELECT ST_AsText(ST_Centroid(polygon)) FROM zones WHERE id_zone = ${zone}
+    SELECT ST_AsText(ST_Centroid(polygon))FROM zones WHERE id_zone=${zone}
     \end{lstlisting}
     Questa query ci permette di calcolare il centroide di una zona, dato il suo id.\\
     \begin{figure}[H]

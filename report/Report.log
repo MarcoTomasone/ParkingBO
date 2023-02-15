@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (MiKTeX 21.8) (preloaded format=pdflatex 2021.9.3)  14 FEB 2023 16:28
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (MiKTeX 21.8) (preloaded format=pdflatex 2021.9.3)  15 FEB 2023 11:01
 entering extended mode
 **c:/Users/tomas/Desktop/ParkingBO/report/Report.tex
 (c:/Users/tomas/Desktop/ParkingBO/report/Report.tex
@@ -581,8 +581,8 @@ File: omscmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 105.
 
-Overfull \hbox (92.84906pt too wide) in paragraph at lines 105--106
-[][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+Overfull \hbox (71.6991pt too wide) in paragraph at lines 105--106
+[][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 <./img//computeValueIDW.png, id=109, 1093.08376pt x 560.0925pt>
@@ -698,28 +698,71 @@ Package pdftex.def Info: ./img//HarByClass.png  used on input line 294.
 
 LaTeX Warning: Reference `sec:random_forest' on page 24 undefined on input line 300.
 
-[24 <./img//HarByClass.png>] [25])
+[24 <./img//HarByClass.png>] [25]
 
-! LaTeX Error: File `chapters/Conclusioni/Conclusioni.tex' not found.
+LaTeX Warning: File `cf_HARSensorData.png' not found on input line 357.
 
-Type X to quit or <RETURN> to proceed,
-or enter new name. (Default extension: tex)
 
-Enter file name: 
- :47: Emergency stop.
-<read *> 
-         
-l.47 ...file{chapters/Conclusioni/Conclusioni.tex}
+chapters/Analisi algoritmi/Analisi_algoritmi.tex:357: Package pdftex.def Error: File `cf_HARSensorData.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
                                                   
-*** (cannot \read from terminal in nonstop modes)
+l.357 ...dth=0.49\textwidth]{cf_HARSensorData.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
 
- 
+
+LaTeX Warning: File `cf_SensorData.png' not found on input line 358.
+
+
+chapters/Analisi algoritmi/Analisi_algoritmi.tex:358: Package pdftex.def Error: File `cf_SensorData.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.358 ...[width=0.49\textwidth]{cf_SensorData.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+) (chapters/Conclusioni/Conclusioni.tex [26]
+Capitolo 5.
+)
+No file Report.bbl.
+[27
+
+] (Report.aux)
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+
+Package rerunfilecheck Warning: File `Report.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `Report.out':
+(rerunfilecheck)             Before: <no file>
+(rerunfilecheck)             After:  11C13E6AF99F04018A09AA59F8A1735B;3181.
+ ) 
 Here is how much of TeX's memory you used:
- 14191 strings out of 478927
- 219326 string characters out of 2852536
+ 14292 strings out of 478927
+ 221692 string characters out of 2852536
  570754 words of memory out of 3000000
- 31715 multiletter control sequences out of 15000+600000
- 414740 words of font info for 73 fonts, out of 8000000 for 9000
+ 31790 multiletter control sequences out of 15000+600000
+ 414909 words of font info for 74 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  69i,12n,79p,1820b,1340s stack positions out of 5000i,500n,10000p,200000b,80000s
- :47:  ==> Fatal error occurred, no output PDF file produced!
+ <C:\Users\tomas\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx8.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cmextra/cmex8.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt12.pfb><C:/Users/tomas/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on Report.pdf (28 pages, 7170811 bytes).
+PDF statistics:
+ 306 PDF objects out of 1000 (max. 8388607)
+ 81 named destinations out of 1000 (max. 500000)
+ 106 words of extra memory for PDF output out of 10000 (max. 10000000)
+
