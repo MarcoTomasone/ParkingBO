@@ -2,12 +2,12 @@
 \usepackage[italian]{babel}
 
 \begin{document}
-\chapter{Valutazione degli Algoritmi di Classificazione}
+\chapter{Algoritmi di classificazione e Risultati}
 Nella presente fase del progetto, è stata effettuata la valutazione di tre algoritmi di classificazione: \textbf{KNN}, \textbf{Random Forest} e \textbf{Gaussian Bayes}. L'obiettivo era quello di eseguire un confronto tra i tre algoritmi e di determinare quale di essi fosse più preciso nel classificare i dati utilizzando il dataset HAR fornito.\\
 La valutazione è stata effettuata attraverso la misurazione dell'accuratezza degli algoritmi e il confronto dei risultati ottenuti. Questo ha permesso di determinare quale algoritmo fosse il più adatto per il problema di riconoscimento delle attività svolte dall'utente.\\   
 
-\section{Dataset, data mining e tecnologie utilizzate}
-Il dataset utilizzato per l'analisi ci è stato fornito dal professor Marco Di Felice. Il dataset è composto da 62.584 osservazioni e 13 colonne riguardanti il valore dei sensori di uno smartphone android e l'attività dell'utente, come seguente:
+\section{Dataset e tecnologie utilizzate}
+Il dataset utilizzato per l'analisi ci è stato fornito dal prof. Marco Di Felice. Il dataset è composto da 62.584 osservazioni e 13 colonne riguardanti il valore dei sensori di uno smartphone android e l'attività dell'utente, come seguente:
 
 \begin{table}[H]
     \centering
@@ -61,7 +61,7 @@ Le etichette di questo dataset assumono 5 valori differenti:
     Per il training è stato utilizzato l'80\% dei dati e per il testing il 20\%.\\
 
 \section{Gli algoritmi}
-Come già detto precedentemente, in questa fase di valutazione degli algoritmi di classificazione, sono stati considerati tre differenti approcci: il \textbf{KNN}, il \textbf{Random Forest} e il \textbf{Gaussian Naive Bayes}.\\
+Come già detto precedentemente, in questa fase di valutazione degli algoritmi di classificazione, sono stati considerati tre differenti algoritmi: il \textbf{KNN}, il \textbf{Random Forest} e il \textbf{Gaussian Naive Bayes}.\\
 Questi algoritmi rappresentano tre approcci distinti alla risoluzione del problema di classificazione, ciascuno con i suoi punti di forza e limiti. Il \textbf{KNN} utilizza una logica basata sulla vicinanza dei dati, il \textbf{Random Forest} è un algoritmo di ensemble che utilizza molteplici alberi di decisione e il \textbf{Gaussian Naive Bayes} si basa sull'assunzione che le feature sono distribuite normalmente.\\
 In questa sezione, verranno descritti in dettaglio ciascuno di questi algoritmi e verrà presentato un confronto tra i loro risultati e le loro prestazioni.
 \subsection{KNN}
@@ -200,7 +200,7 @@ Mostriamo adesso i grafici delle Matrici di confusione ottenute per i due modell
     \caption{Matrice di confusione del modello senza scaling (sx) e con scaling (dx)}
     \label{fig:confusion_matrix_rf}
 \end{figure}
-Queste matrici di confusione mostrano come il modello Radom Forest sia ottimo per la classificazione di questo tipo dati. Sia il modello senza scaling che quello con scaling sono in grado di classificare correttamente la maggior parte dei dati, ma è possibile notare cme riescano a riconoscere più facilmente l'etichetta WALKING, rispetto a quella DRIVING, nella quale è presente un errore maggiore. 
+Queste matrici di confusione mostrano come il modello Random Forest sia ottimo per la classificazione di questo tipo dati. Sia il modello senza scaling che quello con scaling sono in grado di classificare correttamente la maggior parte dei dati, ma è possibile notare cme riescano a riconoscere più facilmente l'etichetta WALKING, rispetto a quella DRIVING, nella quale è presente un errore maggiore. 
 \subsection{Gaussian Naive Bayes}
 Per quanto riguarda il Gaussian Naive Bayes, abbiamo deciso di utilizzare questo algoritmo per la classificazione dei dati in quanto si tratta di un metodo semplice e veloce per la classificazione basato sull'assunzione che le feature siano distribuite secondo una distribuzione normale.\\
 Per questo modello il tuning dei parametri è stato effettuato utilizzando la funzione \emph{GridSearchCV} di \emph{Scikit-learn} solo su un'unico parametro \emph{var\_smoothing}, che rappresenta la varianza della distribuzione normale.\\
@@ -285,10 +285,16 @@ Utilizzando il dataset su cui è stato applicato il MinMaxScaling i risultati so
     \end{center}
 \end{table}
 
-Prima di confrontare i tre modelli tra loro, confrontiamo le differenze tra l'applicazione per ogni modello dello scaling dei valori. Per quanto riguarda il Gaussian Naive Bayes i risultati sono praticamente identici, mentre per il modello KNN c'è un miglioramento di circa un 0.1\% dell'accuratezza. Per il modello Random Forest invece c'è un peggioramento dell'accuratezza di circa il 6\%, un risultato molto significativo. Dati i risultati ottenuti abbiamo tralasciato quindi questa tecnica. Riguardo invece al confronto tra i tre modelli, con ben un 6\% di accuratezza in più il modello Random Forest è il modello migliore.
+Prima di confrontare i tre modelli tra loro, confrontiamo le differenze nell'applicazione per ogni modello dello scaling dei valori. Per quanto riguarda il Gaussian Naive Bayes i risultati sono praticamente identici, mentre per il modello KNN c'è un miglioramento di circa un 0.1\% dell'accuratezza. Per il modello Random Forest invece c'è un peggioramento dell'accuratezza di circa il 6\%, un risultato molto significativo. Dati i risultati ottenuti abbiamo tralasciato quindi questa tecnica. Riguardo invece al confronto tra i tre modelli, con ben un 6\% di accuratezza in più il modello Random Forest è il modello migliore.
 \section{Accuratezza sistema Har integrato}
 Dati i precedenti risultati, abbiamo valutato l'accuratezza del sistema di HAR integrato nell'applicazione e offerto dalla libreria \emph{flutter\_activity\_recognition}. Per farlo, data l'impossibilità di testare la libreria con il dataset utilizzato per testare i modelli precedentemente presentati, abbiamo raccolto un piccolo testbed tramite esperimenti reali. Abbiamo raccolto 1147
-record, formati dai dati dei sensori e due colonne target: il target riconosciuto dall'utente (la ground truth) e il target riconosciuto dalla libreria. Proprio il confronto tra questi target ci ha permesso di valutare l'accuratezza del sistema. Il risultato ottenuto è un'accuratezza del \textbf{91,02}\%. Dato che il dataset è stato raccolto da noi stessi e che abbiamo previsto l'apparizione di un toast sull'app mobile quando la libreria riconosceva un'attività, abbiamo potuto verificare sul campo quali fossero le situazioni che portavano in errore la libreria. Dobbiamo dire che sul riconscimento di un'attività di WALKING o STILL la libreria si presenta solida. Qualche errore è stato commesso durante il riconoscimento di attività IN\_VEICHLE, in cui seppur noi fossimo in macchina la libreria ci raramente segnalato il riconoscimento di un'attività IN\_BICYCLE oppure, in caso di grandi frenate o curve particolari portavano la libreria per qualche secondo a riconoscere UNKNOWN.
+record, formati dai dati dei sensori e due colonne target: il target riconosciuto dall'utente (la ground truth) e il target riconosciuto dalla libreria. Proprio il confronto tra questi target ci ha permesso di valutare l'accuratezza del sistema. Il risultato ottenuto è un'accuratezza del \textbf{91,02}\%. Dato che il dataset è stato raccolto da noi stessi e che abbiamo previsto l'apparizione di un toast sull'app mobile quando la libreria riconosceva un'attività, abbiamo potuto verificare sul campo quali fossero le situazioni che portavano in errore la libreria. Dobbiamo dire che sul riconscimento di un'attività di WALKING o STILL la libreria si presenta solida. Qualche errore è stato commesso durante il riconoscimento di attività IN\_VEICHLE, in caso di grandi frenate o curve particolari portavano la libreria per qualche secondo a riconoscere UNKNOWN. Nel grafico mostriamo un istogramma che mette a confronto le tuple per ogni classe target e il numero di predizioni corrette fatte. Come si può notare la maggior parte degli errori è stata commessa nella classe STILL, questo però è dipeso anche dal nostro metodo di raccolta dei dati, in cui raccoglievamo tuple ad intervalli regolari di tempo e non solo quando la libreria riconosceva una nuova attività.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{HarByClass.png}
+    \caption{Istogramma che mette a confronto le tuple per ogni classe target e il numero di predizioni corrette fatte}
+    \label{fig:accuracy}
+\end{figure}
 
 \section{Implementazione del Random Forest nell'app}
 Dati i risultati ottenuti nella sezione \ref{sec:random_forest}, comparati con i risultati ottenuti dagli altri due modelli, abbiamo scelto il Random Forest come algoritmo di classificazione da implementare direttamente nell'applicazione. Nonostante nella fase precedente è stato allenato un classificatore binario, implementando direttamente nell'applicazione questo tipo di classificatore fa si che l'applicazione non sia in grado di riconoscere quando l'utente è fermo, riconoscendo comunque un'attività. Per motivi di completezza quindi, abbiamo deciso di trasformare il classificatore da binario a ternario riconoscendo WALKING, DRIVING e STILL. Data la poca disponibilità di dati raccolti da noi stessi, questo è stato allenato su una combinazione dei dati raccolti direttamente tramite l'applicazione e dei dati del dataset HAR, discusso nelle sezioni precedenti. Anche il successivo testing è stato fatto su una combinazione dei dati provenienti da queste due diverse fonti.\\

@@ -10,8 +10,7 @@ import 'utils.dart';
 //Per fare localhost sull'emulatore dovrebbe andare il seguente ip = 10.0.2.2
 //Per fare tunelling usando nrock:     ngrok http --scheme=http 8000 --host-header=localhost:8000
 
-const url = 'http://192.168.146.34:8000';
-const baseURL = "192.168.253.68:8000";
+const baseURL = "172.20.10.11:8000";
 /**
  * This function is used to send a transition to the server
  */

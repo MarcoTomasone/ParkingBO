@@ -1,8 +1,11 @@
 
 import 'package:ParkingBO/MapWidget.dart';
+import 'package:ParkingBO/NoPermissionGrantsWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'dart:developer' as dev;
+
 class SplashScreen extends StatefulWidget{
   const SplashScreen({Key? key}) : super(key : key);
   
@@ -26,21 +29,32 @@ class _SplashScreenState extends State<SplashScreen>{
     });
 
     debugPrint(allGranted.toString());
-    return true;
+    return allGranted;
 }
   //TODO: If not permission load another activity
   @override
   void initState() {
     super.initState();
-    checkPermissions().whenComplete( () => {
-      Future.delayed(Duration(seconds: 1)).then((value){
-        Navigator.of(context).pushReplacement(CupertinoPageRoute(
-          builder: (ctx) =>  MapWidget()
-        ));
-      })
-  });
+    checkPermissions().then( (value) => {
+        loadNewScreen(value)
+   });
   }
   
+  void loadNewScreen(value){
+    dev.log("Permission granted: $value");
+    if(value)
+      Navigator.of(context).pushReplacement(CupertinoPageRoute(
+        builder: (ctx) =>  MapWidget()
+    ));
+    else 
+      Navigator.of(context).pushReplacement(CupertinoPageRoute(
+        builder: (ctx) =>  NoPermissionGrantsWidget()
+    ));
+  }
+
+
+  
+
   @override
   Widget build(BuildContext context) {
    return Scaffold(
