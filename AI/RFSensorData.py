@@ -12,19 +12,8 @@ import matplotlib.pyplot as plt
 from imblearn.under_sampling import RandomUnderSampler
 
 
-real_dataDF = pd.read_csv('./supports/real_data.csv')
-
-har_dataDF =pd.read_csv('./supports/har_dataset_preprocessedUnscaledWithStill.csv')
-
-#  Creiamo un modello addestrato sia con i dati reali che con quelli di HAR 
-# e poi lo testiamo per vedere se riesce a riconoscere i movimenti reali 
-#divide both inputs in train and test sets
-har_dataDF = har_dataDF.reindex(columns=['android.sensor.accelerometer#mean','android.sensor.accelerometer#max','android.sensor.accelerometer#min','android.sensor.accelerometer#std','android.sensor.gyroscope#mean','android.sensor.gyroscope#max','android.sensor.gyroscope#min','android.sensor.gyroscope#std','android.sensor.gyroscope_uncalibrated#mean','android.sensor.gyroscope_uncalibrated#max','android.sensor.gyroscope_uncalibrated#min','android.sensor.gyroscope_uncalibrated#std','target'])
-har_dataDFTrain, har_dataDFTest = train_test_split(har_dataDF, test_size=0.1, random_state=42, shuffle=True)
-real_dataDFTrain, real_dataDFTest = train_test_split(real_dataDF, test_size=0.1,random_state=42,shuffle=True)
-#create the full training set and shuffle it
-dataset = pd.concat([har_dataDFTrain, real_dataDFTrain])
-dataset = shuffle(dataset, random_state=42)
+realdata = pd.read_csv('./supports/real_data.csv')
+data =pd.read_csv('./supports/har_dataset_preprocessedUnscaledWithStill.csv')
 
 data = data.reindex(columns=['android.sensor.accelerometer#mean','android.sensor.accelerometer#max','android.sensor.accelerometer#min','android.sensor.accelerometer#std','android.sensor.gyroscope#mean','android.sensor.gyroscope#max','android.sensor.gyroscope#min','android.sensor.gyroscope#std','android.sensor.gyroscope_uncalibrated#mean','android.sensor.gyroscope_uncalibrated#max','android.sensor.gyroscope_uncalibrated#min','android.sensor.gyroscope_uncalibrated#std','target'])
 y = data['target']
@@ -69,8 +58,8 @@ disp = ConfusionMatrixDisplay(confusion_matrix = cf,display_labels=rf.classes_)
 disp.plot()
 plt.show()
 
-exp = LazyExport(rf)
-exp.save('./supports/model.json')
+#exp = LazyExport(rf)
+#exp.save('./supports/model.json')
 
 
 
