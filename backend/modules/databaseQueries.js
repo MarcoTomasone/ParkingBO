@@ -379,10 +379,11 @@ module.exports = {
                     ST_TRANSFORM(point, 3857),
                     ST_TRANSFORM(ST_GeomFromText('POINT(${geom})', 4326), 3857)) * cosd(42.3521) as distance
                 FROM charge_stations 
-                WHERE ST_DWithin(point, ST_GeomFromText('POINT(${geom})', 4326), 300, true)
+                WHERE ST_DWithin(point, ST_GeomFromText('POINT(${geom})', 4326), 10, true)
                 ORDER BY distance ASC
                 LIMIT 1`);
-            const echargers = result.rows; //TODO: check if the result is empty
+            const echargers = result.rows; 
+            console.log(echargers);
             return echargers;
         } catch (e) {
             console.error(e);

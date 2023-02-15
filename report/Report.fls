@@ -783,11 +783,11 @@ INPUT .\chapters\Progettazione\Progettazione.tex
 INPUT chapters\Progettazione\Progettazione.tex
 INPUT C:\Users\tomas\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmr17.tfm
 INPUT C:\Users\tomas\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmbx12.tfm
-INPUT .\chapters\Implementazione\Implementazione.tex
-INPUT chapters\Implementazione\Implementazione.tex
-INPUT .\chapters\Implementazione\Implementazione.tex
-INPUT chapters\Implementazione\Implementazione.tex
 INPUT C:\Users\tomas\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmti12.tfm
+INPUT .\chapters\Implementazione\Implementazione.tex
+INPUT chapters\Implementazione\Implementazione.tex
+INPUT .\chapters\Implementazione\Implementazione.tex
+INPUT chapters\Implementazione\Implementazione.tex
 INPUT C:\Users\tomas\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmbx12.tfm
 INPUT .\img\\CheckPermission.png
 INPUT .\img\\CheckPermission.png

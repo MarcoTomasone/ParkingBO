@@ -10,7 +10,7 @@ import 'dart:developer' as dev;
 class Model {
   RandomForestClassifier? model;
 
-  void loadModel() async {
+  Future<void> loadModel() async {
     await rootBundle.loadString("assets/model.json").then((value) {
       this.model = RandomForestClassifier.fromMap(json.decode(value));
     });

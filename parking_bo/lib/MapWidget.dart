@@ -93,7 +93,7 @@ class _MapWidgetState extends State<MapWidget> {
         fontSize: 16.0);
 
     markerActivity = activityType;
-    setState(() {
+    setState(() {//Remove STILL if trying in a vehicle 
       if((activityType == ar.ActivityType.WALKING || activityType == ar.ActivityType.IN_VEHICLE || activityType == ar.ActivityType.STILL) && (currentActivity != activityType)) 
           currentActivity = activityType;
     });
@@ -177,7 +177,6 @@ class _MapWidgetState extends State<MapWidget> {
     createLocationListener();
     drawMarkersOnMap();
     model.loadModel();
-
     Timer.periodic(Duration(seconds: 10), (timer) {
       int indexActv = model.predict(sensorRecognition.getFeatures());
       sensorRecognition.getRow(userActivitySel.toString(), currentActivity.toString());

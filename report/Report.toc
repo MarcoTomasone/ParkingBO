@@ -11,17 +11,17 @@
 \contentsline {subsection}{\numberline {3.2.1}Feature Aggiuntiva}{10}{subsection.3.2.1}%
 \contentsline {section}{\numberline {3.3}Backend}{11}{section.3.3}%
 \contentsline {section}{\numberline {3.4}Frontend}{14}{section.3.4}%
-\contentsline {chapter}{\numberline {4}Algoritmi di classificazione e Risultati}{16}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Dataset e tecnologie utilizzate}{16}{section.4.1}%
-\contentsline {subsection}{\numberline {4.1.1}Data mining}{17}{subsection.4.1.1}%
-\contentsline {section}{\numberline {4.2}Gli algoritmi}{18}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}KNN}{18}{subsection.4.2.1}%
-\contentsline {subsubsection}{Risultati}{19}{section*.13}%
-\contentsline {subsection}{\numberline {4.2.2}Random Forest}{20}{subsection.4.2.2}%
-\contentsline {subsubsection}{Risultati}{20}{section*.17}%
-\contentsline {subsection}{\numberline {4.2.3}Gaussian Naive Bayes}{22}{subsection.4.2.3}%
-\contentsline {subsubsection}{Risultati}{22}{section*.23}%
-\contentsline {section}{\numberline {4.3}Confronto dei risultati}{23}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Accuratezza sistema Har integrato}{24}{section.4.4}%
-\contentsline {section}{\numberline {4.5}Implementazione del Random Forest nell'app}{25}{section.4.5}%
-\contentsline {chapter}{\numberline {5}Conclusioni}{27}{chapter.5}%
+\contentsline {chapter}{\numberline {4}Algoritmi di classificazione e Risultati}{17}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Dataset e tecnologie utilizzate}{17}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Data mining}{18}{subsection.4.1.1}%
+\contentsline {section}{\numberline {4.2}Gli algoritmi}{19}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}KNN}{19}{subsection.4.2.1}%
+\contentsline {subsubsection}{Risultati}{20}{section*.13}%
+\contentsline {subsection}{\numberline {4.2.2}Random Forest}{21}{subsection.4.2.2}%
+\contentsline {subsubsection}{Risultati}{21}{section*.17}%
+\contentsline {subsection}{\numberline {4.2.3}Gaussian Naive Bayes}{23}{subsection.4.2.3}%
+\contentsline {subsubsection}{Risultati}{23}{section*.23}%
+\contentsline {section}{\numberline {4.3}Confronto dei risultati}{24}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Accuratezza sistema Har integrato}{25}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Implementazione del Random Forest nell'app}{26}{section.4.5}%
+\contentsline {chapter}{\numberline {5}Conclusioni}{28}{chapter.5}%
