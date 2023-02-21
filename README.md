@@ -2,9 +2,10 @@
 Project for the course of Context-Aware Systems Unibo 2021/2022.
 
 To run backend:
-cd backend
+```cd backend
 npm i --force 
 node app.js
+```
 
 
 
